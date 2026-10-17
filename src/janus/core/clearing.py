@@ -5,6 +5,9 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from math import isclose, isfinite
+from typing import Literal
+
+ClearingPriceRule = Literal["midpoint", "marginal_ask"]
 
 
 def _validate_amount(name: str, value: float) -> None:
@@ -95,11 +98,14 @@ def clear_market(
     *,
     tie_priority: Mapping[str, int],
     price_cap: float | None = None,
+    price_rule: ClearingPriceRule = "midpoint",
 ) -> ClearingResult:
-    """Clear a uniform-midpoint auction, optionally subject to a price ceiling."""
+    """Clear a uniform-price auction, optionally subject to a price ceiling."""
 
     if price_cap is not None:
         _validate_amount("price cap", price_cap)
+    if price_rule not in ("midpoint", "marginal_ask"):
+        raise ValueError(f"unknown clearing price rule: {price_rule}")
     sorted_bids, sorted_asks = _sorted_orders(bids, asks, tie_priority)
 
     quantity = 0
@@ -121,7 +127,7 @@ def clear_market(
 
     marginal_bid = sorted_bids[quantity - 1].amount
     marginal_ask = sorted_asks[quantity - 1].amount
-    price = (marginal_bid + marginal_ask) / 2
+    price = marginal_ask if price_rule == "marginal_ask" else (marginal_bid + marginal_ask) / 2
     if price_cap is not None:
         price = min(price, price_cap)
     if price < marginal_ask or price > marginal_bid:
@@ -155,6 +161,7 @@ def slow_clear_market(
     *,
     tie_priority: Mapping[str, int],
     price_cap: float | None = None,
+    price_rule: ClearingPriceRule = "midpoint",
 ) -> ClearingResult:
     """Transparent reference implementation used for differential tests."""
 
@@ -167,7 +174,13 @@ def slow_clear_market(
         if ask.amount <= limit:
             feasible_quantities.append(candidate)
     quantity = max(feasible_quantities)
-    result = clear_market(bids, asks, tie_priority=tie_priority, price_cap=price_cap)
+    result = clear_market(
+        bids,
+        asks,
+        tie_priority=tie_priority,
+        price_cap=price_cap,
+        price_rule=price_rule,
+    )
     if result.quantity != quantity:
         raise AssertionError("production and reference clearing quantities differ")
     return result

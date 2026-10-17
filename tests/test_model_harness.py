@@ -231,9 +231,13 @@ def test_mock_phase0e_run_is_zero_cost_and_replayable(tmp_path) -> None:
     assert manifest["trial_count"] == 5
     assert manifest["paid_api_calls"] == 0
     assert manifest["total_cost_usd"] == 0
+    assert manifest["adapter_calls"] == 5
+    assert manifest["cache_replay_adapter_calls"] == 0
+    assert manifest["cache_replay_passed"] is True
     assert run_phase0e_dry_run(output, project_root)
     replay = json.loads((output / "run_manifest.json").read_text())
     assert replay["adapter_calls"] == 0
+    assert replay["cache_replay_adapter_calls"] == 0
 
 
 def test_hidden_seed_commitment_is_idempotent_and_revision_bound(tmp_path) -> None:

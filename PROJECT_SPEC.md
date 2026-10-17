@@ -1,6 +1,6 @@
 # Janus — Project Specification and Research Charter
 
-**Status:** Source of truth; pre-implementation research design  
+**Status:** Source of truth; benchmark v1 frozen as an evaluation-ready local release
 **Version:** 0.1.0  
 **Date:** 2026-10-16  
 **Project type:** Synthetic, research-oriented LLM decision evaluation  
@@ -841,10 +841,10 @@ Secrets, API keys, hidden provider reasoning, and unrelated account metadata MUS
 
 1. Build with mock responses and no API access.
 2. Validate the market, accounting, counterfactual branches, baselines, and analysis locally.
-3. Run a five-world Luna smoke test under a hard micro-budget.
-4. Run Luna on development only for prompt/parser debugging.
-5. Freeze the prompt; use calibration to estimate difficulty, variance, and planned precision—not to keep editing after every result.
-6. Freeze benchmark version and generate the hidden set.
+3. Freeze the prompt and benchmark; use calibration to estimate difficulty, variance, and planned precision—not to keep editing after every result.
+4. Commit a private seed hash, generate the hidden set, and keep private labels and oracle outcomes concealed.
+5. After separate spending authorization, run a five-world Luna smoke test on development observations under a hard micro-budget. Operational repairs may fix transport or parsing defects, but a semantic prompt or benchmark change creates a new version and hidden release.
+6. Optionally run Luna on development only to verify provider behavior; do not use hidden outcomes for tuning.
 7. Run three planned model replicates per hidden world: 100 × 3 = 300 requests per model.
 8. Evaluate Luna first, then a small set of predeclared stronger/provider-diverse models if budget permits.
 9. Commit response manifests before unblinding hidden labels and oracle outcomes.
@@ -1022,9 +1022,11 @@ Generate only development/calibration candidates, build ambiguity bundles, audit
 
 **Status: complete.** The 256-rollout release audit passed all 15 gates on 2026-10-17, and representative oracle actions were stable at 256, 512, and 1,024 rollouts. Frozen values are recorded in `configs/phase0d.json`; results and artifact hashes are recorded in `reports/phase0d_gate.md`.
 
-### Phase 0E — API harness, still no full run
+### Phase 0E — model harness and hidden release, no paid run
 
 Only after 0A–0D pass, add mock/provider adapters, strict schema parsing, cache, cost accounting, and a dry-run manifest. Exit criterion: mock end-to-end test and hard-budget tests pass. Then—and only then—is a five-world paid smoke test allowed.
+
+**Status: complete.** A fresh five-world mock run passed at zero cost and an immediate replay made zero additional adapter calls. Strict response parsing, one fixed syntax-repair attempt, explicit invalid-response fallback, provider-independent requests, OpenAI Responses payload construction through an injected no-network transport, cache-key isolation by planned replicate, dated pricing, conservative preflight, hard stage/total ceilings, and usage reconciliation are tested. The frozen prompt, opaque 100-world hidden manifest, pre-generation seed commitment, and private 256-rollout oracles are complete. Private outcomes have not been inspected or revealed. `reports/readiness.md` records the release evidence and limitations. No paid call is authorized by this status statement.
 
 ---
 
@@ -1142,15 +1144,17 @@ The following assumptions materially affect validity and MUST be revisited in th
 
 ## 23. Go/no-go checklist before implementation proceeds beyond design
 
-- [ ] This charter has been reviewed and accepted as the source of truth.
-- [ ] Any changes to the primary objective or action semantics are recorded.
-- [ ] The analytic market fixtures are specified on paper.
-- [ ] Provisional parameter distributions are documented in configs.
-- [ ] Phase 0A–0D can be completed with zero model calls.
-- [ ] Hidden-set access and commitment procedure are defined.
-- [ ] The project owner accepts the narrow external-validity claim.
+- [x] This charter has been reviewed and accepted as the source of truth.
+- [x] Any changes to the primary objective or action semantics are recorded.
+- [x] The analytic market fixtures are specified on paper.
+- [x] Provisional parameter distributions are documented in configs.
+- [x] Phase 0A–0D were completed with zero model calls.
+- [x] Hidden-set access and commitment procedure are defined and instantiated.
+- [x] The project owner accepts the narrow external-validity claim.
 
-The next authorized task after acceptance is Phase 0A, not a paid evaluation and not a frontend.
+The next technically eligible task is a five-development-world paid smoke test.
+It requires explicit spending authorization and is not part of the frozen local
+release. A frontend remains outside the scientific critical path.
 
 ---
 

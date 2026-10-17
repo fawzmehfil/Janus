@@ -2,7 +2,11 @@ from dataclasses import replace
 
 from janus.core.fixtures import analytic_market
 from janus.interventions.actions import ActionID
-from janus.oracle.counterfactual import check_oracle_convergence, evaluate_oracle
+from janus.oracle.counterfactual import (
+    OracleObjective,
+    check_oracle_convergence,
+    evaluate_oracle,
+)
 from janus.scenarios.families import LatentFamily, ScenarioConfig
 from janus.simulation.runner import DynamicsConfig
 
@@ -65,3 +69,28 @@ def test_small_convergence_audit_reports_all_scales() -> None:
     assert len(result.best_actions) == 3
     assert result.maximum_mean_delta >= 0
     assert all(action in ActionID for action in result.best_actions)
+
+
+def test_secondary_objectives_are_available_as_analysis_paths() -> None:
+    scenario = ScenarioConfig(
+        scenario_id="objectives-supply",
+        family=LatentFamily.SUPPLY_SHORTAGE,
+        shock_duration=20,
+    )
+    objectives: tuple[OracleObjective, ...] = (
+        "primary",
+        "consumer_protection",
+        "producer_continuity",
+        "stability_aware",
+        "fiscal_neutral",
+    )
+    for objective in objectives:
+        result = evaluate_oracle(
+            decision_state(),
+            scenario,
+            root_seed=5,
+            rollout_count=1,
+            dynamics=DynamicsConfig(recovery_periods=2),
+            objective=objective,
+        )
+        assert result.best_action in ActionID

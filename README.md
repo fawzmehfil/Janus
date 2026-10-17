@@ -10,10 +10,15 @@ The authoritative research design is [`PROJECT_SPEC.md`](PROJECT_SPEC.md).
 
 ## Development status
 
-Phases 0A–0D are complete. The accounting kernel, mechanisms, counterfactual
-oracle, ambiguity bundles, baselines, and local validity gates pass. Phase 0E
-is implementing the mock/provider harness and hard budget controls. Paid model
-calls remain prohibited until that final local gate passes.
+Phases 0A–0E are complete and benchmark v1 is frozen as an evaluation-ready
+local release. The accounting kernel, mechanisms, counterfactual oracle,
+ambiguity bundles, baselines, strict mock/provider harness, hard budget
+controls, hidden-set commitment, and local scientific-validity gates pass.
+No paid model call has been made. A five-world paid smoke test is technically
+eligible but remains a separately authorized next step.
+
+The release evidence, exact commands, hashes, cost estimates, limitations, and
+recommendation are in [`reports/readiness.md`](reports/readiness.md).
 
 ## Local setup
 
@@ -22,6 +27,8 @@ uv sync --all-groups
 uv run pytest
 uv run janus analytic-fixture
 uv run janus phase0d --output artifacts/phase0d-release --rollouts 256 --workers 4
+uv run janus phase0e-dry-run --output artifacts/phase0e-freeze
+uv run janus robustness --output artifacts/robustness/report.json --rollouts 64 --workers 4
 ```
 
 The package requires Python 3.12 or newer. All stochastic behavior must use the

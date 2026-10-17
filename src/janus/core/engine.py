@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, replace
 
-from janus.core.clearing import Ask, Bid, ClearingResult, clear_market
+from janus.core.clearing import Ask, Bid, ClearingPriceRule, ClearingResult, clear_market
 from janus.core.config import AccountingConfig, MarketConfig
 from janus.core.ledger import PeriodLedger, PolicyFlows, compute_period_ledger
 from janus.core.state import MarketState
@@ -29,6 +29,7 @@ def run_period(
     accounting_config: AccountingConfig | None = None,
     policy: PolicyFlows | None = None,
     price_cap: float | None = None,
+    price_rule: ClearingPriceRule = "midpoint",
 ) -> PeriodResult:
     accounting_config = accounting_config or AccountingConfig()
     policy = policy or PolicyFlows()
@@ -59,6 +60,7 @@ def run_period(
         asks,
         tie_priority=tie_priority,
         price_cap=price_cap,
+        price_rule=price_rule,
     )
     sold_by_seller: dict[str, int] = {}
     for trade in clearing.trades:

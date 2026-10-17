@@ -8,6 +8,7 @@ from math import log
 
 from pydantic import Field
 
+from janus.core.clearing import ClearingPriceRule
 from janus.core.config import AccountingConfig, MarketConfig, StrictFrozenModel
 from janus.core.engine import PeriodResult, run_period
 from janus.core.ledger import PolicyFlows
@@ -174,6 +175,7 @@ def run_recovery(
     accounting_config: AccountingConfig | None = None,
     intervention_config: InterventionConfig | None = None,
     dynamics: DynamicsConfig | None = None,
+    price_rule: ClearingPriceRule = "midpoint",
 ) -> RecoveryResult:
     market_config = market_config or MarketConfig()
     accounting_config = accounting_config or AccountingConfig()
@@ -234,6 +236,7 @@ def run_recovery(
             accounting_config=accounting_config,
             policy=flows,
             price_cap=intervention.price_cap,
+            price_rule=price_rule,
         )
         steps.append(RecoveryStep(result, snapshot))
         prices.append(result.clearing.transaction_price)

@@ -33,3 +33,22 @@ def test_small_hand_solved_markets() -> None:
         assert result.quantity == quantity
         assert result.transaction_price == price
         assert sum(trade.buyer_value - trade.seller_cost for trade in result.trades) == surplus
+
+
+def test_marginal_ask_ablation_preserves_allocation_and_surplus() -> None:
+    state = analytic_market()
+    bids, asks = competitive_orders(state)
+    ids = tuple(order.order_id for order in (*bids, *asks))
+    priority = DisturbanceTape(7, "ablation").tie_priority(ids, 0)
+    midpoint = clear_market(bids, asks, tie_priority=priority)
+    marginal_ask = clear_market(
+        bids,
+        asks,
+        tie_priority=priority,
+        price_rule="marginal_ask",
+    )
+    assert marginal_ask.quantity == midpoint.quantity == 21
+    assert marginal_ask.transaction_price == 100.0
+    assert [trade.buyer_value - trade.seller_cost for trade in marginal_ask.trades] == [
+        trade.buyer_value - trade.seller_cost for trade in midpoint.trades
+    ]

@@ -14,6 +14,7 @@ from janus.core.randomness import DisturbanceTape
 from janus.evaluation.hidden_release import generate_hidden_release, prepare_hidden_seed
 from janus.evaluation.phase0d_runner import run_phase0d
 from janus.evaluation.phase0e_runner import run_phase0e_dry_run
+from janus.evaluation.robustness import run_robustness_audit
 
 
 def analytic_fixture_command() -> int:
@@ -77,6 +78,12 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path("manifests/hidden-v1-commitment.json"),
     )
     hidden_generate.add_argument("--workers", type=int, default=4)
+    robustness = subparsers.add_parser(
+        "robustness", help="run alternate-clearing and normative sensitivity audits"
+    )
+    robustness.add_argument("--output", type=Path, default=Path("artifacts/robustness/report.json"))
+    robustness.add_argument("--rollouts", type=int, default=64)
+    robustness.add_argument("--workers", type=int, default=4)
     return parser
 
 
@@ -116,6 +123,14 @@ def main(argv: Sequence[str] | None = None) -> int:
             workers=args.workers,
         )
         print(json.dumps({"public_manifest": str(args.public_manifest), "passed": passed}))
+        return 0 if passed else 2
+    if args.command == "robustness":
+        passed = run_robustness_audit(
+            args.output,
+            rollouts=args.rollouts,
+            workers=args.workers,
+        )
+        print(json.dumps({"output": str(args.output), "passed": passed}, sort_keys=True))
         return 0 if passed else 2
     raise AssertionError(f"unhandled command: {args.command}")
 

@@ -5,13 +5,23 @@ from __future__ import annotations
 from dataclasses import dataclass
 from math import sqrt
 from statistics import fmean, stdev
+from typing import Literal
 
+from janus.core.clearing import ClearingPriceRule
 from janus.core.config import AccountingConfig, MarketConfig
 from janus.core.randomness import DisturbanceTape
 from janus.core.state import MarketState
 from janus.interventions.actions import ActionID, InterventionConfig
 from janus.scenarios.families import ScenarioConfig
 from janus.simulation.runner import DynamicsConfig, run_recovery
+
+OracleObjective = Literal[
+    "primary",
+    "consumer_protection",
+    "producer_continuity",
+    "stability_aware",
+    "fiscal_neutral",
+]
 
 
 @dataclass(frozen=True, slots=True)
@@ -49,9 +59,19 @@ def evaluate_oracle(
     accounting_config: AccountingConfig | None = None,
     intervention_config: InterventionConfig | None = None,
     dynamics: DynamicsConfig | None = None,
+    objective: OracleObjective = "primary",
+    price_rule: ClearingPriceRule = "midpoint",
 ) -> OracleResult:
     if rollout_count < 1:
         raise ValueError("rollout count must be positive")
+    if objective not in (
+        "primary",
+        "consumer_protection",
+        "producer_continuity",
+        "stability_aware",
+        "fiscal_neutral",
+    ):
+        raise ValueError(f"unknown oracle objective: {objective}")
     dynamics = dynamics or DynamicsConfig()
     samples: dict[ActionID, list[float]] = {action: [] for action in ActionID}
 
@@ -67,8 +87,9 @@ def evaluate_oracle(
                 accounting_config=accounting_config,
                 intervention_config=intervention_config,
                 dynamics=dynamics,
+                price_rule=price_rule,
             )
-            samples[action].append(result.utilities.primary)
+            samples[action].append(getattr(result.utilities, objective))
 
     action_values = tuple(
         ActionValue(

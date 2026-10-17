@@ -93,6 +93,22 @@ def run_phase0e_dry_run(output_directory: Path, project_root: Path) -> bool:
         )
         artifacts.append(artifact)
 
+    adapter_calls = adapter.call_count
+    replayed = []
+    for index, world in enumerate(selected):
+        replayed.append(
+            runner.run(
+                world.serialized_observation,
+                TrialContext(
+                    world_id=world.world_id,
+                    replicate_id=f"replicate-{index:02d}",
+                    benchmark_version="janus-v1",
+                    stage="dry-run",
+                ),
+            )
+        )
+    cache_replay_adapter_calls = adapter.call_count - adapter_calls
+
     cache_hashes = {
         path.name: hashlib.sha256(path.read_bytes()).hexdigest()
         for path in sorted((output_directory / "cache").glob("*.json"))
@@ -100,6 +116,8 @@ def run_phase0e_dry_run(output_directory: Path, project_root: Path) -> bool:
     passed = (
         len(artifacts) == 5
         and all(item["validation_status"] == ResponseStatus.VALID.value for item in artifacts)
+        and replayed == artifacts
+        and cache_replay_adapter_calls == 0
         and budget.total_spent_usd == 0
     )
     manifest = {
@@ -107,7 +125,9 @@ def run_phase0e_dry_run(output_directory: Path, project_root: Path) -> bool:
         "mode": "mock-dry-run",
         "passed": passed,
         "paid_api_calls": 0,
-        "adapter_calls": adapter.call_count,
+        "adapter_calls": adapter_calls,
+        "cache_replay_adapter_calls": cache_replay_adapter_calls,
+        "cache_replay_passed": replayed == artifacts and cache_replay_adapter_calls == 0,
         "trial_count": len(artifacts),
         "total_cost_usd": budget.total_spent_usd,
         "prompt_sha256": prompt.hash,
