@@ -1,6 +1,6 @@
 # Decision 0004: Pre-freeze validity calibration
 
-- **Status:** provisional, pending the complete Phase 0D gate
+- **Status:** accepted and frozen for benchmark v1
 - **Date:** 2026-10-17
 
 ## Context
@@ -44,3 +44,12 @@ worlds. The release still fails unless it has at least three oracle actions,
 no constant epsilon-optimal action above 60%, held-out overlap within the frozen
 range, and separated baselines. Failed configurations and their audit results
 remain in the Phase 0D report.
+
+## Outcome
+
+The 256-rollout release audit passed every frozen gate. The maximum constant
+epsilon-optimal rate was 53.3%, three distinct actions were oracle-optimal, and
+98.3% of calibration worlds had a unique epsilon-optimal action. The
+development-fitted heuristic and partial-information policy both improved over
+their predecessor with positive 95% bundle-clustered bootstrap lower bounds.
+Representative best actions were unchanged at 256, 512, and 1,024 rollouts.

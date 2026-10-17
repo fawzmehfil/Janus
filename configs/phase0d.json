@@ -1,0 +1,60 @@
+{
+  "schema_version": "janus-phase0d-v1",
+  "frozen_at": "2026-10-17",
+  "generator": {
+    "candidates_per_family": 80,
+    "shock_start": 20,
+    "observation_periods": 10,
+    "shock_duration_min": 18,
+    "shock_duration_max": 20,
+    "initial_cash_multiple": 100.0,
+    "root_seed": 20261017
+  },
+  "market": {
+    "potential_buyers": 40,
+    "active_sellers": 8,
+    "units_per_seller": 5,
+    "initial_cash_multiple": 100.0,
+    "reference_price": 100.0,
+    "buyer_value_start": 140.0,
+    "seller_cost_start": 60.0,
+    "schedule_step": 2.0,
+    "holding_cost_per_unit": 0.0,
+    "allow_credit": false
+  },
+  "interventions": {
+    "price_ceiling_multiplier": 1.10,
+    "transaction_tax_rate": 0.02,
+    "supply_subsidy_fraction": 0.15,
+    "investigation_sensitivity": 0.85,
+    "investigation_false_positive_rate": 0.05,
+    "investigation_fine_fraction": 0.25,
+    "price_ceiling_admin_cost": 5.0,
+    "tax_admin_cost": 0.5,
+    "subsidy_admin_cost": 0.5,
+    "investigation_admin_cost": 40.0,
+    "investigation_compliance_cost": 10.0,
+    "false_positive_disruption_cost": 50.0
+  },
+  "oracle": {
+    "rollouts": 256,
+    "convergence_rollouts": [256, 512, 1024],
+    "recovery_periods": 20,
+    "epsilon_reference_surplus_per_period": 840.0,
+    "epsilon_absolute_fraction": 0.005
+  },
+  "validity_thresholds": {
+    "maximum_pre_shock_price_deviation": 0.05,
+    "maximum_pre_shock_volume_deviation": 0.15,
+    "maximum_pre_shock_half_drift": 0.05,
+    "maximum_bundle_distance": 1.25,
+    "maximum_standardized_mean_difference": 2.5,
+    "maximum_nearest_neighbor_distance": 1.0,
+    "minimum_classifier_macro_f1": 0.35,
+    "maximum_classifier_macro_f1": 0.80,
+    "minimum_oracle_action_count": 3,
+    "maximum_constant_epsilon_rate": 0.60,
+    "minimum_resolvable_world_fraction": 0.50,
+    "minimum_mc_resolved_gap_fraction": 0.50
+  }
+}

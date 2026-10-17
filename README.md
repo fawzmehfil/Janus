@@ -10,9 +10,10 @@ The authoritative research design is [`PROJECT_SPEC.md`](PROJECT_SPEC.md).
 
 ## Development status
 
-Janus is being implemented phase-by-phase. Paid model calls are prohibited
-until the local simulator, accounting, counterfactual evaluator, baselines,
-validity gates, and budget controls have passed.
+Phases 0A–0D are complete. The accounting kernel, mechanisms, counterfactual
+oracle, ambiguity bundles, baselines, and local validity gates pass. Phase 0E
+is implementing the mock/provider harness and hard budget controls. Paid model
+calls remain prohibited until that final local gate passes.
 
 ## Local setup
 
@@ -20,9 +21,9 @@ validity gates, and budget controls have passed.
 uv sync --all-groups
 uv run pytest
 uv run janus analytic-fixture
+uv run janus phase0d --output artifacts/phase0d-release --rollouts 256 --workers 4
 ```
 
 The package requires Python 3.12 or newer. All stochastic behavior must use the
 named/indexed randomness interfaces in `janus.core.randomness`; module-global
 random-number generators are forbidden.
-

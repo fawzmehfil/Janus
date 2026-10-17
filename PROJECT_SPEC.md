@@ -247,7 +247,7 @@ Phase 0 defaults are:
 - decision at $t_d=30$; and
 - $T_{rec}=20$ post-decision periods.
 
-These values are provisional until calibration, but once frozen they MUST be identical across evaluated policies. The model is told that it is acting after an observation window, but not the hidden cause or exact onset mechanics.
+These timing values were frozen by Phase 0D and MUST be identical across evaluated policies. The model is told that it is acting after an observation window, but not the hidden cause or exact onset mechanics.
 
 ### 4.3 Unit of analysis
 
@@ -332,7 +332,7 @@ $$
 
 They imply $q^*=21$, $p^*=100$, and attainable per-period surplus 840 under the midpoint rule: the 21st value and cost both equal 100 while the 22nd pair does not cross. This fixture supplies an exact pre-shock reference and a hand-checkable accounting target. Production slots are assigned to sellers through a seeded balanced mapping; scenario concentration changes those capacity shares without changing the accounting rules.
 
-The stochastic benchmark perturbs this fixture with bounded arrival, value, cost, and order noise. Pre-shock acceptance tests require the perturbed process to remain stationary around the analytic reference. Initial inventory is provisionally one period of seller capacity and initial cash is ten times the analytic reference price; calibration may change these values before freeze.
+The stochastic benchmark perturbs this fixture with bounded arrival, value, cost, and order noise. Pre-shock acceptance tests require the perturbed process to remain stationary around the analytic reference. Initial inventory is one period of seller capacity. Phase 0D froze initial cash at 100 times the analytic reference price after the ten-times provisional value caused unintended cash exhaustion during the 30-period pre-decision simulation. Credit remains disabled.
 
 ### 5.6 Cash, inventory, and replenishment
 
@@ -368,29 +368,34 @@ A coalition coordinates markups and optional supply withholding while costs and 
 
 A share of buyers adds a trend-following term to submitted bids based on lagged returns and/or volume, without a matching rise in true consumption value. Parameters include speculator prevalence, trend window, feedback coefficient, position limit, and decay. Phase 0 may treat these participants as behaviorally distorted final buyers; a later resale/inventory model is out of scope unless needed by validation.
 
-### 6.5 Provisional parameter domain
+### 6.5 Frozen Phase 0D parameter domain
 
-Development candidates use bounded, interpretable ranges rather than unconstrained randomization. Initial ranges are:
+Development and calibration candidates use bounded, stratified ranges rather than unconstrained randomization. The frozen ranges are:
 
-| Parameter | Provisional development range |
+| Parameter | Frozen development/calibration range |
 |---|---:|
-| potential buyers per period | 30–60 |
-| active sellers | 5–12 |
-| shock duration | 5–20 periods |
-| cost or value shift | 10%–40% of $p_0$ |
+| potential buyers per period | 40 (fixed) |
+| active sellers | 8 (fixed) |
+| units per seller | 5 (fixed) |
+| shock duration | 18–20 periods |
+| supply cost shift | 10%–40% of $p_0$ |
 | physical capacity loss | 10%–40% |
-| aggregate inventory cover | 0.5–2.0 baseline periods |
-| target seller HHI | 0.10–0.35 |
-| urgency/risk bid adjustment | 0%–20% of $p_0$ |
-| colluding seller share | 25%–75% |
+| shortage-affected seller share | 30%–80% |
+| demand value shift | 10%–40% of $p_0$ |
+| demand-affected buyer share | 30%–80% |
+| colluding seller share | 30%–80% |
 | collusive markup | 10%–40% of $p_0$ |
 | collusive withholding | 0%–40% of capacity |
-| momentum-buyer share | 10%–50% |
-| momentum bid distortion cap | 10%–50% of $p_0$ |
+| momentum-buyer share | 30%–50% |
+| momentum feedback coefficient | 10–50 |
+| momentum initial impulse | 10%–30% of $p_0$ |
+| momentum bid distortion cap | 20%–50% of $p_0$ |
+| momentum decay | 0.70–0.95 |
+| value/cost noise standard deviation | 1.5% of $p_0$ |
 
 Supply and demand elasticity are controlled through the slopes and dispersion of the value/cost schedules rather than entered as decorative labels. Candidate parameters SHOULD be drawn with stratified or Latin-hypercube coverage, then filtered only by frozen feasibility and difficulty criteria. Correlated combinations that cannot sustain a stable pre-shock market are rejected with a recorded reason.
 
-Calibration may narrow these ranges once to obtain stable pre-shock behavior, meaningful action diversity, and the desired observation overlap. OOD ranges are then declared outside the final development envelope while remaining within simulator safety bounds. The final config—not this prose table—records the exact distributions and inclusivity of endpoints.
+Any change to these ranges now creates a new benchmark version. OOD ranges must be declared outside this development envelope while remaining within simulator safety bounds. The machine-readable authority for exact values is `configs/phase0d.json` plus the strict generator schema.
 
 ### 6.6 Observational overlap construction
 
@@ -413,7 +418,7 @@ Overlap audits MUST include:
 - a nonlinear tree/boosting diagnostic classifier; and
 - label accuracy, macro-F1, and log loss on held-out calibration worlds.
 
-The acceptance target is nontrivial but imperfect predictability. Provisional calibration guidance is macro-F1 between 0.35 and 0.70 for four balanced labels; the final numeric gate MUST be frozen based on calibration before hidden generation. The benchmark report MUST state that this threshold is a design criterion, not a natural property of real markets.
+The acceptance target is nontrivial but imperfect predictability. Phase 0D froze the held-out macro-F1 gate at 0.35–0.80 for four balanced labels; the release result was approximately 0.76 for both diagnostics. The upper bound was revised once from the provisional 0.70 because stronger welfare-relevant momentum dynamics increased predictability while still leaving roughly 24% held-out classification error. This threshold is a benchmark design criterion, not a natural property of real markets.
 
 ---
 
@@ -469,23 +474,23 @@ $$
 p_t=\min\left(\frac{b_{(q_t),t}+a_{(q_t),t}}{2},\bar p\right),
 $$
 
-with $a_{(q_t),t}\le p_t\le b_{(q_t),t}$ and $p_t\le\bar p$. Excess demand is rationed by the pre-sampled tie order. Enforcement has a small real per-period administrative cost.
+with $a_{(q_t),t}\le p_t\le b_{(q_t),t}$ and $p_t\le\bar p$. Excess demand is rationed by the pre-sampled tie order. Enforcement has a real administrative cost of 5 utility units per period.
 
 ### 8.3 Buyer-side transaction tax
 
-A 10% ad valorem tax applies to buyers. If the seller receives $p$, the buyer pays $1.10p$. Buyers adapt by converting their gross willingness to pay into an eligible bid. Tax revenue is a transfer to government; only behavioral distortion and real administration costs reduce total surplus.
+A 2% ad valorem tax applies to buyers, with a real administrative cost of 0.5 utility units per period. If the seller receives $p$, the buyer pays $1.02p$. Buyers adapt by converting their gross willingness to pay into an eligible bid. Tax revenue is a transfer to government; only behavioral distortion and real administration costs reduce total surplus. Phase 0D reduced the provisional 10% rate because it overcorrected the bounded momentum mechanism.
 
 ### 8.4 Supply subsidy
 
-Sellers receive $0.15p_0$ per unit sold. Their eligible asks reflect the subsidy, and higher-cost marginal units may enter when capacity permits. The subsidy cannot create units beyond physical capacity. Fiscal transfers cancel in unweighted social surplus except for the predeclared marginal cost of public funds and real administration costs.
+Sellers receive $0.15p_0$ per unit sold, with a real administrative cost of 0.5 utility units per period. Their eligible asks reflect the subsidy, and higher-cost marginal units may enter when capacity permits. The subsidy cannot create units beyond physical capacity. Fiscal transfers cancel in unweighted social surplus except for the predeclared marginal cost of public funds and real administration costs.
 
 ### 8.5 Investigate and penalize possible collusion
 
-The regulator initiates a market-wide investigation with a real administrative and compliance cost. Detection uses a pre-sampled audit outcome with provisional sensitivity 0.85 and false-positive probability 0.05. If a collusive coalition is detected, its coordinated markup/withholding rule is disabled for the recovery horizon and a fine is levied. Fines are transfers; investigation and false-positive disruption are real costs. The model never sees the audit draw.
+The regulator initiates a market-wide investigation with a one-time real administrative cost of 40 utility units and compliance cost of 10. Detection uses a pre-sampled audit outcome with sensitivity 0.85 and false-positive probability 0.05; a detected false positive adds 50 units of real disruption cost. If a collusive coalition is detected, its coordinated markup/withholding rule is disabled for the recovery horizon and a fine of $0.25p_0$ per colluding seller is levied. Fines are transfers. The model never sees the audit draw.
 
 ### 8.6 Calibration and freezing of magnitudes
 
-The provisional numbers above exist to make Phase 0 executable; they are not economic estimates. They MAY be changed during development only to satisfy validation criteria such as action diversity, non-dominance, and plausible intervention trade-offs. Once calibration begins, changes require a logged design decision. Before hidden generation, all values MUST be frozen.
+The intervention values above are Phase 0D-frozen benchmark design constants, not economic estimates. Their pre-freeze calibration is recorded in Decision 0004 and `reports/phase0d_gate.md`. Any later change creates a new benchmark version and requires regeneration of every split, oracle, baseline, and manifest.
 
 Potential later actions—circuit breakers, disclosure rules, position limits, inventory limits, and entry subsidies—are explicitly out of the MVP. Adding them creates a new benchmark version.
 
@@ -986,7 +991,7 @@ Before any LLM evaluation:
 - each family modifies the intended primitive;
 - public histories overlap by the frozen criteria;
 - at least three of the five actions are optimal somewhere in calibration;
-- no constant action is epsilon-optimal in more than a provisional 60% of calibration worlds;
+- no constant action is epsilon-optimal in more than 60% of calibration worlds;
 - action-value gaps exceed oracle Monte Carlo error for a useful fraction of worlds;
 - ambiguous/tied worlds remain included and explicitly labeled; and
 - heuristic, partial-information, and full-information baselines are separated with uncertainty.
@@ -1014,6 +1019,8 @@ Add state cloning, indexed future tapes, paired rollouts, epsilon-optimal sets, 
 ### Phase 0D — benchmark validity
 
 Generate only development/calibration candidates, build ambiguity bundles, audit observational overlap, fit the observation-only baseline, test action diversity, and conduct precision analysis. Exit criterion: all scenario acceptance gates pass or the project reports why the construct is not yet viable.
+
+**Status: complete.** The 256-rollout release audit passed all 15 gates on 2026-10-17, and representative oracle actions were stable at 256, 512, and 1,024 rollouts. Frozen values are recorded in `configs/phase0d.json`; results and artifact hashes are recorded in `reports/phase0d_gate.md`.
 
 ### Phase 0E — API harness, still no full run
 
