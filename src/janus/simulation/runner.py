@@ -191,7 +191,9 @@ def run_recovery(
         config=intervention_config,
     )
     state = initial_state.clone()
-    prices: list[float | None] = [state.last_price]
+    prices: list[float | None] = list(state.recent_transaction_prices)
+    if not prices and state.last_price is not None:
+        prices.append(state.last_price)
     steps: list[RecoveryStep] = []
 
     for step_index in range(dynamics.recovery_periods):

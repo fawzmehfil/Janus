@@ -90,6 +90,9 @@ def run_period(
         )
         for seller in state.sellers
     )
+    recent_prices = state.recent_transaction_prices
+    if clearing.transaction_price is not None:
+        recent_prices = (*recent_prices, clearing.transaction_price)[-4:]
     next_state = MarketState(
         period=state.period + 1,
         buyers=buyers,
@@ -98,6 +101,7 @@ def run_period(
         last_price=clearing.transaction_price
         if clearing.transaction_price is not None
         else state.last_price,
+        recent_transaction_prices=recent_prices,
         cumulative_real_cost=state.cumulative_real_cost + ledger.real_cost,
     )
     return PeriodResult(state, next_state, clearing, ledger)

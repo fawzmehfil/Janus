@@ -18,6 +18,7 @@ T = TypeVar("T")
 
 REQUIRED_STREAMS: Final[tuple[str, ...]] = (
     "scenario_parameters",
+    "affected_participants",
     "pre_decision_disturbances",
     "post_decision_tapes",
     "tie_breaking",

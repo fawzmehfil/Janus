@@ -99,24 +99,28 @@ def build_public_row(
     )
     return PublicObservationRow(
         period=state.period,
-        transaction_price=clearing.transaction_price,
+        transaction_price=_rounded(clearing.transaction_price),
         no_trade=clearing.transaction_price is None,
         transaction_volume=clearing.quantity,
         aggregate_available_supply=clearing.available_supply,
         unfilled_submitted_demand=clearing.unfilled_demand,
         aggregate_inventory=sum(seller.inventory for seller in state.sellers if seller.active),
-        best_bid=clearing.best_bid,
-        best_ask=clearing.best_ask,
-        spread=spread,
-        seller_hhi=seller_hhi(state),
+        best_bid=_rounded(clearing.best_bid),
+        best_ask=_rounded(clearing.best_ask),
+        spread=_rounded(spread),
+        seller_hhi=round(seller_hhi(state), 8),
         active_firm_count=sum(seller.active for seller in state.sellers),
         bankruptcies=sum(not seller.active for seller in state.sellers),
-        realized_log_price_volatility=realized_log_volatility(price_history),
+        realized_log_price_volatility=round(realized_log_volatility(price_history), 8),
         intervention=intervention,
         reference_price=reference_price,
         reference_volume=reference_volume,
         reference_inventory=reference_inventory,
     )
+
+
+def _rounded(value: float | None) -> float | None:
+    return None if value is None else round(value, 6)
 
 
 def serialize_public_history(history: PublicObservationHistory) -> bytes:

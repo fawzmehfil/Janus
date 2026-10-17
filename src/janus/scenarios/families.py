@@ -7,9 +7,11 @@ from enum import StrEnum
 from math import ceil
 from typing import Self
 
+import numpy as np
 from pydantic import Field, model_validator
 
 from janus.core.config import StrictFrozenModel
+from janus.core.randomness import NamedRNG
 from janus.core.state import MarketState
 
 
@@ -40,6 +42,7 @@ class ScenarioConfig(StrictFrozenModel):
 
     momentum_buyer_fraction: float = Field(default=0.30, gt=0, le=1)
     momentum_feedback: float = Field(default=2.0, ge=0)
+    momentum_initial_impulse_fraction: float = Field(default=0.10, ge=0, le=1)
     momentum_distortion_cap_fraction: float = Field(default=0.30, ge=0, le=1)
     momentum_decay: float = Field(default=0.85, gt=0, le=1)
 
@@ -72,7 +75,12 @@ class MarketPrimitives:
 
 
 def _select_ids(
-    all_ids: tuple[str, ...], explicit: tuple[str, ...], fraction: float
+    all_ids: tuple[str, ...],
+    explicit: tuple[str, ...],
+    fraction: float,
+    *,
+    scenario_id: str,
+    role: str,
 ) -> tuple[str, ...]:
     if explicit:
         unknown = set(explicit).difference(all_ids)
@@ -80,7 +88,9 @@ def _select_ids(
             raise ValueError(f"scenario references unknown actor IDs: {sorted(unknown)}")
         return explicit
     count = max(1, ceil(len(all_ids) * fraction))
-    return tuple(sorted(all_ids)[:count])
+    generator = NamedRNG(0).generator("affected_participants", scenario_id, role)
+    selected = generator.choice(np.asarray(all_ids), size=count, replace=False)
+    return tuple(sorted(str(item) for item in selected))
 
 
 def primitives_for_period(
@@ -112,7 +122,11 @@ def primitives_for_period(
 
     if scenario.family is LatentFamily.SUPPLY_SHORTAGE:
         affected = _select_ids(
-            seller_ids, scenario.affected_seller_ids, scenario.affected_seller_fraction
+            seller_ids,
+            scenario.affected_seller_ids,
+            scenario.affected_seller_fraction,
+            scenario_id=scenario.scenario_id,
+            role="shortage_sellers",
         )
         cost_shift = scenario.reference_price * scenario.supply_cost_shift_fraction
         for seller_id in affected:
@@ -124,7 +138,11 @@ def primitives_for_period(
 
     elif scenario.family is LatentFamily.DEMAND_INCREASE:
         affected = _select_ids(
-            buyer_ids, scenario.affected_buyer_ids, scenario.affected_buyer_fraction
+            buyer_ids,
+            scenario.affected_buyer_ids,
+            scenario.affected_buyer_fraction,
+            scenario_id=scenario.scenario_id,
+            role="demand_buyers",
         )
         value_shift = scenario.reference_price * scenario.demand_value_shift_fraction
         for buyer_id in affected:
@@ -132,7 +150,11 @@ def primitives_for_period(
 
     elif scenario.family is LatentFamily.SELLER_COLLUSION:
         colluders = _select_ids(
-            seller_ids, scenario.affected_seller_ids, scenario.colluding_seller_fraction
+            seller_ids,
+            scenario.affected_seller_ids,
+            scenario.colluding_seller_fraction,
+            scenario_id=scenario.scenario_id,
+            role="colluding_sellers",
         )
         if not collusion_disabled:
             markup = scenario.reference_price * scenario.collusive_markup_fraction
@@ -145,15 +167,28 @@ def primitives_for_period(
 
     elif scenario.family is LatentFamily.MOMENTUM_DEMAND:
         momentum_buyers = _select_ids(
-            buyer_ids, scenario.affected_buyer_ids, scenario.momentum_buyer_fraction
+            buyer_ids,
+            scenario.affected_buyer_ids,
+            scenario.momentum_buyer_fraction,
+            scenario_id=scenario.scenario_id,
+            role="momentum_buyers",
         )
         weighted_return = sum(
             value * scenario.momentum_decay**lag
             for lag, value in enumerate(reversed(recent_log_returns))
         )
+        initial_impulse = (
+            scenario.reference_price * scenario.momentum_initial_impulse_fraction
+            if state.period == scenario.shock_start
+            else 0.0
+        )
         distortion = min(
             scenario.reference_price * scenario.momentum_distortion_cap_fraction,
-            max(0.0, scenario.reference_price * scenario.momentum_feedback * weighted_return),
+            max(
+                initial_impulse,
+                scenario.reference_price * scenario.momentum_feedback * weighted_return,
+                0.0,
+            ),
         )
         for buyer_id in momentum_buyers:
             buyer_adjustments[buyer_id] = distortion

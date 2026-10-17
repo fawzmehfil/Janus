@@ -80,7 +80,11 @@ def evaluate_oracle(
         for action in ActionID
     )
     best_value = max(action_values, key=lambda value: (value.mean, value.action.value))
-    absolute_floor = 0.005 * reference_surplus_per_period * dynamics.recovery_periods
+    # The specification defines the analytic reference as attainable *per-period*
+    # surplus (840), so the 0.5% absolute tolerance is 4.2 rather than a
+    # horizon-scaled 84. Paired Monte Carlo uncertainty still scales naturally
+    # through the standard error of each action-value difference.
+    absolute_floor = 0.005 * reference_surplus_per_period
     epsilon_pairs: list[tuple[ActionID, float]] = []
     optimal: set[ActionID] = set()
     for value in action_values:

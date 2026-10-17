@@ -33,6 +33,9 @@ def state_from_dict(data: Mapping[str, Any]) -> MarketState:
         ),
         government_balance=float(data["government_balance"]),
         last_price=None if data["last_price"] is None else float(data["last_price"]),
+        recent_transaction_prices=tuple(
+            float(value) for value in data.get("recent_transaction_prices", ())
+        ),
         cumulative_real_cost=float(data["cumulative_real_cost"]),
     )
 

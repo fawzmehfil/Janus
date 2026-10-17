@@ -28,6 +28,8 @@ def test_oracle_uses_paired_samples_and_dominates_actions_by_mean() -> None:
     best = result.value_for(result.best_action).mean
     assert all(best >= value.mean for value in result.action_values)
     assert result.best_action in result.epsilon_optimal_actions
+    epsilon = dict(result.epsilon_by_action)[result.best_action]
+    assert epsilon == 4.2
 
 
 def test_oracle_is_bit_reproducible() -> None:

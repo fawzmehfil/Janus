@@ -23,17 +23,17 @@ class ActionID(StrEnum):
 
 class InterventionConfig(StrictFrozenModel):
     price_ceiling_multiplier: float = Field(default=1.10, gt=0)
-    transaction_tax_rate: float = Field(default=0.10, ge=0)
+    transaction_tax_rate: float = Field(default=0.02, ge=0)
     supply_subsidy_fraction: float = Field(default=0.15, ge=0)
     investigation_sensitivity: float = Field(default=0.85, ge=0, le=1)
     investigation_false_positive_rate: float = Field(default=0.05, ge=0, le=1)
     investigation_fine_fraction: float = Field(default=0.25, ge=0)
-    price_ceiling_admin_cost: float = Field(default=1.0, ge=0)
+    price_ceiling_admin_cost: float = Field(default=5.0, ge=0)
     tax_admin_cost: float = Field(default=0.5, ge=0)
     subsidy_admin_cost: float = Field(default=0.5, ge=0)
-    investigation_admin_cost: float = Field(default=5.0, ge=0)
-    investigation_compliance_cost: float = Field(default=2.0, ge=0)
-    false_positive_disruption_cost: float = Field(default=10.0, ge=0)
+    investigation_admin_cost: float = Field(default=40.0, ge=0)
+    investigation_compliance_cost: float = Field(default=10.0, ge=0)
+    false_positive_disruption_cost: float = Field(default=50.0, ge=0)
 
 
 @dataclass(frozen=True, slots=True)

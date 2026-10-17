@@ -49,6 +49,7 @@ class MarketState:
     sellers: tuple[SellerState, ...]
     government_balance: float = 0.0
     last_price: float | None = None
+    recent_transaction_prices: tuple[float, ...] = ()
     cumulative_real_cost: float = 0.0
 
     def __post_init__(self) -> None:
@@ -60,6 +61,10 @@ class MarketState:
             raise ValueError("seller IDs must be unique")
         if self.last_price is not None:
             _require_finite_nonnegative("last_price", self.last_price)
+        for price in self.recent_transaction_prices:
+            _require_finite_nonnegative("recent transaction price", price)
+        if len(self.recent_transaction_prices) > 4:
+            raise ValueError("market state retains at most four recent transaction prices")
         _require_finite_nonnegative("cumulative_real_cost", self.cumulative_real_cost)
 
     def clone(self) -> MarketState:
@@ -83,5 +88,6 @@ class MarketState:
             ),
             government_balance=self.government_balance,
             last_price=self.last_price,
+            recent_transaction_prices=tuple(self.recent_transaction_prices),
             cumulative_real_cost=self.cumulative_real_cost,
         )
