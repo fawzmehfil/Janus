@@ -9,7 +9,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from janus.evaluation.budget import BudgetLedger, conservative_usage_estimate
+from janus.evaluation.budget import BudgetExceeded, BudgetLedger, conservative_usage_estimate
 from janus.interventions.actions import ActionID
 from janus.models.base import (
     Decision,
@@ -162,6 +162,7 @@ class EvaluationRunner:
                 errors.append(str(error))
 
         repair_reply: ProviderReply | None = None
+        repair_blocked_by_budget = False
         if (
             decision is None
             and self.allow_repair
@@ -173,20 +174,25 @@ class EvaluationRunner:
                 repair_attempt=True,
                 raw_to_repair=reply.raw_text,
             )
-            repair_reply, repair_estimate, repair_actual = self._call(repair_request)
-            total_estimate += repair_estimate
-            total_actual += repair_actual
-            total_usage = total_usage + repair_reply.usage
-            repair_status = self._status(repair_reply)
-            if repair_status is ResponseStatus.SCHEMA_FAILURE:
-                try:
-                    decision = parse_decision(repair_reply.raw_text or "")
-                    status = ResponseStatus.REPAIRED
-                except ValidationError as error:
-                    errors.append(str(error))
-                    status = ResponseStatus.SCHEMA_FAILURE
+            try:
+                repair_reply, repair_estimate, repair_actual = self._call(repair_request)
+            except BudgetExceeded as error:
+                repair_blocked_by_budget = True
+                errors.append(f"syntax repair not sent: {error}")
             else:
-                status = repair_status
+                total_estimate += repair_estimate
+                total_actual += repair_actual
+                total_usage = total_usage + repair_reply.usage
+                repair_status = self._status(repair_reply)
+                if repair_status is ResponseStatus.SCHEMA_FAILURE:
+                    try:
+                        decision = parse_decision(repair_reply.raw_text or "")
+                        status = ResponseStatus.REPAIRED
+                    except ValidationError as error:
+                        errors.append(str(error))
+                        status = ResponseStatus.SCHEMA_FAILURE
+                else:
+                    status = repair_status
 
         artifact = TrialArtifact(
             cache_key=key,
@@ -211,6 +217,7 @@ class EvaluationRunner:
             validation_status=status.value,
             validation_errors=errors,
             repair_attempted=repair_reply is not None,
+            repair_blocked_by_budget=repair_blocked_by_budget,
             fallback_action=(
                 decision.action if decision is not None else ActionID.DO_NOTHING
             ).value,

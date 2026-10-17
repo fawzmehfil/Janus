@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from collections.abc import Sequence
 from dataclasses import asdict
 from pathlib import Path
@@ -12,9 +13,17 @@ from janus.core.clearing import clear_market
 from janus.core.fixtures import analytic_market, competitive_orders
 from janus.core.randomness import DisturbanceTape
 from janus.evaluation.hidden_release import generate_hidden_release, prepare_hidden_seed
+from janus.evaluation.openai_smoke import (
+    SMOKE_MAXIMUM_CEILING_USD,
+    SPEND_CONFIRMATION,
+    run_openai_smoke,
+    smoke_preflight,
+    validate_smoke_ceiling,
+)
 from janus.evaluation.phase0d_runner import run_phase0d
 from janus.evaluation.phase0e_runner import run_phase0e_dry_run
 from janus.evaluation.robustness import run_robustness_audit
+from janus.models.providers.openai import make_openai_sdk_transport
 
 
 def analytic_fixture_command() -> int:
@@ -52,6 +61,27 @@ def build_parser() -> argparse.ArgumentParser:
     )
     phase0e = subparsers.add_parser("phase0e-dry-run", help="run the zero-cost mock harness")
     phase0e.add_argument("--output", type=Path, default=Path("artifacts/phase0e-dry-run"))
+    smoke_preflight_parser = subparsers.add_parser(
+        "openai-smoke-preflight",
+        help="print the no-network five-world Luna cost and input plan",
+    )
+    smoke_preflight_parser.add_argument(
+        "--max-usd",
+        type=float,
+        default=SMOKE_MAXIMUM_CEILING_USD,
+    )
+    smoke = subparsers.add_parser(
+        "openai-smoke",
+        help="run the explicitly confirmed five-world paid Luna smoke test",
+    )
+    smoke.add_argument("--output", type=Path, default=Path("artifacts/openai-smoke-v1"))
+    smoke.add_argument("--max-usd", type=float, default=SMOKE_MAXIMUM_CEILING_USD)
+    smoke.add_argument("--timeout-seconds", type=float, default=120.0)
+    smoke.add_argument(
+        "--confirm-spend",
+        required=True,
+        help=f"must equal {SPEND_CONFIRMATION!r}; no request is sent otherwise",
+    )
     hidden_seed = subparsers.add_parser(
         "hidden-seed", help="create a private seed and public commitment before generation"
     )
@@ -103,6 +133,32 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.command == "phase0e-dry-run":
         passed = run_phase0e_dry_run(args.output, Path.cwd())
         print(json.dumps({"output": str(args.output), "passed": passed}, sort_keys=True))
+        return 0 if passed else 2
+    if args.command == "openai-smoke-preflight":
+        plan = smoke_preflight(Path.cwd(), ceiling_usd=args.max_usd)
+        print(json.dumps(plan, sort_keys=True, indent=2))
+        return 0 if plan["fits_ceiling"] else 2
+    if args.command == "openai-smoke":
+        validate_smoke_ceiling(args.max_usd)
+        if args.confirm_spend != SPEND_CONFIRMATION:
+            raise SystemExit(
+                f"refusing paid run: --confirm-spend must equal {SPEND_CONFIRMATION!r}"
+            )
+        api_key = os.environ.get("OPENAI_API_KEY", "")
+        if not api_key:
+            raise SystemExit("refusing paid run: OPENAI_API_KEY is not set")
+        transport, sdk_version = make_openai_sdk_transport(
+            api_key,
+            timeout_seconds=args.timeout_seconds,
+        )
+        passed, manifest = run_openai_smoke(
+            Path.cwd(),
+            args.output,
+            transport=transport,
+            sdk_version=sdk_version,
+            ceiling_usd=args.max_usd,
+        )
+        print(json.dumps({"manifest": str(manifest), "passed": passed}, sort_keys=True))
         return 0 if passed else 2
     if args.command == "hidden-seed":
         commitment = prepare_hidden_seed(

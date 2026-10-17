@@ -9,6 +9,8 @@ from pydantic import Field
 from janus.core.config import StrictFrozenModel
 from janus.models.base import UsageRecord
 
+REQUEST_OVERHEAD_TOKEN_ALLOWANCE = 1_024
+
 
 class PricingConfig(StrictFrozenModel):
     provider: str
@@ -64,7 +66,14 @@ class BudgetLedger:
 
 
 def conservative_usage_estimate(input_bytes: int, maximum_output_tokens: int) -> UsageRecord:
-    estimated_input = (input_bytes + 3) // 4
+    """Return a deliberately high per-request bound for local budget preflight.
+
+    Counting every input byte as a token is far more conservative than the
+    usual four-bytes-per-token planning heuristic. The fixed allowance covers
+    message framing and request metadata not present in the input byte strings.
+    """
+
+    estimated_input = input_bytes + REQUEST_OVERHEAD_TOKEN_ALLOWANCE
     return UsageRecord(
         input_tokens=estimated_input,
         output_tokens=maximum_output_tokens,

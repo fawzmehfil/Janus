@@ -1,18 +1,71 @@
-"""OpenAI Responses payload adapter with an injected transport.
+"""OpenAI Responses adapter and explicitly constructed official-SDK transport.
 
-This module never reads an API key and never opens a network connection. A
-deployment must explicitly inject an authenticated transport after local gates
-and budget authorization pass.
+The adapter remains transport-injected for no-network tests. The SDK transport
+accepts a caller-supplied key only after CLI confirmation; this module never
+reads environment variables or writes credentials to artifacts.
 """
 
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import Any
+from typing import Any, cast
 
 from janus.models.base import ModelRequest, ProviderReply, UsageRecord
 
 OpenAITransport = Callable[[dict[str, Any]], dict[str, Any]]
+
+
+def _has_refusal(payload: dict[str, Any]) -> bool:
+    output = payload.get("output", [])
+    return any(
+        isinstance(item, dict)
+        and any(
+            isinstance(content, dict) and content.get("type") == "refusal"
+            for content in item.get("content", [])
+        )
+        for item in output
+    )
+
+
+def make_openai_sdk_transport(
+    api_key: str,
+    *,
+    timeout_seconds: float = 120.0,
+) -> tuple[OpenAITransport, str]:
+    """Create a no-retry official-SDK transport for an explicitly authorized run."""
+
+    if not api_key.strip():
+        raise ValueError("OPENAI_API_KEY is empty")
+    from importlib.metadata import version
+
+    from openai import APITimeoutError, OpenAI
+
+    client = OpenAI(
+        api_key=api_key,
+        timeout=timeout_seconds,
+        max_retries=0,
+    )
+
+    def transport(payload: dict[str, Any]) -> dict[str, Any]:
+        logical_trial_id = str(payload.get("metadata", {}).get("logical_trial_id", ""))
+        try:
+            response = client.responses.create(
+                **payload,
+                extra_headers={"Idempotency-Key": logical_trial_id},
+            )
+        except APITimeoutError:
+            return {
+                "model": payload["model"],
+                "output_text": None,
+                "timed_out": True,
+                "usage": {},
+            }
+        data = cast(dict[str, Any], response.model_dump(mode="json"))
+        data["output_text"] = response.output_text
+        data["refusal"] = _has_refusal(data)
+        return data
+
+    return transport, version("openai")
 
 
 class OpenAIResponsesAdapter:
@@ -54,6 +107,8 @@ class OpenAIResponsesAdapter:
                 "logical_trial_id": request.logical_trial_id,
                 "replicate_id": request.context.replicate_id,
             },
+            "service_tier": "default",
+            "store": False,
         }
         if request.settings.reasoning_effort is not None:
             payload["reasoning"] = {"effort": request.settings.reasoning_effort}
@@ -69,17 +124,21 @@ class OpenAIResponsesAdapter:
         input_details = usage.get("input_tokens_details", {})
         output_details = usage.get("output_tokens_details", {})
         raw_text = response.get("output_text")
+        cached_tokens = int(input_details.get("cached_tokens", 0))
+        cache_write_tokens = int(input_details.get("cache_write_tokens", 0))
+        total_input_tokens = int(usage.get("input_tokens", 0))
         return ProviderReply(
             raw_text=None if raw_text is None else str(raw_text),
             returned_model_id=str(response.get("model", request.settings.requested_model_id)),
             provider_request_id=None if response.get("id") is None else str(response["id"]),
             usage=UsageRecord(
-                input_tokens=int(usage.get("input_tokens", 0)),
-                cached_input_tokens=int(input_details.get("cached_tokens", 0)),
+                input_tokens=max(0, total_input_tokens - cached_tokens - cache_write_tokens),
+                cached_input_tokens=cached_tokens,
+                cache_write_tokens=cache_write_tokens,
                 output_tokens=int(usage.get("output_tokens", 0)),
                 reasoning_tokens=int(output_details.get("reasoning_tokens", 0)),
             ),
             refusal=bool(response.get("refusal", False)),
-            timed_out=False,
+            timed_out=bool(response.get("timed_out", False)),
             timestamp_utc=self.timestamp(),
         )

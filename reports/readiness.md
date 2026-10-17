@@ -88,15 +88,23 @@ conditional on the primary welfare function.
 ## Budget estimate before any paid call
 
 Using the dated standard short-context Luna table ($0.10/M input and $0.50/M
-output), the exact frozen prompt/schema bytes, a conservative four-bytes-per-
-token input bound, and the 512-token output ceiling:
+output), the exact frozen prompt/schema bytes, a conventional four-bytes-per-
+token planning estimate, and the 512-token output ceiling:
 
-| Planned stage | Requests | Input-token upper estimate | Output-token ceiling | Estimated maximum | If every request needs one repair |
+| Planned stage | Requests | Planning input estimate | Output-token ceiling | Estimated cost | If every request needs one repair |
 |---|---:|---:|---:|---:|---:|
 | smoke | 5 | 20,094 | 2,560 | $0.00329 | $0.00658 |
 | one-model hidden run | 300 | 1,205,325 | 153,600 | $0.19733 | $0.39467 |
 
-These are preflight estimates, not invoices. They exclude future provider price
+These are planning estimates, not invoices or mathematical upper bounds. The
+live smoke runner therefore uses a separate hard preflight: it counts every
+input byte as a token, adds 1,024 framing tokens per request, and reserves the
+full 512-token output ceiling. The five primary requests total **$0.0098262**
+under that deliberately high bound. A syntax repair is sent only if the
+remaining local budget passes the same check; it may displace a later primary
+request rather than cross $0.01.
+
+The estimates exclude future provider price
 changes, taxes, and any non-token fees, and assume the price snapshot remains
 valid. Cached-input discounts are not credited. The project’s $10 development
 and $100 cross-model ceilings remain hard stops, not targets. Revalidate the
@@ -112,6 +120,7 @@ uv run janus analytic-fixture
 uv run janus phase0d --output artifacts/phase0d-release --rollouts 256 --workers 4
 uv run janus phase0e-dry-run --output artifacts/phase0e-freeze
 uv run janus robustness --output artifacts/robustness/report.json --rollouts 64 --workers 4
+uv run janus openai-smoke-preflight --max-usd 0.01
 uv run ruff format --check .
 uv run ruff check .
 uv run mypy
@@ -120,9 +129,10 @@ uv run pytest --cov=janus --cov-report=term-missing -q
 git diff --check
 ```
 
-Final verification on the release candidate: Ruff formatting and lint pass;
-strict mypy passes across 48 source files; 50 tests pass in both ordinary and
-coverage runs; total statement coverage is 86%; and `git diff --check` passes.
+Final verification on the current release candidate: Ruff formatting and lint
+pass; strict mypy passes across 49 source files; 55 tests pass in both ordinary
+and coverage runs; total statement coverage is 89%; and `git diff --check`
+passes.
 The two end-to-end research commands (`phase0d` and `robustness`) are validated
 by their content-addressed local reports rather than rerun inside unit coverage.
 
@@ -145,9 +155,9 @@ by their content-addressed local reports rather than rerun inside unit coverage.
 
 ## Unresolved limitations
 
-1. No live provider request, authentication path, rate-limit behavior, SDK
-   integration, or returned-model snapshot has been exercised. The OpenAI
-   adapter is validated through an injected transport and representative payload.
+1. No live provider request, authentication result, rate-limit behavior, or
+   returned-model snapshot has been exercised. The official SDK transport is
+   installed and validated through injected no-network responses only.
 2. Hidden private files are protected by local Unix permissions, not encryption,
    a separate evaluator host, or hardware-backed access control.
 3. The fitted observation-only baseline is not a proven Bayes policy. The 13.10

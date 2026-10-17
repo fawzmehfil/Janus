@@ -29,7 +29,14 @@ uv run janus analytic-fixture
 uv run janus phase0d --output artifacts/phase0d-release --rollouts 256 --workers 4
 uv run janus phase0e-dry-run --output artifacts/phase0e-freeze
 uv run janus robustness --output artifacts/robustness/report.json --rollouts 64 --workers 4
+uv run janus openai-smoke-preflight --max-usd 0.01
 ```
+
+The live five-world smoke command, environment-key instructions, and layered
+one-cent safeguards are documented in
+[`docs/OPENAI_SMOKE_TEST.md`](docs/OPENAI_SMOKE_TEST.md). Running the preflight
+does not read a key, access hidden artifacts, make a network request, or spend
+money.
 
 The package requires Python 3.12 or newer. All stochastic behavior must use the
 named/indexed randomness interfaces in `janus.core.randomness`; module-global

@@ -7,9 +7,11 @@ __pycache__/
 .mypy_cache/
 .coverage
 htmlcov/
+.env
+.env.*
+!.env.example
 dist/
 build/
 *.egg-info/
 artifacts/**
 !artifacts/.gitkeep
-

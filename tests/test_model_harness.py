@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
+from janus.cli import main
 from janus.evaluation.budget import BudgetExceeded, BudgetLedger, PricingConfig
 from janus.evaluation.harness import (
     SCHEMA_VERSION,
@@ -13,6 +14,12 @@ from janus.evaluation.harness import (
     parse_decision,
 )
 from janus.evaluation.hidden_release import prepare_hidden_seed
+from janus.evaluation.openai_smoke import (
+    SMOKE_MAXIMUM_CEILING_USD,
+    run_openai_smoke,
+    smoke_preflight,
+    validate_smoke_ceiling,
+)
 from janus.evaluation.phase0e_runner import run_phase0e_dry_run
 from janus.models.base import (
     ModelRequest,
@@ -22,7 +29,7 @@ from janus.models.base import (
     UsageRecord,
 )
 from janus.models.mock import MockAdapter
-from janus.models.providers.openai import OpenAIResponsesAdapter
+from janus.models.providers.openai import OpenAIResponsesAdapter, make_openai_sdk_transport
 from janus.storage.cache import FileTrialCache, request_cache_key
 
 
@@ -169,6 +176,22 @@ def test_budget_preflight_stops_before_adapter_call(tmp_path) -> None:
     assert budget.total_spent_usd == 0
 
 
+def test_syntax_repair_is_skipped_and_primary_artifact_saved_when_budget_is_low(
+    tmp_path,
+) -> None:
+    adapter = MockAdapter(
+        ("not json", valid_decision()),
+        usage=UsageRecord(input_tokens=9_000),
+    )
+    budget = BudgetLedger(pricing(nonzero=True), 0.01, {"test": 0.01})
+    artifact = runner(tmp_path, adapter, budget).run(b"{}", context())
+    assert artifact["validation_status"] == ResponseStatus.SCHEMA_FAILURE.value
+    assert artifact["repair_attempted"] is False
+    assert artifact["repair_blocked_by_budget"] is True
+    assert adapter.call_count == 1
+    assert len(list((tmp_path / "cache").glob("*.json"))) == 1
+
+
 def test_cost_reconciliation_tracks_all_exposed_usage_categories() -> None:
     budget = BudgetLedger(pricing(nonzero=True), 1.0, {"test": 1.0})
     usage = UsageRecord(
@@ -194,7 +217,7 @@ def test_openai_adapter_builds_strict_payload_and_maps_usage_without_network() -
             "output_text": valid_decision(),
             "usage": {
                 "input_tokens": 100,
-                "input_tokens_details": {"cached_tokens": 20},
+                "input_tokens_details": {"cached_tokens": 20, "cache_write_tokens": 10},
                 "output_tokens": 50,
                 "output_tokens_details": {"reasoning_tokens": 15},
             },
@@ -218,9 +241,139 @@ def test_openai_adapter_builds_strict_payload_and_maps_usage_without_network() -
     assert len(seen) == 1
     assert seen[0]["text"]["format"]["strict"] is True
     assert seen[0]["metadata"]["replicate_id"] == "r0"
+    assert seen[0]["service_tier"] == "default"
+    assert seen[0]["store"] is False
     assert reply.returned_model_id == "gpt-6-luna-2026-10-01"
+    assert reply.usage.input_tokens == 70
     assert reply.usage.cached_input_tokens == 20
+    assert reply.usage.cache_write_tokens == 10
     assert reply.usage.reasoning_tokens == 15
+
+
+def test_official_sdk_transport_disables_retries_and_sets_idempotency_without_network(
+    monkeypatch,
+) -> None:
+    import openai
+
+    captured = {}
+
+    class FakeResponse:
+        output_text = None
+
+        def model_dump(self, *, mode):
+            assert mode == "json"
+            return {
+                "id": "response-fake",
+                "model": "gpt-6-luna",
+                "output": [{"content": [{"type": "refusal"}]}],
+                "usage": {},
+            }
+
+    class FakeResponses:
+        def create(self, **kwargs):
+            captured["request"] = kwargs
+            return FakeResponse()
+
+    class FakeClient:
+        def __init__(self, **kwargs):
+            captured["client"] = kwargs
+            self.responses = FakeResponses()
+
+    monkeypatch.setattr(openai, "OpenAI", FakeClient)
+    transport, sdk_version = make_openai_sdk_transport(
+        "test-only-secret",
+        timeout_seconds=17,
+    )
+    response = transport(
+        {
+            "model": "gpt-6-luna",
+            "metadata": {"logical_trial_id": "world-1:r0"},
+            "input": [],
+        }
+    )
+    assert sdk_version
+    assert captured["client"] == {
+        "api_key": "test-only-secret",
+        "timeout": 17,
+        "max_retries": 0,
+    }
+    assert captured["request"]["extra_headers"] == {"Idempotency-Key": "world-1:r0"}
+    assert response["refusal"] is True
+
+
+def test_openai_smoke_preflight_and_fake_run_never_need_a_key(tmp_path) -> None:
+    project_root = Path(__file__).resolve().parents[1]
+    plan = smoke_preflight(project_root)
+    assert plan["network_calls"] == 0
+    assert plan["paid_api_calls"] == 0
+    assert plan["development_only"] is True
+    assert plan["trial_count"] == 5
+    assert plan["fits_ceiling"] is True
+    assert plan["planned_primary_request_upper_bound_usd"] <= 0.01
+
+    calls = []
+
+    def transport(payload):
+        calls.append(payload)
+        return {
+            "id": f"response-{len(calls)}",
+            "model": "gpt-6-luna",
+            "output_text": valid_decision(),
+            "usage": {
+                "input_tokens": 4_000,
+                "input_tokens_details": {"cached_tokens": 0, "cache_write_tokens": 0},
+                "output_tokens": 200,
+                "output_tokens_details": {"reasoning_tokens": 50},
+            },
+        }
+
+    passed, manifest_path = run_openai_smoke(
+        project_root,
+        tmp_path / "smoke",
+        transport=transport,
+        sdk_version="test-sdk",
+    )
+    assert passed
+    assert len(calls) == 5
+    manifest = json.loads(manifest_path.read_text())
+    assert manifest["hidden_artifacts_accessed"] is False
+    assert manifest["provider_calls_this_invocation"] == 5
+    assert manifest["trial_count_completed"] == 5
+    assert manifest["cumulative_cost_usd"] < SMOKE_MAXIMUM_CEILING_USD
+    assert "OPENAI_API_KEY" not in manifest_path.read_text()
+
+    replay_calls = []
+
+    def replay_transport(payload):
+        replay_calls.append(payload)
+        raise AssertionError("cache replay must not call the provider")
+
+    replay_passed, replay_manifest_path = run_openai_smoke(
+        project_root,
+        tmp_path / "smoke",
+        transport=replay_transport,
+        sdk_version="test-sdk",
+    )
+    assert replay_passed
+    assert replay_calls == []
+    replay_manifest = json.loads(replay_manifest_path.read_text())
+    assert replay_manifest["provider_calls_this_invocation"] == 0
+    assert replay_manifest["invocation_cost_usd"] == pytest.approx(0)
+
+
+def test_openai_smoke_rejects_any_ceiling_above_one_cent() -> None:
+    with pytest.raises(ValueError, match="at most"):
+        validate_smoke_ceiling(0.010001)
+    with pytest.raises(ValueError, match="greater than zero"):
+        validate_smoke_ceiling(0)
+
+
+def test_openai_smoke_cli_refuses_wrong_confirmation_or_missing_key(monkeypatch) -> None:
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    with pytest.raises(SystemExit, match="confirm-spend"):
+        main(["openai-smoke", "--confirm-spend", "WRONG"])
+    with pytest.raises(SystemExit, match="OPENAI_API_KEY is not set"):
+        main(["openai-smoke", "--confirm-spend", "ONE_CENT_SMOKE"])
 
 
 def test_mock_phase0e_run_is_zero_cost_and_replayable(tmp_path) -> None:
