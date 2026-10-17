@@ -24,7 +24,7 @@ class ScenarioConfig(StrictFrozenModel):
     scenario_id: str
     family: LatentFamily
     shock_start: int = Field(default=20, ge=0)
-    shock_duration: int = Field(default=10, ge=1)
+    shock_duration: int = Field(default=20, ge=1)
     reference_price: float = Field(default=100.0, gt=0)
 
     supply_cost_shift_fraction: float = Field(default=0.20, ge=0, le=1)

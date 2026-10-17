@@ -79,5 +79,10 @@ class DisturbanceTape:
         return tuple(values[int(index)] for index in indices)
 
     def tie_priority(self, order_ids: tuple[str, ...], period: int) -> dict[str, int]:
-        permutation = self.permutation(order_ids, "tie_order", period)
-        return {order_id: rank for rank, order_id in enumerate(permutation)}
+        """Assign an indexed priority that is stable when other orders appear or disappear."""
+
+        priorities: dict[str, int] = {}
+        for order_id in order_ids:
+            generator = self._generator("tie_priority", (period, order_id))
+            priorities[order_id] = int(generator.integers(0, 2**63 - 1))
+        return priorities

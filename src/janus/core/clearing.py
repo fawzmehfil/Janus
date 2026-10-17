@@ -80,8 +80,12 @@ def _sorted_orders(
     bids: Sequence[Bid], asks: Sequence[Ask], tie_priority: Mapping[str, int]
 ) -> tuple[list[Bid], list[Ask]]:
     _validate_orders(bids, asks, tie_priority)
-    sorted_bids = sorted(bids, key=lambda bid: (-bid.amount, tie_priority[bid.order_id]))
-    sorted_asks = sorted(asks, key=lambda ask: (ask.amount, tie_priority[ask.order_id]))
+    sorted_bids = sorted(
+        bids, key=lambda bid: (-bid.amount, tie_priority[bid.order_id], bid.order_id)
+    )
+    sorted_asks = sorted(
+        asks, key=lambda ask: (ask.amount, tie_priority[ask.order_id], ask.order_id)
+    )
     return sorted_bids, sorted_asks
 
 
