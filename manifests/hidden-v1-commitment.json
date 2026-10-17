@@ -1,7 +1,13 @@
 {
+  "bundle_count": 25,
   "code_commit": "d22c2ca0b800066b54455919c9960faa2792ca4a",
+  "maximum_bundle_distance": 1.1910090512011364,
+  "plan_sha256": "6eb820591975232578be1ecc88cf4491129a7dd9198d582fbc970ee9fc3cae17",
+  "private_manifest_sha256": "298ad3d0c245071fbd8a76ed8892c9db22e8670a24eaa32d582dadd571e334e2",
   "private_seed_manifest": "artifacts/hidden-v1/seed_manifest.json",
+  "public_manifest_sha256": "27fd5c4e399ec8b66413ac0ab1b3f1d467d068a7c463f35e98cde21653549cfb",
   "reveal_policy": "reveal only after model response manifests are committed",
   "schema_version": "janus-hidden-seed-commitment-v1",
-  "sha256": "105ef4c17827ba9e90bf06f5c3eeab6979495fa7820890b86860f7b56dbeb51b"
+  "sha256": "105ef4c17827ba9e90bf06f5c3eeab6979495fa7820890b86860f7b56dbeb51b",
+  "world_count": 100
 }
