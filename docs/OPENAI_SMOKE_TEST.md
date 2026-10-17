@@ -12,6 +12,8 @@ exact spend confirmation.
 - strict structured output and one budget-conditional syntax repair;
 - `reasoning.effort=high`, no temperature/top-p override;
 - 512-token output ceiling and default/Standard service tier;
+- explicit-only prompt-cache mode with no breakpoints, preventing the
+  higher-priced cache writes that implicit mode could create;
 - local ceiling no greater than $0.01;
 - one-byte-per-input-token bound plus 1,024 framing tokens per request;
 - official SDK automatic retries disabled;

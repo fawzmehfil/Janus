@@ -242,6 +242,7 @@ def test_openai_adapter_builds_strict_payload_and_maps_usage_without_network() -
     assert seen[0]["text"]["format"]["strict"] is True
     assert seen[0]["metadata"]["replicate_id"] == "r0"
     assert seen[0]["service_tier"] == "default"
+    assert seen[0]["prompt_cache_options"] == {"mode": "explicit"}
     assert seen[0]["store"] is False
     assert reply.returned_model_id == "gpt-6-luna-2026-10-01"
     assert reply.usage.input_tokens == 70

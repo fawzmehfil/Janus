@@ -108,6 +108,9 @@ class OpenAIResponsesAdapter:
                 "replicate_id": request.context.replicate_id,
             },
             "service_tier": "default",
+            # Explicit mode without breakpoints disables the higher-priced cache
+            # writes that implicit mode could create during this tiny smoke run.
+            "prompt_cache_options": {"mode": "explicit"},
             "store": False,
         }
         if request.settings.reasoning_effort is not None:

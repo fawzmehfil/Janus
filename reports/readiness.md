@@ -97,10 +97,11 @@ token planning estimate, and the 512-token output ceiling:
 | one-model hidden run | 300 | 1,205,325 | 153,600 | $0.19733 | $0.39467 |
 
 These are planning estimates, not invoices or mathematical upper bounds. The
-live smoke runner therefore uses a separate hard preflight: it counts every
-input byte as a token, adds 1,024 framing tokens per request, and reserves the
-full 512-token output ceiling. The five primary requests total **$0.0098262**
-under that deliberately high bound. A syntax repair is sent only if the
+live smoke runner therefore uses a separate hard preflight: it disables
+prompt-cache writes, counts every input byte as an ordinary input token, adds
+1,024 framing tokens per request, and reserves the full 512-token output
+ceiling. The five primary requests total **$0.0098262** under that deliberately
+high bound. A syntax repair is sent only if the
 remaining local budget passes the same check; it may displace a later primary
 request rather than cross $0.01.
 
