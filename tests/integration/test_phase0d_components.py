@@ -7,6 +7,7 @@ from janus.interventions.actions import ActionID
 from janus.policies.partial_information import RidgeActionValuePolicy, features_from_serialized
 from janus.scenarios.families import LatentFamily
 from janus.scenarios.generator import CandidateGeneratorConfig, generate_candidates
+from janus.scenarios.hidden import generate_ood_scenario_configs
 from janus.scenarios.matching import match_ambiguity_bundles
 
 
@@ -64,3 +65,15 @@ def test_pre_shock_and_clustered_statistics_are_reproducible(small_candidates) -
 def test_generator_rejects_reversed_duration_range() -> None:
     with pytest.raises(ValueError, match="shock_duration_min"):
         CandidateGeneratorConfig(shock_duration_min=20, shock_duration_max=10)
+
+
+def test_ood_generator_shifts_one_family_severity_dimension() -> None:
+    config = CandidateGeneratorConfig(candidates_per_family=3, root_seed=91)
+    supply = generate_ood_scenario_configs("ood-test", LatentFamily.SUPPLY_SHORTAGE, config)
+    demand = generate_ood_scenario_configs("ood-test", LatentFamily.DEMAND_INCREASE, config)
+    collusion = generate_ood_scenario_configs("ood-test", LatentFamily.SELLER_COLLUSION, config)
+    momentum = generate_ood_scenario_configs("ood-test", LatentFamily.MOMENTUM_DEMAND, config)
+    assert all(0.40 <= item.supply_cost_shift_fraction <= 0.55 for item in supply)
+    assert all(0.40 <= item.demand_value_shift_fraction <= 0.55 for item in demand)
+    assert all(0.40 <= item.collusive_markup_fraction <= 0.55 for item in collusion)
+    assert all(50 <= item.momentum_feedback <= 70 for item in momentum)

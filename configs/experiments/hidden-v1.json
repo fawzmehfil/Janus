@@ -1,0 +1,18 @@
+{
+  "schema_version": "janus-hidden-plan-v1",
+  "id_bundles": 15,
+  "ood_bundles": 10,
+  "worlds_per_bundle": 4,
+  "id_candidates_per_family": 80,
+  "ood_candidates_per_family": 160,
+  "oracle_rollouts": 256,
+  "maximum_bundle_distance": 1.25,
+  "ood_shift": {
+    "supply_cost_shift_fraction": [0.40, 0.55],
+    "demand_value_shift_fraction": [0.40, 0.55],
+    "collusive_markup_fraction": [0.40, 0.55],
+    "momentum_feedback": [50.0, 70.0]
+  },
+  "seed_process": "63-bit root seed from Python secrets.randbits using the host OS CSPRNG; canonical private seed manifest committed by SHA-256 before hidden generation",
+  "public_id_policy": "opaque randomized world and bundle IDs; no family, stratum, parameter, state, or oracle fields"
+}

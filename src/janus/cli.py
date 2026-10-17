@@ -11,7 +11,9 @@ from pathlib import Path
 from janus.core.clearing import clear_market
 from janus.core.fixtures import analytic_market, competitive_orders
 from janus.core.randomness import DisturbanceTape
+from janus.evaluation.hidden_release import generate_hidden_release, prepare_hidden_seed
 from janus.evaluation.phase0d_runner import run_phase0d
+from janus.evaluation.phase0e_runner import run_phase0e_dry_run
 
 
 def analytic_fixture_command() -> int:
@@ -47,6 +49,34 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="diagnostic only: skip the required 2x/4x oracle audit",
     )
+    phase0e = subparsers.add_parser("phase0e-dry-run", help="run the zero-cost mock harness")
+    phase0e.add_argument("--output", type=Path, default=Path("artifacts/phase0e-dry-run"))
+    hidden_seed = subparsers.add_parser(
+        "hidden-seed", help="create a private seed and public commitment before generation"
+    )
+    hidden_seed.add_argument("--code-commit", required=True)
+    hidden_seed.add_argument("--private-output", type=Path, default=Path("artifacts/hidden-v1"))
+    hidden_seed.add_argument(
+        "--commitment",
+        type=Path,
+        default=Path("manifests/hidden-v1-commitment.json"),
+    )
+    hidden_generate = subparsers.add_parser(
+        "hidden-generate", help="generate the committed hidden release locally"
+    )
+    hidden_generate.add_argument("--code-commit", required=True)
+    hidden_generate.add_argument("--private-output", type=Path, default=Path("artifacts/hidden-v1"))
+    hidden_generate.add_argument(
+        "--public-manifest",
+        type=Path,
+        default=Path("manifests/hidden-v1-public.json"),
+    )
+    hidden_generate.add_argument(
+        "--commitment",
+        type=Path,
+        default=Path("manifests/hidden-v1-commitment.json"),
+    )
+    hidden_generate.add_argument("--workers", type=int, default=4)
     return parser
 
 
@@ -62,6 +92,30 @@ def main(argv: Sequence[str] | None = None) -> int:
             run_convergence=not args.skip_convergence,
         )
         print(json.dumps({"output": str(args.output), "passed": passed}, sort_keys=True))
+        return 0 if passed else 2
+    if args.command == "phase0e-dry-run":
+        passed = run_phase0e_dry_run(args.output, Path.cwd())
+        print(json.dumps({"output": str(args.output), "passed": passed}, sort_keys=True))
+        return 0 if passed else 2
+    if args.command == "hidden-seed":
+        commitment = prepare_hidden_seed(
+            args.private_output,
+            args.commitment,
+            code_commit=args.code_commit,
+        )
+        print(json.dumps({"commitment_sha256": commitment}, sort_keys=True))
+        return 0
+    if args.command == "hidden-generate":
+        passed = generate_hidden_release(
+            args.private_output,
+            args.public_manifest,
+            args.commitment,
+            Path("configs/experiments/hidden-v1.json"),
+            Path("configs/prompts/primary-v1.txt"),
+            code_commit=args.code_commit,
+            workers=args.workers,
+        )
+        print(json.dumps({"public_manifest": str(args.public_manifest), "passed": passed}))
         return 0 if passed else 2
     raise AssertionError(f"unhandled command: {args.command}")
 
