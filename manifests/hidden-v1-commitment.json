@@ -1,0 +1,7 @@
+{
+  "code_commit": "d22c2ca0b800066b54455919c9960faa2792ca4a",
+  "private_seed_manifest": "artifacts/hidden-v1/seed_manifest.json",
+  "reveal_policy": "reveal only after model response manifests are committed",
+  "schema_version": "janus-hidden-seed-commitment-v1",
+  "sha256": "105ef4c17827ba9e90bf06f5c3eeab6979495fa7820890b86860f7b56dbeb51b"
+}
