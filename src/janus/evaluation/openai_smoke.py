@@ -39,6 +39,9 @@ SPEND_CONFIRMATION = "ONE_CENT_SMOKE"
 DIAGNOSTIC_STAGE = "openai-development-diagnostic-2048-v1"
 DIAGNOSTIC_MAXIMUM_OUTPUT_TOKENS = 2_048
 DIAGNOSTIC_CONFIRMATION = "ONE_CENT_DIAGNOSTIC"
+CORRECTED_SMOKE_STAGE = "openai-development-smoke-2048-v2"
+CORRECTED_SMOKE_MAXIMUM_CEILING_USD = 0.02
+CORRECTED_SMOKE_CONFIRMATION = "TWO_CENT_SMOKE_V2"
 
 
 @dataclass(frozen=True, slots=True)
@@ -73,6 +76,14 @@ def validate_smoke_ceiling(ceiling_usd: float) -> None:
     if not 0 < ceiling_usd <= SMOKE_MAXIMUM_CEILING_USD:
         raise ValueError(
             f"smoke ceiling must be greater than zero and at most ${SMOKE_MAXIMUM_CEILING_USD:.2f}"
+        )
+
+
+def validate_corrected_smoke_ceiling(ceiling_usd: float) -> None:
+    if not 0 < ceiling_usd <= CORRECTED_SMOKE_MAXIMUM_CEILING_USD:
+        raise ValueError(
+            "corrected smoke ceiling must be greater than zero and at most "
+            f"${CORRECTED_SMOKE_MAXIMUM_CEILING_USD:.2f}"
         )
 
 
@@ -247,6 +258,75 @@ def diagnostic_preflight(
             "input_token_upper_bound": usage.input_tokens,
             "output_token_ceiling": usage.output_tokens,
         },
+    }
+
+
+def corrected_smoke_preflight(
+    project_root: Path,
+    prior_output_directory: Path,
+    diagnostic_output_directory: Path,
+    output_directory: Path,
+    *,
+    ceiling_usd: float = CORRECTED_SMOKE_MAXIMUM_CEILING_USD,
+    sdk_version: str = "preflight-only",
+) -> dict[str, Any]:
+    """Plan five direct 2,048-token requests against all prior live spend."""
+
+    validate_corrected_smoke_ceiling(ceiling_usd)
+    prompt, pricing, _, prompt_path, pricing_path = _components(
+        project_root,
+        sdk_version,
+    )
+    settings = diagnostic_settings(sdk_version)
+    trials = []
+    request_total = 0.0
+    for item in development_smoke_inputs():
+        usage = conservative_usage_estimate(
+            _request_input_bytes(prompt, item.observation),
+            settings.maximum_output_tokens,
+        )
+        estimate = pricing.cost(usage)
+        request_total += estimate
+        trials.append(
+            {
+                "world_id": item.world_id,
+                "observation_sha256": _sha256(item.observation),
+                "input_token_upper_bound": usage.input_tokens,
+                "output_token_ceiling": usage.output_tokens,
+                "request_cost_upper_bound_usd": estimate,
+            }
+        )
+    prior_smoke_spend = _existing_spend(prior_output_directory / "cache")
+    prior_diagnostic_spend = _existing_spend(
+        diagnostic_output_directory / "cache",
+        stage=DIAGNOSTIC_STAGE,
+    )
+    prior_corrected_spend = _existing_spend(
+        output_directory / "cache",
+        stage=CORRECTED_SMOKE_STAGE,
+    )
+    cumulative_spend = prior_smoke_spend + prior_diagnostic_spend + prior_corrected_spend
+    return {
+        "schema_version": "janus-openai-corrected-smoke-preflight-v1",
+        "network_calls": 0,
+        "paid_api_calls": 0,
+        "development_only": True,
+        "trial_count": len(trials),
+        "repairs_allowed": False,
+        "ceiling_usd": ceiling_usd,
+        "prior_smoke_spend_usd": prior_smoke_spend,
+        "prior_diagnostic_spend_usd": prior_diagnostic_spend,
+        "prior_corrected_smoke_spend_usd": prior_corrected_spend,
+        "cumulative_spend_before_usd": cumulative_spend,
+        "remaining_before_usd": ceiling_usd - cumulative_spend,
+        "planned_primary_request_upper_bound_usd": request_total,
+        "cumulative_upper_bound_usd": cumulative_spend + request_total,
+        "fits_ceiling": cumulative_spend + request_total <= ceiling_usd,
+        "settings": settings.model_dump(mode="json"),
+        "prompt_sha256": _sha256(prompt_path.read_bytes()),
+        "schema_sha256": _sha256(decision_schema_bytes()),
+        "pricing_sha256": _sha256(pricing_path.read_bytes()),
+        "trials": trials,
     }
 
 
@@ -526,5 +606,147 @@ def run_openai_diagnostic(
                 "provider_attempts": artifact["provider_attempts"],
             }
         ),
+    }
+    return passed, _write_manifest(output_directory, manifest)
+
+
+def run_corrected_openai_smoke(
+    project_root: Path,
+    prior_output_directory: Path,
+    diagnostic_output_directory: Path,
+    output_directory: Path,
+    *,
+    transport: OpenAITransport,
+    sdk_version: str,
+    ceiling_usd: float = CORRECTED_SMOKE_MAXIMUM_CEILING_USD,
+) -> tuple[bool, Path]:
+    """Run five direct 2,048-token development trials without repair."""
+
+    validate_corrected_smoke_ceiling(ceiling_usd)
+    started_at = _utc_now()
+    prompt, pricing, _, prompt_path, pricing_path = _components(
+        project_root,
+        sdk_version,
+    )
+    settings = diagnostic_settings(sdk_version)
+    preflight = corrected_smoke_preflight(
+        project_root,
+        prior_output_directory,
+        diagnostic_output_directory,
+        output_directory,
+        ceiling_usd=ceiling_usd,
+        sdk_version=sdk_version,
+    )
+    if not preflight["fits_ceiling"]:
+        raise BudgetExceeded("corrected smoke requests do not fit the cumulative local ceiling")
+
+    prior_smoke_spend = float(preflight["prior_smoke_spend_usd"])
+    prior_diagnostic_spend = float(preflight["prior_diagnostic_spend_usd"])
+    prior_corrected_spend = float(preflight["prior_corrected_smoke_spend_usd"])
+    external_prior_spend = prior_smoke_spend + prior_diagnostic_spend
+    cumulative_prior_spend = external_prior_spend + prior_corrected_spend
+    corrected_stage_ceiling = ceiling_usd - external_prior_spend
+    budget = BudgetLedger(
+        pricing=pricing,
+        total_ceiling_usd=ceiling_usd,
+        stage_ceilings_usd={CORRECTED_SMOKE_STAGE: corrected_stage_ceiling},
+        total_spent_usd=cumulative_prior_spend,
+        stage_spent_usd={CORRECTED_SMOKE_STAGE: prior_corrected_spend},
+    )
+    counted_transport = CountingTransport(transport)
+    adapter = OpenAIResponsesAdapter(
+        counted_transport,
+        sdk_version=sdk_version,
+        timestamp=_utc_now,
+    )
+    cache_directory = output_directory / "cache"
+    runner = EvaluationRunner(
+        adapter=adapter,
+        settings=settings,
+        prompt=prompt,
+        cache=FileTrialCache(cache_directory),
+        budget=budget,
+        allow_repair=False,
+    )
+
+    artifacts: list[dict[str, Any]] = []
+    budget_stop: str | None = None
+    fatal_error_type: str | None = None
+    for item in development_smoke_inputs():
+        try:
+            artifact = runner.run(
+                item.observation,
+                TrialContext(
+                    world_id=item.world_id,
+                    replicate_id="corrected-smoke-2048-00",
+                    benchmark_version="janus-v1",
+                    stage=CORRECTED_SMOKE_STAGE,
+                ),
+            )
+        except BudgetExceeded as error:
+            budget_stop = str(error)
+            break
+        except Exception as error:  # provider errors stop the stage; no blind retries
+            fatal_error_type = type(error).__name__
+            break
+        artifacts.append(dict(artifact))
+
+    completed = len(artifacts) == SMOKE_TRIAL_COUNT
+    passed = (
+        completed
+        and all(item["validation_status"] == ResponseStatus.VALID.value for item in artifacts)
+        and counted_transport.call_count <= SMOKE_TRIAL_COUNT
+        and budget.total_spent_usd <= ceiling_usd + 1e-12
+        and budget_stop is None
+        and fatal_error_type is None
+    )
+    cache_hashes = {
+        path.name: _sha256(path.read_bytes()) for path in sorted(cache_directory.glob("*.json"))
+    }
+    manifest = {
+        "schema_version": "janus-openai-corrected-smoke-run-v1",
+        "stage": CORRECTED_SMOKE_STAGE,
+        "started_at_utc": started_at,
+        "finished_at_utc": _utc_now(),
+        "completed": completed,
+        "passed": passed,
+        "development_only": True,
+        "hidden_artifacts_accessed": False,
+        "trial_count_planned": SMOKE_TRIAL_COUNT,
+        "trial_count_completed": len(artifacts),
+        "provider_calls_this_invocation": counted_transport.call_count,
+        "repairs_allowed": False,
+        "prior_smoke_spend_usd": prior_smoke_spend,
+        "prior_diagnostic_spend_usd": prior_diagnostic_spend,
+        "prior_corrected_smoke_spend_usd": prior_corrected_spend,
+        "invocation_cost_usd": budget.total_spent_usd - cumulative_prior_spend,
+        "cumulative_cost_usd": budget.total_spent_usd,
+        "local_hard_ceiling_usd": ceiling_usd,
+        "budget_stop": budget_stop,
+        "fatal_error_type": fatal_error_type,
+        "settings": settings.model_dump(mode="json"),
+        "prompt_sha256": _sha256(prompt_path.read_bytes()),
+        "schema_sha256": _sha256(decision_schema_bytes()),
+        "pricing_sha256": _sha256(pricing_path.read_bytes()),
+        "preflight": preflight,
+        "returned_model_ids": sorted({str(item["returned_model_id"]) for item in artifacts}),
+        "status_counts": {
+            status.value: sum(item["validation_status"] == status.value for item in artifacts)
+            for status in ResponseStatus
+        },
+        "response_artifact_sha256": cache_hashes,
+        "trials": [
+            {
+                "logical_trial_id": item["logical_trial_id"],
+                "cache_key": item["cache_key"],
+                "validation_status": item["validation_status"],
+                "repair_attempted": item["repair_attempted"],
+                "actual_cost_usd": item["actual_cost_usd"],
+                "estimated_cost_usd": item["estimated_cost_usd"],
+                "usage": item["usage"],
+                "provider_attempts": item["provider_attempts"],
+            }
+            for item in artifacts
+        ],
     }
     return passed, _write_manifest(output_directory, manifest)

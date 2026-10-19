@@ -15,10 +15,15 @@ from janus.evaluation.harness import (
 )
 from janus.evaluation.hidden_release import prepare_hidden_seed
 from janus.evaluation.openai_smoke import (
+    CORRECTED_SMOKE_MAXIMUM_CEILING_USD,
+    CORRECTED_SMOKE_STAGE,
     DIAGNOSTIC_MAXIMUM_OUTPUT_TOKENS,
+    DIAGNOSTIC_STAGE,
     SMOKE_MAXIMUM_CEILING_USD,
     SMOKE_STAGE,
+    corrected_smoke_preflight,
     diagnostic_preflight,
+    run_corrected_openai_smoke,
     run_openai_diagnostic,
     run_openai_smoke,
     smoke_preflight,
@@ -509,6 +514,77 @@ def test_one_world_diagnostic_preserves_incomplete_without_repair(tmp_path) -> N
     }
 
 
+def test_corrected_smoke_accounts_for_all_prior_spend_and_requires_direct_validity(
+    tmp_path,
+) -> None:
+    project_root = Path(__file__).resolve().parents[1]
+    prior_output = tmp_path / "prior-smoke"
+    prior_cache = prior_output / "cache"
+    prior_cache.mkdir(parents=True)
+    (prior_cache / "prior.json").write_text(
+        json.dumps({"stage": SMOKE_STAGE, "actual_cost_usd": 0.0042324})
+    )
+    diagnostic_output = tmp_path / "diagnostic"
+    diagnostic_cache = diagnostic_output / "cache"
+    diagnostic_cache.mkdir(parents=True)
+    (diagnostic_cache / "diagnostic.json").write_text(
+        json.dumps({"stage": DIAGNOSTIC_STAGE, "actual_cost_usd": 0.0010983})
+    )
+    output = tmp_path / "corrected"
+
+    plan = corrected_smoke_preflight(
+        project_root,
+        prior_output,
+        diagnostic_output,
+        output,
+    )
+    assert plan["network_calls"] == 0
+    assert plan["paid_api_calls"] == 0
+    assert plan["trial_count"] == 5
+    assert plan["repairs_allowed"] is False
+    assert plan["cumulative_spend_before_usd"] == pytest.approx(0.0053307)
+    assert plan["planned_primary_request_upper_bound_usd"] == pytest.approx(0.0136662)
+    assert plan["cumulative_upper_bound_usd"] == pytest.approx(0.0189969)
+    assert plan["fits_ceiling"] is True
+
+    calls = []
+
+    def transport(payload):
+        calls.append(payload)
+        return {
+            "id": f"corrected-{len(calls)}",
+            "model": "gpt-6-luna",
+            "output_text": valid_decision(),
+            "status": "completed",
+            "incomplete_details": None,
+            "usage": {
+                "input_tokens": 4_000,
+                "input_tokens_details": {"cached_tokens": 0, "cache_write_tokens": 0},
+                "output_tokens": 1_300,
+                "output_tokens_details": {"reasoning_tokens": 1_100},
+            },
+        }
+
+    passed, manifest_path = run_corrected_openai_smoke(
+        project_root,
+        prior_output,
+        diagnostic_output,
+        output,
+        transport=transport,
+        sdk_version="test-sdk",
+    )
+    assert passed
+    assert len(calls) == 5
+    assert all(call["max_output_tokens"] == 2_048 for call in calls)
+    manifest = json.loads(manifest_path.read_text())
+    assert manifest["stage"] == CORRECTED_SMOKE_STAGE
+    assert manifest["repairs_allowed"] is False
+    assert manifest["provider_calls_this_invocation"] == 5
+    assert manifest["status_counts"][ResponseStatus.VALID.value] == 5
+    assert all(not trial["repair_attempted"] for trial in manifest["trials"])
+    assert manifest["cumulative_cost_usd"] < CORRECTED_SMOKE_MAXIMUM_CEILING_USD
+
+
 def test_openai_smoke_rejects_any_ceiling_above_one_cent() -> None:
     with pytest.raises(ValueError, match="at most"):
         validate_smoke_ceiling(0.010001)
@@ -526,6 +602,10 @@ def test_openai_smoke_cli_refuses_wrong_confirmation_or_missing_key(monkeypatch)
         main(["openai-diagnostic", "--confirm-spend", "WRONG"])
     with pytest.raises(SystemExit, match="OPENAI_API_KEY is not set"):
         main(["openai-diagnostic", "--confirm-spend", "ONE_CENT_DIAGNOSTIC"])
+    with pytest.raises(SystemExit, match="confirm-spend"):
+        main(["openai-corrected-smoke", "--confirm-spend", "WRONG"])
+    with pytest.raises(SystemExit, match="OPENAI_API_KEY is not set"):
+        main(["openai-corrected-smoke", "--confirm-spend", "TWO_CENT_SMOKE_V2"])
 
 
 def test_mock_phase0e_run_is_zero_cost_and_replayable(tmp_path) -> None:

@@ -18,8 +18,8 @@ The first five-world paid development smoke completed under its one-cent limit,
 but every 512-token primary response ended before visible output and required a
 repair. A one-world, 2,048-token development diagnostic then returned one direct
 schema-valid response with no repair. Hidden evaluation remains blocked pending
-a clean five-world rerun under the corrected setting and a separately approved
-$0.02 cumulative ceiling.
+a clean five-world rerun under the corrected setting and the approved $0.02
+cumulative ceiling.
 
 The release evidence, exact commands, hashes, cost estimates, limitations, and
 recommendation are in [`reports/readiness.md`](reports/readiness.md).

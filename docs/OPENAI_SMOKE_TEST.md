@@ -158,3 +158,37 @@ do not continue to the hidden evaluation.
 
 This diagnostic has now passed. Its immutable manifest is under
 `artifacts/openai-diagnostic-2048-v1/manifests/`; do not submit it again.
+
+## 7. Corrected five-world smoke
+
+The project owner approved a cumulative $0.02 cap on 2026-10-19. Run the free
+preflight before exporting a key:
+
+```bash
+uv run janus openai-corrected-smoke-preflight \
+  --max-usd 0.02 \
+  --prior-output artifacts/openai-smoke-v1 \
+  --diagnostic-output artifacts/openai-diagnostic-2048-v1 \
+  --output artifacts/openai-smoke-2048-v2
+```
+
+The preflight must report five development trials, no repairs, prior cumulative
+spend of $0.0053307, a $0.0136662 incremental upper bound, a $0.0189969
+cumulative upper bound, and `fits_ceiling=true`.
+
+After the provider project hard limit is raised to $0.02 and a process-local key
+is exported, run:
+
+```bash
+uv run janus openai-corrected-smoke \
+  --max-usd 0.02 \
+  --confirm-spend TWO_CENT_SMOKE_V2 \
+  --prior-output artifacts/openai-smoke-v1 \
+  --diagnostic-output artifacts/openai-diagnostic-2048-v1 \
+  --output artifacts/openai-smoke-2048-v2
+```
+
+The command permits at most five provider calls, disables repair, preserves the
+frozen prompt/schema/high-reasoning settings, and never reads hidden artifacts.
+Unset the key afterward and inspect the immutable manifest before any hidden
+evaluation work.

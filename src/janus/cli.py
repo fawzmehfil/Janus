@@ -14,10 +14,14 @@ from janus.core.fixtures import analytic_market, competitive_orders
 from janus.core.randomness import DisturbanceTape
 from janus.evaluation.hidden_release import generate_hidden_release, prepare_hidden_seed
 from janus.evaluation.openai_smoke import (
+    CORRECTED_SMOKE_CONFIRMATION,
+    CORRECTED_SMOKE_MAXIMUM_CEILING_USD,
     DIAGNOSTIC_CONFIRMATION,
     SMOKE_MAXIMUM_CEILING_USD,
     SPEND_CONFIRMATION,
+    corrected_smoke_preflight,
     diagnostic_preflight,
+    run_corrected_openai_smoke,
     run_openai_diagnostic,
     run_openai_smoke,
     smoke_preflight,
@@ -125,6 +129,48 @@ def build_parser() -> argparse.ArgumentParser:
         required=True,
         help=f"must equal {DIAGNOSTIC_CONFIRMATION!r}; no request is sent otherwise",
     )
+    corrected_preflight = subparsers.add_parser(
+        "openai-corrected-smoke-preflight",
+        help="print the no-network five-world 2,048-token corrected smoke plan",
+    )
+    corrected_preflight.add_argument(
+        "--prior-output", type=Path, default=Path("artifacts/openai-smoke-v1")
+    )
+    corrected_preflight.add_argument(
+        "--diagnostic-output",
+        type=Path,
+        default=Path("artifacts/openai-diagnostic-2048-v1"),
+    )
+    corrected_preflight.add_argument(
+        "--output",
+        type=Path,
+        default=Path("artifacts/openai-smoke-2048-v2"),
+    )
+    corrected_preflight.add_argument(
+        "--max-usd", type=float, default=CORRECTED_SMOKE_MAXIMUM_CEILING_USD
+    )
+    corrected = subparsers.add_parser(
+        "openai-corrected-smoke",
+        help="run the explicitly confirmed five-world 2,048-token corrected smoke",
+    )
+    corrected.add_argument("--prior-output", type=Path, default=Path("artifacts/openai-smoke-v1"))
+    corrected.add_argument(
+        "--diagnostic-output",
+        type=Path,
+        default=Path("artifacts/openai-diagnostic-2048-v1"),
+    )
+    corrected.add_argument(
+        "--output",
+        type=Path,
+        default=Path("artifacts/openai-smoke-2048-v2"),
+    )
+    corrected.add_argument("--max-usd", type=float, default=CORRECTED_SMOKE_MAXIMUM_CEILING_USD)
+    corrected.add_argument("--timeout-seconds", type=float, default=120.0)
+    corrected.add_argument(
+        "--confirm-spend",
+        required=True,
+        help=f"must equal {CORRECTED_SMOKE_CONFIRMATION!r}; no request is sent otherwise",
+    )
     hidden_seed = subparsers.add_parser(
         "hidden-seed", help="create a private seed and public commitment before generation"
     )
@@ -190,6 +236,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         print(json.dumps(plan, sort_keys=True, indent=2))
         return 0 if plan["fits_ceiling"] else 2
+    if args.command == "openai-corrected-smoke-preflight":
+        plan = corrected_smoke_preflight(
+            Path.cwd(),
+            args.prior_output,
+            args.diagnostic_output,
+            args.output,
+            ceiling_usd=args.max_usd,
+        )
+        print(json.dumps(plan, sort_keys=True, indent=2))
+        return 0 if plan["fits_ceiling"] else 2
     if args.command == "openai-smoke":
         validate_smoke_ceiling(args.max_usd)
         if args.confirm_spend != SPEND_CONFIRMATION:
@@ -228,6 +284,34 @@ def main(argv: Sequence[str] | None = None) -> int:
         passed, manifest = run_openai_diagnostic(
             Path.cwd(),
             args.prior_output,
+            args.output,
+            transport=transport,
+            sdk_version=sdk_version,
+            ceiling_usd=args.max_usd,
+        )
+        print(json.dumps({"manifest": str(manifest), "passed": passed}, sort_keys=True))
+        return 0 if passed else 2
+    if args.command == "openai-corrected-smoke":
+        if not 0 < args.max_usd <= CORRECTED_SMOKE_MAXIMUM_CEILING_USD:
+            raise SystemExit(
+                "refusing paid run: corrected smoke --max-usd must be greater than zero "
+                f"and at most {CORRECTED_SMOKE_MAXIMUM_CEILING_USD:.2f}"
+            )
+        if args.confirm_spend != CORRECTED_SMOKE_CONFIRMATION:
+            raise SystemExit(
+                f"refusing paid run: --confirm-spend must equal {CORRECTED_SMOKE_CONFIRMATION!r}"
+            )
+        api_key = os.environ.get("OPENAI_API_KEY", "")
+        if not api_key:
+            raise SystemExit("refusing paid run: OPENAI_API_KEY is not set")
+        transport, sdk_version = make_openai_sdk_transport(
+            api_key,
+            timeout_seconds=args.timeout_seconds,
+        )
+        passed, manifest = run_corrected_openai_smoke(
+            Path.cwd(),
+            args.prior_output,
+            args.diagnostic_output,
             args.output,
             transport=transport,
             sdk_version=sdk_version,
