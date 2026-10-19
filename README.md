@@ -19,9 +19,12 @@ but every 512-token primary response ended before visible output and required a
 repair. A one-world, 2,048-token development diagnostic then returned one direct
 schema-valid response with no repair. The corrected five-world rerun subsequently
 returned five direct valid responses with no repairs or retries. The provider
-gate is complete. The guarded, resumable 300-request hidden collector and its
-zero-network preflight are now implemented. The paid hidden run remains blocked
-until a new cumulative spending cap is explicitly approved.
+gate is complete. The guarded 300-request hidden collection completed on
+2026-10-19, its response set was committed before unblinding, and the frozen
+post-seal analysis is complete. The main result is mixed: GPT-6 Luna beat
+uniform random, did not reliably beat always doing nothing, and performed much
+worse on OOD seller-collusion worlds. See
+[`reports/hidden-v1-results.md`](reports/hidden-v1-results.md).
 
 The release evidence, exact commands, hashes, cost estimates, limitations, and
 recommendation are in [`reports/readiness.md`](reports/readiness.md).

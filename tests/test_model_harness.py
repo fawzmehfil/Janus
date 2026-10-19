@@ -13,6 +13,7 @@ from janus.evaluation.harness import (
     decision_schema_bytes,
     parse_decision,
 )
+from janus.evaluation.hidden_analysis import run_hidden_analysis
 from janus.evaluation.hidden_release import prepare_hidden_seed
 from janus.evaluation.openai_hidden import (
     HIDDEN_MAXIMUM_OUTPUT_TOKENS,
@@ -734,6 +735,34 @@ def test_hidden_ceiling_is_cent_bound_and_confirmation_is_exact() -> None:
         validate_hidden_ceiling(0.841)
     with pytest.raises(ValueError, match="at most"):
         validate_hidden_ceiling(1.01)
+
+
+def test_hidden_analysis_verifies_sealed_set_and_scores_all_trials(tmp_path) -> None:
+    project_root = Path(__file__).resolve().parents[1]
+    response_manifest = (
+        project_root
+        / "artifacts/openai-hidden-v1/manifests/run-20261019T083004.963054Z.json"
+    )
+    report = run_hidden_analysis(
+        project_root,
+        response_manifest,
+        tmp_path / "report.json",
+        response_commit="95b6b9b",
+    )
+    assert report["integrity"]["sealed_response_count"] == 300
+    assert report["integrity"]["verified_oracle_count"] == 100
+    assert report["sample"]["status_counts"] == {"valid": 256, "incomplete": 44}
+    assert report["sample"]["trials"] == 300
+    assert report["primary"]["mean_normalized_regret"]["estimate"] == pytest.approx(
+        0.006945047641478125
+    )
+    assert report["hypotheses"] == {
+        "H1_better_than_uniform_random": True,
+        "H2_better_than_do_nothing": False,
+        "H3_ood_increases_regret": True,
+        "H4_confidence_positive_association": True,
+        "H5_diagnosis_above_chance_all_trials": False,
+    }
 
 
 def test_mock_phase0e_run_is_zero_cost_and_replayable(tmp_path) -> None:

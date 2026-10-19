@@ -65,3 +65,10 @@ After collection, verify that the printed manifest says `"passed": true`, then
 commit the entire hidden response cache and that manifest before unblinding.
 Never paste an API key into chat, a shell command, a file, or a Git commit.
 
+## Completed hidden-v1 collection
+
+The collection completed on 2026-10-19 with 300 provider calls and cumulative
+spend of `$0.3475366`. The 300 response artifacts and run manifest were sealed
+in commit `95b6b9b` before unblinding. The final analysis is recorded in
+`reports/hidden-v1-results.md` and its machine-readable counterpart is
+`artifacts/hidden-v1-analysis/report.json`.

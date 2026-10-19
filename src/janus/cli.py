@@ -12,6 +12,7 @@ from pathlib import Path
 from janus.core.clearing import clear_market
 from janus.core.fixtures import analytic_market, competitive_orders
 from janus.core.randomness import DisturbanceTape
+from janus.evaluation.hidden_analysis import run_hidden_analysis
 from janus.evaluation.hidden_release import generate_hidden_release, prepare_hidden_seed
 from janus.evaluation.openai_hidden import (
     HIDDEN_MAXIMUM_CUMULATIVE_CEILING_USD,
@@ -218,6 +219,23 @@ def build_parser() -> argparse.ArgumentParser:
         required=True,
         help="must exactly match the ceiling-specific phrase printed by preflight",
     )
+    hidden_analysis = subparsers.add_parser(
+        "hidden-analyze",
+        help="verify, unblind, and score a response set committed before analysis",
+    )
+    hidden_analysis.add_argument(
+        "--response-manifest",
+        type=Path,
+        default=Path(
+            "artifacts/openai-hidden-v1/manifests/run-20261019T083004.963054Z.json"
+        ),
+    )
+    hidden_analysis.add_argument(
+        "--output",
+        type=Path,
+        default=Path("artifacts/hidden-v1-analysis/report.json"),
+    )
+    hidden_analysis.add_argument("--response-commit", required=True)
     hidden_seed = subparsers.add_parser(
         "hidden-seed", help="create a private seed and public commitment before generation"
     )
@@ -398,6 +416,23 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         print(json.dumps({"manifest": str(manifest), "passed": passed}, sort_keys=True))
         return 0 if passed else 2
+    if args.command == "hidden-analyze":
+        report = run_hidden_analysis(
+            Path.cwd(),
+            args.response_manifest,
+            args.output,
+            response_commit=args.response_commit,
+        )
+        print(
+            json.dumps(
+                {
+                    "output": str(args.output),
+                    "hypotheses": report["hypotheses"],
+                },
+                sort_keys=True,
+            )
+        )
+        return 0
     if args.command == "hidden-seed":
         commitment = prepare_hidden_seed(
             args.private_output,

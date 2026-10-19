@@ -1,0 +1,259 @@
+{
+  "behavior": {
+    "action_confidence_brier_valid_only": 0.25113281249999997,
+    "action_counts_all": {
+      "collusion_investigation": 3,
+      "do_nothing": 251,
+      "price_ceiling": 2,
+      "transaction_tax": 44
+    },
+    "action_counts_valid_only": {
+      "collusion_investigation": 3,
+      "do_nothing": 207,
+      "price_ceiling": 2,
+      "transaction_tax": 44
+    },
+    "confidence_epsilon_optimal_cluster_interval": {
+      "bootstrap_samples": 10000,
+      "estimate": 0.35745958097211683,
+      "lower_95": 0.2393604397701674,
+      "upper_95": 0.46946233894217987
+    },
+    "mean_action_entropy_nats": 0.25286150683870995,
+    "mean_within_world_action_agreement": 0.8666666666666666,
+    "unanimous_world_rate": 0.61
+  },
+  "cost": {
+    "approved_cumulative_cap_usd": 0.84,
+    "cumulative_usd": 0.3475366000000004,
+    "incremental_usd": 0.3367435000000004
+  },
+  "diagnosis": {
+    "accuracy_all_trials_cluster_interval": {
+      "bootstrap_samples": 10000,
+      "estimate": 0.25,
+      "lower_95": 0.23333333333333334,
+      "upper_95": 0.26666666666666666
+    },
+    "accuracy_all_trials_invalid_as_incorrect": 0.25,
+    "accuracy_valid_only": 0.29296875,
+    "confusion_valid_only": {
+      "demand_increase": {
+        "demand_increase": 1,
+        "momentum_demand": 70,
+        "seller_collusion": 0,
+        "supply_shortage": 0
+      },
+      "momentum_demand": {
+        "demand_increase": 0,
+        "momentum_demand": 72,
+        "seller_collusion": 0,
+        "supply_shortage": 0
+      },
+      "seller_collusion": {
+        "demand_increase": 1,
+        "momentum_demand": 49,
+        "seller_collusion": 2,
+        "supply_shortage": 0
+      },
+      "supply_shortage": {
+        "demand_increase": 1,
+        "momentum_demand": 59,
+        "seller_collusion": 1,
+        "supply_shortage": 0
+      }
+    },
+    "log_loss_valid_only": 1.9185490191943873,
+    "multiclass_brier_valid_only": 0.9757386718749999
+  },
+  "gap_decomposition": {
+    "decision_gap_partial_minus_llm": 99.07283068922698,
+    "estimated_information_gap_oracle_minus_partial": 17.603969687606877
+  },
+  "highest_regret_trials": [
+    {
+      "action": "transaction_tax",
+      "family": "seller_collusion",
+      "normalized_regret": 0.08480991848532053,
+      "regret": 1424.8066305533848,
+      "replicate_id": "hidden-replicate-00",
+      "stratum": "ood",
+      "validation_status": "valid",
+      "world_id": "janus-hidden-world-005"
+    },
+    {
+      "action": "do_nothing",
+      "family": "seller_collusion",
+      "normalized_regret": 0.08358940719125431,
+      "regret": 1404.3020408130724,
+      "replicate_id": "hidden-replicate-02",
+      "stratum": "ood",
+      "validation_status": "incomplete",
+      "world_id": "janus-hidden-world-005"
+    },
+    {
+      "action": "do_nothing",
+      "family": "seller_collusion",
+      "normalized_regret": 0.06792603271439897,
+      "regret": 1141.1573496019028,
+      "replicate_id": "hidden-replicate-02",
+      "stratum": "ood",
+      "validation_status": "incomplete",
+      "world_id": "janus-hidden-world-068"
+    },
+    {
+      "action": "do_nothing",
+      "family": "seller_collusion",
+      "normalized_regret": 0.06792603271439897,
+      "regret": 1141.1573496019028,
+      "replicate_id": "hidden-replicate-00",
+      "stratum": "ood",
+      "validation_status": "incomplete",
+      "world_id": "janus-hidden-world-068"
+    },
+    {
+      "action": "do_nothing",
+      "family": "seller_collusion",
+      "normalized_regret": 0.06792603271439897,
+      "regret": 1141.1573496019028,
+      "replicate_id": "hidden-replicate-01",
+      "stratum": "ood",
+      "validation_status": "incomplete",
+      "world_id": "janus-hidden-world-068"
+    }
+  ],
+  "hypotheses": {
+    "H1_better_than_uniform_random": true,
+    "H2_better_than_do_nothing": false,
+    "H3_ood_increases_regret": true,
+    "H4_confidence_positive_association": true,
+    "H5_diagnosis_above_chance_all_trials": false
+  },
+  "integrity": {
+    "private_manifest_sha256": "298ad3d0c245071fbd8a76ed8892c9db22e8670a24eaa32d582dadd571e334e2",
+    "public_manifest_sha256": "27fd5c4e399ec8b66413ac0ab1b3f1d467d068a7c463f35e98cde21653549cfb",
+    "response_manifest": "artifacts/openai-hidden-v1/manifests/run-20261019T083004.963054Z.json",
+    "response_manifest_sha256": "3f4b2bfa9467f482cf8eb1194fff68dea1f862a8b9fff20e5ea1fb8be2de636b",
+    "sealed_response_count": 300,
+    "seed_commitment_verified": true,
+    "verified_oracle_count": 100
+  },
+  "mean_constant_action_utilities": {
+    "collusion_investigation": 17033.4402210544,
+    "do_nothing": 16955.35823214426,
+    "price_ceiling": 16855.232914121436,
+    "supply_subsidy": 15017.651348724443,
+    "transaction_tax": 16928.758215693433
+  },
+  "mean_utilities": {
+    "do_nothing_utility": 16955.35823214426,
+    "heuristic_utility": 16987.583549454415,
+    "oracle_utility": 17075.914862683385,
+    "partial_information_utility": 17058.310892995778,
+    "random_utility": 16558.088186347595,
+    "utility": 16959.23806230655
+  },
+  "ood_minus_id_mean_normalized_regret": {
+    "bootstrap_samples": 10000,
+    "estimate": 0.012431491834234008,
+    "lower_95": 0.011039580502733818,
+    "upper_95": 0.013731283518716256
+  },
+  "primary": {
+    "epsilon_optimal_rate": {
+      "bootstrap_samples": 10000,
+      "estimate": 0.55,
+      "lower_95": 0.4866666666666667,
+      "upper_95": 0.6133333333333333
+    },
+    "mean_normalized_regret": {
+      "bootstrap_samples": 10000,
+      "estimate": 0.006945047641478125,
+      "lower_95": 0.0045649218895301436,
+      "upper_95": 0.009440704775186303
+    },
+    "mean_utility_difference_vs_do_nothing": {
+      "bootstrap_samples": 10000,
+      "estimate": 3.879830162291291,
+      "lower_95": -4.818555095428699,
+      "upper_95": 16.032063890710923
+    },
+    "mean_utility_difference_vs_heuristic": {
+      "bootstrap_samples": 10000,
+      "estimate": -28.345487147864606,
+      "lower_95": -82.1540034974366,
+      "upper_95": 23.910725808051055
+    },
+    "mean_utility_difference_vs_partial_information": {
+      "bootstrap_samples": 10000,
+      "estimate": -99.07283068922825,
+      "lower_95": -139.20950658744533,
+      "upper_95": -59.27798462251892
+    },
+    "mean_utility_difference_vs_random": {
+      "bootstrap_samples": 10000,
+      "estimate": 401.14987595895667,
+      "lower_95": 387.39915554548645,
+      "upper_95": 414.0575530431596
+    },
+    "median_normalized_regret": 0.0,
+    "utility_cvar_worst_10_percent": 14953.649041115776
+  },
+  "response_commit": "95b6b9b",
+  "sample": {
+    "bundles": 25,
+    "normalization_scale": 16800.0,
+    "replicates_per_world": 3,
+    "status_counts": {
+      "incomplete": 44,
+      "valid": 256
+    },
+    "trials": 300,
+    "valid_rate": 0.8533333333333334,
+    "worlds": 100
+  },
+  "schema_version": "janus-hidden-analysis-v1",
+  "subgroups": {
+    "family": {
+      "demand_increase": {
+        "epsilon_optimal_rate": 0.6933333333333334,
+        "mean_normalized_regret": 0.00036771060269946053,
+        "trials": 75,
+        "valid_rate": 0.9466666666666667
+      },
+      "momentum_demand": {
+        "epsilon_optimal_rate": 0.6,
+        "mean_normalized_regret": 0.0007058488676953337,
+        "trials": 75,
+        "valid_rate": 0.96
+      },
+      "seller_collusion": {
+        "epsilon_optimal_rate": 0.06666666666666667,
+        "mean_normalized_regret": 0.026422669628027102,
+        "trials": 75,
+        "valid_rate": 0.6933333333333334
+      },
+      "supply_shortage": {
+        "epsilon_optimal_rate": 0.84,
+        "mean_normalized_regret": 0.00028396146749060244,
+        "trials": 75,
+        "valid_rate": 0.8133333333333334
+      }
+    },
+    "stratum": {
+      "id": {
+        "epsilon_optimal_rate": 0.5777777777777777,
+        "mean_normalized_regret": 0.0019724509077845226,
+        "trials": 180,
+        "valid_rate": 0.9166666666666666
+      },
+      "ood": {
+        "epsilon_optimal_rate": 0.5083333333333333,
+        "mean_normalized_regret": 0.01440394274201853,
+        "trials": 120,
+        "valid_rate": 0.7583333333333333
+      }
+    }
+  },
+  "unblinded_after_response_commit": true
+}
