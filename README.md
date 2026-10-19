@@ -19,8 +19,9 @@ but every 512-token primary response ended before visible output and required a
 repair. A one-world, 2,048-token development diagnostic then returned one direct
 schema-valid response with no repair. The corrected five-world rerun subsequently
 returned five direct valid responses with no repairs or retries. The provider
-gate is complete; hidden evaluation remains blocked only while its 300-request
-runner and final zero-network budget preflight are prepared and reviewed.
+gate is complete. The guarded, resumable 300-request hidden collector and its
+zero-network preflight are now implemented. The paid hidden run remains blocked
+until a new cumulative spending cap is explicitly approved.
 
 The release evidence, exact commands, hashes, cost estimates, limitations, and
 recommendation are in [`reports/readiness.md`](reports/readiness.md).
@@ -35,6 +36,7 @@ uv run janus phase0d --output artifacts/phase0d-release --rollouts 256 --workers
 uv run janus phase0e-dry-run --output artifacts/phase0e-freeze
 uv run janus robustness --output artifacts/robustness/report.json --rollouts 64 --workers 4
 uv run janus openai-smoke-preflight --max-usd 0.01
+uv run janus openai-hidden-preflight --max-usd 0.84
 ```
 
 The live five-world smoke command, environment-key instructions, and layered
@@ -42,6 +44,10 @@ one-cent safeguards are documented in
 [`docs/OPENAI_SMOKE_TEST.md`](docs/OPENAI_SMOKE_TEST.md). Running the preflight
 does not read a key, access hidden artifacts, make a network request, or spend
 money.
+
+The hidden collection procedure, conservative `$0.84` cumulative gate, safe key
+entry, resumption behavior, and pre-unblinding commit rule are documented in
+[`docs/HIDDEN_EVALUATION.md`](docs/HIDDEN_EVALUATION.md).
 
 The package requires Python 3.12 or newer. All stochastic behavior must use the
 named/indexed randomness interfaces in `janus.core.randomness`; module-global

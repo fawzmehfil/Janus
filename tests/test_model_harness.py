@@ -14,6 +14,16 @@ from janus.evaluation.harness import (
     parse_decision,
 )
 from janus.evaluation.hidden_release import prepare_hidden_seed
+from janus.evaluation.openai_hidden import (
+    HIDDEN_MAXIMUM_OUTPUT_TOKENS,
+    HIDDEN_STAGE,
+    HIDDEN_TRIAL_COUNT,
+    RECOMMENDED_CUMULATIVE_CEILING_USD,
+    hidden_confirmation,
+    hidden_preflight,
+    run_openai_hidden,
+    validate_hidden_ceiling,
+)
 from janus.evaluation.openai_smoke import (
     CORRECTED_SMOKE_MAXIMUM_CEILING_USD,
     CORRECTED_SMOKE_STAGE,
@@ -606,6 +616,124 @@ def test_openai_smoke_cli_refuses_wrong_confirmation_or_missing_key(monkeypatch)
         main(["openai-corrected-smoke", "--confirm-spend", "WRONG"])
     with pytest.raises(SystemExit, match="OPENAI_API_KEY is not set"):
         main(["openai-corrected-smoke", "--confirm-spend", "TWO_CENT_SMOKE_V2"])
+    with pytest.raises(SystemExit, match="confirm-spend"):
+        main(
+            [
+                "openai-hidden",
+                "--max-usd",
+                "0.84",
+                "--confirm-spend",
+                "WRONG",
+            ]
+        )
+    with pytest.raises(SystemExit, match="OPENAI_API_KEY is not set"):
+        main(
+            [
+                "openai-hidden",
+                "--max-usd",
+                "0.84",
+                "--confirm-spend",
+                "HIDDEN_V1_CUMULATIVE_USD_0_84",
+            ]
+        )
+
+
+def test_hidden_preflight_is_public_only_exact_and_cumulatively_budgeted(tmp_path) -> None:
+    project_root = Path(__file__).resolve().parents[1]
+    plan = hidden_preflight(
+        project_root,
+        tmp_path / "hidden",
+        ceiling_usd=RECOMMENDED_CUMULATIVE_CEILING_USD,
+    )
+    assert plan["network_calls"] == 0
+    assert plan["paid_api_calls"] == 0
+    assert plan["public_hidden_observations_accessed"] is True
+    assert plan["private_hidden_artifacts_accessed"] is False
+    assert plan["hidden_labels_or_oracles_accessed"] is False
+    assert plan["world_count"] == 100
+    assert plan["replicates_per_world"] == 3
+    assert plan["trial_count"] == HIDDEN_TRIAL_COUNT
+    assert plan["trial_count_remaining"] == HIDDEN_TRIAL_COUNT
+    assert plan["repairs_allowed"] is False
+    assert plan["settings"]["maximum_output_tokens"] == HIDDEN_MAXIMUM_OUTPUT_TOKENS
+    assert plan["remaining_primary_request_upper_bound_usd"] == pytest.approx(0.8200065)
+    assert plan["cumulative_spend_before_usd"] == pytest.approx(0.0107931)
+    assert plan["cumulative_upper_bound_usd"] == pytest.approx(0.8307996)
+    assert plan["fits_ceiling"] is True
+    assert plan["required_confirmation"] == hidden_confirmation(0.84)
+    assert plan["release_gate"]["passed"] is True
+
+
+def test_hidden_runner_collects_exact_plan_and_replays_without_calls(tmp_path) -> None:
+    project_root = Path(__file__).resolve().parents[1]
+    output = tmp_path / "hidden"
+    calls = []
+
+    def transport(payload):
+        calls.append(payload)
+        return {
+            "id": f"hidden-{len(calls)}",
+            "model": "gpt-6-luna",
+            "output_text": valid_decision(),
+            "status": "completed",
+            "incomplete_details": None,
+            "usage": {
+                "input_tokens": 4_000,
+                "input_tokens_details": {"cached_tokens": 0, "cache_write_tokens": 0},
+                "output_tokens": 1_300,
+                "output_tokens_details": {"reasoning_tokens": 1_100},
+            },
+        }
+
+    passed, manifest_path = run_openai_hidden(
+        project_root,
+        output,
+        transport=transport,
+        sdk_version="test-sdk",
+    )
+    assert passed
+    assert len(calls) == HIDDEN_TRIAL_COUNT
+    assert len({call["metadata"]["logical_trial_id"] for call in calls}) == HIDDEN_TRIAL_COUNT
+    assert all(call["max_output_tokens"] == HIDDEN_MAXIMUM_OUTPUT_TOKENS for call in calls)
+    manifest = json.loads(manifest_path.read_text())
+    assert manifest["stage"] == HIDDEN_STAGE
+    assert manifest["completed"] is True
+    assert manifest["trial_count_completed"] == HIDDEN_TRIAL_COUNT
+    assert manifest["provider_calls_this_invocation"] == HIDDEN_TRIAL_COUNT
+    assert manifest["repairs_allowed"] is False
+    assert manifest["private_hidden_artifacts_accessed"] is False
+    assert manifest["hidden_labels_or_oracles_accessed"] is False
+    assert manifest["unblinded"] is False
+    assert manifest["status_counts"][ResponseStatus.VALID.value] == HIDDEN_TRIAL_COUNT
+    assert "OPENAI_API_KEY" not in manifest_path.read_text()
+
+    replay_calls = []
+
+    def replay_transport(payload):
+        replay_calls.append(payload)
+        raise AssertionError("completed hidden logical trials must never be called again")
+
+    replay_passed, replay_manifest_path = run_openai_hidden(
+        project_root,
+        output,
+        transport=replay_transport,
+        sdk_version="different-sdk-version",
+    )
+    assert replay_passed
+    assert replay_calls == []
+    replay_manifest = json.loads(replay_manifest_path.read_text())
+    assert replay_manifest["trial_count_previously_collected"] == HIDDEN_TRIAL_COUNT
+    assert replay_manifest["provider_calls_this_invocation"] == 0
+    assert replay_manifest["invocation_cost_usd"] == pytest.approx(0)
+
+
+def test_hidden_ceiling_is_cent_bound_and_confirmation_is_exact() -> None:
+    validate_hidden_ceiling(0.84)
+    assert hidden_confirmation(0.84) == "HIDDEN_V1_CUMULATIVE_USD_0_84"
+    with pytest.raises(ValueError, match="whole cents"):
+        validate_hidden_ceiling(0.841)
+    with pytest.raises(ValueError, match="at most"):
+        validate_hidden_ceiling(1.01)
 
 
 def test_mock_phase0e_run_is_zero_cost_and_replayable(tmp_path) -> None:

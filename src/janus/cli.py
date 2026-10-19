@@ -13,6 +13,14 @@ from janus.core.clearing import clear_market
 from janus.core.fixtures import analytic_market, competitive_orders
 from janus.core.randomness import DisturbanceTape
 from janus.evaluation.hidden_release import generate_hidden_release, prepare_hidden_seed
+from janus.evaluation.openai_hidden import (
+    HIDDEN_MAXIMUM_CUMULATIVE_CEILING_USD,
+    RECOMMENDED_CUMULATIVE_CEILING_USD,
+    hidden_confirmation,
+    hidden_preflight,
+    run_openai_hidden,
+    validate_hidden_ceiling,
+)
 from janus.evaluation.openai_smoke import (
     CORRECTED_SMOKE_CONFIRMATION,
     CORRECTED_SMOKE_MAXIMUM_CEILING_USD,
@@ -171,6 +179,45 @@ def build_parser() -> argparse.ArgumentParser:
         required=True,
         help=f"must equal {CORRECTED_SMOKE_CONFIRMATION!r}; no request is sent otherwise",
     )
+    hidden_preflight_parser = subparsers.add_parser(
+        "openai-hidden-preflight",
+        help="validate and price the no-network 300-request hidden collection",
+    )
+    hidden_preflight_parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("artifacts/openai-hidden-v1"),
+    )
+    hidden_preflight_parser.add_argument(
+        "--max-usd",
+        type=float,
+        default=RECOMMENDED_CUMULATIVE_CEILING_USD,
+        help="cumulative project ceiling, including the recorded live smoke spend",
+    )
+    hidden_run = subparsers.add_parser(
+        "openai-hidden",
+        help="collect or resume the explicitly confirmed 300 hidden Luna responses",
+    )
+    hidden_run.add_argument(
+        "--output",
+        type=Path,
+        default=Path("artifacts/openai-hidden-v1"),
+    )
+    hidden_run.add_argument(
+        "--max-usd",
+        type=float,
+        default=RECOMMENDED_CUMULATIVE_CEILING_USD,
+        help=(
+            "cumulative project ceiling; must be at most "
+            f"${HIDDEN_MAXIMUM_CUMULATIVE_CEILING_USD:.2f}"
+        ),
+    )
+    hidden_run.add_argument("--timeout-seconds", type=float, default=120.0)
+    hidden_run.add_argument(
+        "--confirm-spend",
+        required=True,
+        help="must exactly match the ceiling-specific phrase printed by preflight",
+    )
     hidden_seed = subparsers.add_parser(
         "hidden-seed", help="create a private seed and public commitment before generation"
     )
@@ -246,6 +293,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         print(json.dumps(plan, sort_keys=True, indent=2))
         return 0 if plan["fits_ceiling"] else 2
+    if args.command == "openai-hidden-preflight":
+        plan = hidden_preflight(
+            Path.cwd(),
+            args.output,
+            ceiling_usd=args.max_usd,
+        )
+        print(json.dumps(plan, sort_keys=True, indent=2))
+        return 0 if plan["fits_ceiling"] else 2
     if args.command == "openai-smoke":
         validate_smoke_ceiling(args.max_usd)
         if args.confirm_spend != SPEND_CONFIRMATION:
@@ -312,6 +367,30 @@ def main(argv: Sequence[str] | None = None) -> int:
             Path.cwd(),
             args.prior_output,
             args.diagnostic_output,
+            args.output,
+            transport=transport,
+            sdk_version=sdk_version,
+            ceiling_usd=args.max_usd,
+        )
+        print(json.dumps({"manifest": str(manifest), "passed": passed}, sort_keys=True))
+        return 0 if passed else 2
+    if args.command == "openai-hidden":
+        validate_hidden_ceiling(args.max_usd)
+        required_confirmation = hidden_confirmation(args.max_usd)
+        if args.confirm_spend != required_confirmation:
+            raise SystemExit(
+                "refusing paid run: --confirm-spend must equal "
+                f"{required_confirmation!r} for this cumulative ceiling"
+            )
+        api_key = os.environ.get("OPENAI_API_KEY", "")
+        if not api_key:
+            raise SystemExit("refusing paid run: OPENAI_API_KEY is not set")
+        transport, sdk_version = make_openai_sdk_transport(
+            api_key,
+            timeout_seconds=args.timeout_seconds,
+        )
+        passed, manifest = run_openai_hidden(
+            Path.cwd(),
             args.output,
             transport=transport,
             sdk_version=sdk_version,
