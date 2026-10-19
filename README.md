@@ -8,6 +8,10 @@ counterfactual simulator rather than an LLM judge.
 
 The authoritative research design is [`PROJECT_SPEC.md`](PROJECT_SPEC.md).
 
+Janus v2 is under sealed comparative-development. Its charter is
+[`docs/v2/CHARTER.md`](docs/v2/CHARTER.md); v1 remains an immutable released
+measurement rather than being rewritten in place.
+
 ## Development status
 
 Phases 0A–0E are complete and benchmark v1 is frozen as an evaluation-ready
@@ -32,6 +36,15 @@ See
 The release evidence, exact commands, hashes, cost estimates, limitations, and
 recommendation are in [`reports/readiness.md`](reports/readiness.md).
 
+The v2 local scientific layer is complete: five objective-specific public-
+information policies are frozen after bundle-preserving nested validation,
+the action-margin and matched-contrast audits pass, the structural OOD pilot
+finds cue-to-action reversals, and a four-role offline provider dry run passes.
+The precision analysis selects 40 independent bundles and 300 trials per model.
+No hidden-v2 set has been generated and no v2 paid provider call has been made.
+Exact model versions and the four 100-trial provider admission runs remain
+intentional gates; `uv run janus v2-gates` reports them.
+
 ## Local setup
 
 ```bash
@@ -45,6 +58,12 @@ uv run janus openai-smoke-preflight --max-usd 0.01
 uv run janus openai-hidden-preflight --max-usd 0.84
 uv run janus hidden-sensitivity --workers 8
 uv run janus hidden-publication
+uv run janus v2-dry-run --output artifacts/v2-dry-run
+uv run janus v2-local-development --objective-rollouts 64 --workers 4
+uv run janus v2-ood-pilot
+uv run janus v2-gates
+# After the sealed four-model run and authorized unblinding only:
+uv run janus v2-publication
 ```
 
 The live five-world smoke command, environment-key instructions, and layered

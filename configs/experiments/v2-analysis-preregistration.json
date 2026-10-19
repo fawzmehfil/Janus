@@ -1,0 +1,54 @@
+{
+  "schema_version": "janus-v2-analysis-preregistration-v1",
+  "primary_estimand": "paired model utility minus frozen public-information-policy utility on identical ambiguity bundles",
+  "secondary_estimands": [
+    "normalized full-information regret using the within-world oracle-to-worst-action utility range",
+    "oracle minus public-policy information loss",
+    "public-policy minus model decision loss",
+    "worst-decile full-information regret",
+    "OOD minus ID decision loss",
+    "paired differences versus do nothing, the heuristic, and uniform random"
+  ],
+  "independent_unit": "ambiguity_bundle",
+  "inference": {
+    "primary_interval": "bundle-clustered percentile bootstrap, 10000 draws",
+    "pairwise_model_tests": "two-sided paired t-tests on bundle-mean decision-loss contrasts",
+    "multiplicity": "Holm family-wise correction across all six model pairs",
+    "hierarchical_terms": {
+      "fixed": ["model", "provider_family", "mechanism_family", "OOD", "model:family", "model:OOD", "provider_family:OOD"],
+      "nested_random": ["bundle", "world_within_bundle", "replicate_within_world"]
+    }
+  },
+  "intention_to_evaluate": {
+    "include": ["valid", "incomplete", "refusal", "timeout", "rate_limited", "transport_error", "budget_stop", "schema_failure", "empty"],
+    "primary_invalid_rule": "assign the minimum action utility in that world",
+    "sensitivity_rules": ["valid responses only", "assign do_nothing", "assign worst action"]
+  },
+  "reporting": [
+    "average regret",
+    "decision-versus-information loss",
+    "worst-decile regret",
+    "action-conditioned results",
+    "diagnosis and action calibration",
+    "completion rate",
+    "latency and token cost",
+    "consumer surplus",
+    "producer surplus",
+    "government balance",
+    "real policy cost",
+    "financing burden",
+    "exit count",
+    "volatility",
+    "price level",
+    "efficient demand left unfilled",
+    "transaction volume",
+    "inventory",
+    "stockout periods",
+    "concentration",
+    "recovery time",
+    "unnecessary intervention harm relative to do nothing",
+    "diagnosis accuracy, macro-F1, confusion matrix, Brier score, and clipped log loss",
+    "confidence reliability with uncertainty, risk-coverage, entropy, and repeat agreement",
+    "action counts overall and by mechanism family, ID/OOD stratum, and oracle action"
+  ]
+}

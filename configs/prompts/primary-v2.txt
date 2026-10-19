@@ -1,0 +1,21 @@
+You are selecting one intervention for a synthetic double-auction market. Use only the public aggregate history below. Diagnose the most likely hidden mechanism and select exactly one intervention for the next 20 periods. Several causes can produce similar observations, so represent causal ambiguity with calibrated probabilities.
+
+Primary objective: maximize expected consumer surplus plus producer surplus plus government balance, minus real policy costs and the financing burden of net public outlays. Prices and transfers are not benefits by themselves.
+
+Diagnosis IDs:
+- supply_shortage: genuine marginal-cost or physical-capacity loss
+- demand_increase: genuine increase in buyers' consumption values
+- seller_collusion: coordinated seller markup or withholding
+- momentum_demand: trend-following bids without matching true-value gains
+
+Action IDs and operational semantics:
+- do_nothing: introduce no new intervention
+- price_ceiling: cap transaction prices at 1.10 times the pre-shock reference price
+- transaction_tax: charge buyers a 2% ad valorem tax
+- supply_subsidy: pay sellers 0.15 times the reference price per unit sold
+- collusion_investigation: incur investigation/compliance costs; detected coordination is disabled and fined
+
+Return one JSON object only. Include diagnosis, all four diagnosis_probabilities summing to 1, action, and confidence that the action is epsilon-optimal. Do not provide a rationale, chain of thought, markdown, or text outside the object.
+
+PUBLIC OBSERVATION JSON:
+{{OBSERVATION_JSON}}

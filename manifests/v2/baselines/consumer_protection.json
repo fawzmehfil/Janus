@@ -1,0 +1,268 @@
+{
+  "action_order": [
+    "do_nothing",
+    "price_ceiling",
+    "transaction_tax",
+    "supply_subsidy",
+    "collusion_investigation"
+  ],
+  "candidate_cv": {
+    "extra_trees:max_depth=4,min_samples_leaf=3,n_estimators=200": {
+      "bundle_scores": [
+        26412.047859272527,
+        26533.603169463087,
+        26644.024190295524,
+        26354.783214442195,
+        26483.592337236896,
+        26614.059887860876,
+        26292.579691267576,
+        26286.560566335073,
+        26006.61185912973,
+        26826.88069982365
+      ],
+      "mean_decision_utility": 26445.474347512714
+    },
+    "hist_gradient_boosting:learning_rate=0.05,max_depth=2,max_iter=120": {
+      "bundle_scores": [
+        26412.047859272527,
+        26533.603169463087,
+        26644.024190295524,
+        26354.783214442195,
+        26483.592337236896,
+        26614.059887860876,
+        26292.579691267576,
+        26286.560566335073,
+        26006.61185912973,
+        26826.88069982365
+      ],
+      "mean_decision_utility": 26445.474347512714
+    },
+    "hist_gradient_boosting:learning_rate=0.08,max_depth=3,max_iter=120": {
+      "bundle_scores": [
+        26412.047859272527,
+        26533.603169463087,
+        26644.024190295524,
+        26354.783214442195,
+        26483.592337236896,
+        26614.059887860876,
+        26292.579691267576,
+        26286.560566335073,
+        26006.61185912973,
+        26826.88069982365
+      ],
+      "mean_decision_utility": 26445.474347512714
+    },
+    "polynomial_ridge:alpha=10.0,degree=2": {
+      "bundle_scores": [
+        26412.047859272527,
+        26533.603169463087,
+        26644.024190295524,
+        26354.783214442195,
+        26483.592337236896,
+        26614.059887860876,
+        26292.579691267576,
+        26286.560566335073,
+        26006.61185912973,
+        26826.88069982365
+      ],
+      "mean_decision_utility": 26445.474347512714
+    },
+    "ridge:alpha=0.1": {
+      "bundle_scores": [
+        26412.047859272527,
+        26533.603169463087,
+        26644.024190295524,
+        26354.783214442195,
+        26483.592337236896,
+        26614.059887860876,
+        26292.579691267576,
+        26286.560566335073,
+        26006.61185912973,
+        26826.88069982365
+      ],
+      "mean_decision_utility": 26445.474347512714
+    },
+    "ridge:alpha=1.0": {
+      "bundle_scores": [
+        26412.047859272527,
+        26533.603169463087,
+        26644.024190295524,
+        26354.783214442195,
+        26483.592337236896,
+        26614.059887860876,
+        26292.579691267576,
+        26286.560566335073,
+        26006.61185912973,
+        26826.88069982365
+      ],
+      "mean_decision_utility": 26445.474347512714
+    },
+    "ridge:alpha=10.0": {
+      "bundle_scores": [
+        26412.047859272527,
+        26533.603169463087,
+        26644.024190295524,
+        26354.783214442195,
+        26483.592337236896,
+        26614.059887860876,
+        26292.579691267576,
+        26286.560566335073,
+        26006.61185912973,
+        26826.88069982365
+      ],
+      "mean_decision_utility": 26445.474347512714
+    },
+    "ridge:alpha=100.0": {
+      "bundle_scores": [
+        26412.047859272527,
+        26533.603169463087,
+        26644.024190295524,
+        26354.783214442195,
+        26483.592337236896,
+        26614.059887860876,
+        26292.579691267576,
+        26286.560566335073,
+        26006.61185912973,
+        26826.88069982365
+      ],
+      "mean_decision_utility": 26445.474347512714
+    }
+  },
+  "feature_contract": "janus.public_summary.v1",
+  "learning_curve": [
+    {
+      "mean_decision_utility": 26445.474347512714,
+      "standard_error": 72.50336863174414,
+      "training_bundles": 3
+    },
+    {
+      "mean_decision_utility": 26445.474347512714,
+      "standard_error": 72.50336863174414,
+      "training_bundles": 6
+    }
+  ],
+  "learning_curve_stability": {
+    "criterion": "absolute change from 3 to 6 training bundles is at most 0.25% of 20-period analytic reference surplus",
+    "last_minus_first_utility": 0.0,
+    "maximum_stabilized_change": 42.0,
+    "stabilized": true
+  },
+  "model_file": "consumer_protection.pkl",
+  "model_sha256": "917b6fb53cd00f1d10f64014f9919314dfb9679c4f56addfb59af7505a90b910",
+  "nested_mean_decision_utility": 26445.474347512714,
+  "nested_outer_folds": [
+    {
+      "decision_utility": 26412.047859272527,
+      "held_out_bundle": "development-bundle-000",
+      "oracle_utility": 26412.047859272527,
+      "selected_candidate": "ridge:alpha=100.0"
+    },
+    {
+      "decision_utility": 26533.603169463087,
+      "held_out_bundle": "development-bundle-001",
+      "oracle_utility": 26533.603169463087,
+      "selected_candidate": "ridge:alpha=100.0"
+    },
+    {
+      "decision_utility": 26644.024190295524,
+      "held_out_bundle": "development-bundle-002",
+      "oracle_utility": 26644.024190295524,
+      "selected_candidate": "ridge:alpha=100.0"
+    },
+    {
+      "decision_utility": 26354.783214442195,
+      "held_out_bundle": "development-bundle-003",
+      "oracle_utility": 26354.783214442195,
+      "selected_candidate": "ridge:alpha=100.0"
+    },
+    {
+      "decision_utility": 26483.592337236896,
+      "held_out_bundle": "development-bundle-004",
+      "oracle_utility": 26483.592337236896,
+      "selected_candidate": "ridge:alpha=100.0"
+    },
+    {
+      "decision_utility": 26614.059887860876,
+      "held_out_bundle": "development-bundle-005",
+      "oracle_utility": 26614.059887860876,
+      "selected_candidate": "ridge:alpha=100.0"
+    },
+    {
+      "decision_utility": 26292.579691267576,
+      "held_out_bundle": "development-bundle-006",
+      "oracle_utility": 26292.579691267576,
+      "selected_candidate": "ridge:alpha=100.0"
+    },
+    {
+      "decision_utility": 26286.560566335073,
+      "held_out_bundle": "development-bundle-007",
+      "oracle_utility": 26286.560566335073,
+      "selected_candidate": "ridge:alpha=100.0"
+    },
+    {
+      "decision_utility": 26006.61185912973,
+      "held_out_bundle": "development-bundle-008",
+      "oracle_utility": 26006.61185912973,
+      "selected_candidate": "ridge:alpha=100.0"
+    },
+    {
+      "decision_utility": 26826.88069982365,
+      "held_out_bundle": "development-bundle-009",
+      "oracle_utility": 26826.88069982365,
+      "selected_candidate": "ridge:alpha=100.0"
+    }
+  ],
+  "objective": "consumer_protection",
+  "observation_only": true,
+  "random_seed": 2026,
+  "schema_version": "janus-v2-public-baseline-v1",
+  "selected_candidate": "ridge:alpha=100.0",
+  "software": {
+    "scikit_learn": "1.9.1"
+  },
+  "training_bundle_count": 10,
+  "training_source_sha256": "e3b4152126b3240fe3387cf080f4538cd1a27045f05a48a4d07e87a986720db8",
+  "training_world_count": 40,
+  "training_world_ids": [
+    "development-supply_shortage-0019",
+    "development-demand_increase-0075",
+    "development-seller_collusion-0025",
+    "development-momentum_demand-0008",
+    "development-supply_shortage-0046",
+    "development-demand_increase-0025",
+    "development-seller_collusion-0007",
+    "development-momentum_demand-0066",
+    "development-supply_shortage-0025",
+    "development-demand_increase-0011",
+    "development-seller_collusion-0031",
+    "development-momentum_demand-0068",
+    "development-supply_shortage-0057",
+    "development-demand_increase-0033",
+    "development-seller_collusion-0000",
+    "development-momentum_demand-0051",
+    "development-supply_shortage-0075",
+    "development-demand_increase-0010",
+    "development-seller_collusion-0041",
+    "development-momentum_demand-0013",
+    "development-supply_shortage-0051",
+    "development-demand_increase-0016",
+    "development-seller_collusion-0037",
+    "development-momentum_demand-0062",
+    "development-supply_shortage-0063",
+    "development-demand_increase-0020",
+    "development-seller_collusion-0024",
+    "development-momentum_demand-0055",
+    "development-supply_shortage-0042",
+    "development-demand_increase-0050",
+    "development-seller_collusion-0069",
+    "development-momentum_demand-0035",
+    "development-supply_shortage-0027",
+    "development-demand_increase-0056",
+    "development-seller_collusion-0017",
+    "development-momentum_demand-0040",
+    "development-supply_shortage-0006",
+    "development-demand_increase-0000",
+    "development-seller_collusion-0077",
+    "development-momentum_demand-0028"
+  ]
+}

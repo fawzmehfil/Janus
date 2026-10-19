@@ -1,0 +1,49 @@
+{
+  "designs": {
+    "more_bundles_two_replicates": {
+      "average_replicates_per_world": 2.0,
+      "bundles": 38,
+      "expected_95_half_width": 55.484841339847854,
+      "minimum_detectable_effect_80pct_power": 79.30935280495804,
+      "planned_trials_per_model": 304,
+      "simulated_standard_error": 28.30859252033054,
+      "worlds": 152
+    },
+    "split_replicate": {
+      "average_replicates_per_world": 1.875,
+      "bundles": 40,
+      "expected_95_half_width": 53.54709588436787,
+      "minimum_detectable_effect_80pct_power": 76.53956317839032,
+      "planned_trials_per_model": 300,
+      "simulated_standard_error": 27.319946879779526,
+      "worlds": 160
+    },
+    "v1_three_replicates": {
+      "average_replicates_per_world": 3.0,
+      "bundles": 25,
+      "expected_95_half_width": 66.9215609855664,
+      "minimum_detectable_effect_80pct_power": 95.65685982508309,
+      "planned_trials_per_model": 300,
+      "simulated_standard_error": 34.14365356406449,
+      "worlds": 100
+    }
+  },
+  "independent_unit": "ambiguity bundle",
+  "model_count_not_used_to_inflate_n": true,
+  "paid_api_calls": 0,
+  "pilot": "completed hidden-v1 Luna oracle regret; allocation use only",
+  "pilot_bundles": 25,
+  "pilot_trials": 300,
+  "schema_version": "janus-v2-precision-v1",
+  "selected_design": "split_replicate",
+  "selection_rule": "smallest simulated 95% half-width at approximately 300 trials/model",
+  "simulation_count_per_design": 20000,
+  "variance_components": {
+    "bundle": 11681.72513793818,
+    "family_mean_dispersion": 47598.53330938306,
+    "ood_id_mean_dispersion": 21808.96551937933,
+    "replicate_within_world": 6950.842227565582,
+    "world_within_bundle": 69101.67521427448
+  },
+  "worlds_are_nested_not_independent": true
+}

@@ -1,0 +1,53 @@
+{
+  "$defs": {
+    "ActionID": {
+      "enum": [
+        "do_nothing",
+        "price_ceiling",
+        "transaction_tax",
+        "supply_subsidy",
+        "collusion_investigation"
+      ],
+      "title": "ActionID",
+      "type": "string"
+    },
+    "DiagnosisProbabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "demand_increase": {"maximum": 1, "minimum": 0, "title": "Demand Increase", "type": "number"},
+        "momentum_demand": {"maximum": 1, "minimum": 0, "title": "Momentum Demand", "type": "number"},
+        "seller_collusion": {"maximum": 1, "minimum": 0, "title": "Seller Collusion", "type": "number"},
+        "supply_shortage": {"maximum": 1, "minimum": 0, "title": "Supply Shortage", "type": "number"}
+      },
+      "required": [
+        "supply_shortage",
+        "demand_increase",
+        "seller_collusion",
+        "momentum_demand"
+      ],
+      "title": "DiagnosisProbabilities",
+      "type": "object"
+    },
+    "LatentFamily": {
+      "enum": [
+        "supply_shortage",
+        "demand_increase",
+        "seller_collusion",
+        "momentum_demand"
+      ],
+      "title": "LatentFamily",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Minimum scored response; rationale is deliberately not scored or required.",
+  "properties": {
+    "action": {"$ref": "#/$defs/ActionID"},
+    "confidence": {"maximum": 1, "minimum": 0, "title": "Confidence", "type": "number"},
+    "diagnosis": {"$ref": "#/$defs/LatentFamily"},
+    "diagnosis_probabilities": {"$ref": "#/$defs/DiagnosisProbabilities"}
+  },
+  "required": ["diagnosis", "diagnosis_probabilities", "action", "confidence"],
+  "title": "janus-decision-v2",
+  "type": "object"
+}
