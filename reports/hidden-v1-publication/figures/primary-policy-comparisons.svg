@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="438" viewBox="0 0 1000 438" role="img" aria-labelledby="title desc">
+<title id="title">Luna beat random, but not the non-random baselines</title>
+<desc id="desc">Mean paired utility differences show a decisive gain over uniform random, no clear gain over doing nothing or the frozen heuristic, and a deficit to the public-information ridge baseline.</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="28.0" y="38.0" fill="#172033" font-family="Arial, sans-serif" font-size="24" font-weight="700">Luna beat random, but not the non-random baselines</text>
+<text x="28.0" y="64.0" fill="#526078" font-family="Arial, sans-serif" font-size="14">Points are estimates; lines are 95% bundle-clustered intervals.</text>
+<line x1="495.2" y1="74" x2="495.2" y2="370" stroke="#758197" stroke-width="1.5"/>
+<rect x="20" y="62" width="960" height="52" fill="#f5f7fa"/>
+<text x="297.0" y="93.0" fill="#172033" font-family="Arial, sans-serif" font-size="16" text-anchor="end">Uniform random</text>
+<line x1="854.1" y1="88" x2="878.8" y2="88" stroke="#1f5a8a" stroke-width="4" stroke-linecap="round"/>
+<circle cx="866.8" cy="88" r="7" fill="#c44536" stroke="#ffffff" stroke-width="2"/>
+<text x="938.0" y="93.0" fill="#172033" font-family="Arial, sans-serif" font-size="13" text-anchor="end">+401.1 [+387.4, +414.1]</text>
+<text x="297.0" y="165.0" fill="#172033" font-family="Arial, sans-serif" font-size="16" text-anchor="end">Always do nothing</text>
+<line x1="490.7" y1="160" x2="510.1" y2="160" stroke="#1f5a8a" stroke-width="4" stroke-linecap="round"/>
+<circle cx="498.8" cy="160" r="7" fill="#c44536" stroke="#ffffff" stroke-width="2"/>
+<text x="938.0" y="165.0" fill="#172033" font-family="Arial, sans-serif" font-size="13" text-anchor="end">+3.9 [-4.8, +16.0]</text>
+<rect x="20" y="206" width="960" height="52" fill="#f5f7fa"/>
+<text x="297.0" y="237.0" fill="#172033" font-family="Arial, sans-serif" font-size="16" text-anchor="end">Frozen heuristic</text>
+<line x1="419.1" y1="232" x2="517.4" y2="232" stroke="#1f5a8a" stroke-width="4" stroke-linecap="round"/>
+<circle cx="468.9" cy="232" r="7" fill="#c44536" stroke="#ffffff" stroke-width="2"/>
+<text x="938.0" y="237.0" fill="#172033" font-family="Arial, sans-serif" font-size="13" text-anchor="end">-28.3 [-82.2, +23.9]</text>
+<text x="297.0" y="309.0" fill="#172033" font-family="Arial, sans-serif" font-size="16" text-anchor="end">Public-information ridge</text>
+<line x1="366.2" y1="304" x2="440.3" y2="304" stroke="#1f5a8a" stroke-width="4" stroke-linecap="round"/>
+<circle cx="403.4" cy="304" r="7" fill="#c44536" stroke="#ffffff" stroke-width="2"/>
+<text x="938.0" y="309.0" fill="#172033" font-family="Arial, sans-serif" font-size="13" text-anchor="end">-99.1 [-139.2, -59.3]</text>
+<line x1="315.0" y1="370" x2="315.0" y2="376" stroke="#758197"/>
+<text x="315.0" y="404.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">-195</text>
+<line x1="468.8" y1="370" x2="468.8" y2="376" stroke="#758197"/>
+<text x="468.8" y="404.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">-29</text>
+<line x1="622.5" y1="370" x2="622.5" y2="376" stroke="#758197"/>
+<text x="622.5" y="404.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">137</text>
+<line x1="776.2" y1="370" x2="776.2" y2="376" stroke="#758197"/>
+<text x="776.2" y="404.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">303</text>
+<line x1="930.0" y1="370" x2="930.0" y2="376" stroke="#758197"/>
+<text x="930.0" y="404.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">469</text>
+<text x="622.5" y="426.0" fill="#172033" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Luna utility minus comparator utility</text>
+</svg>

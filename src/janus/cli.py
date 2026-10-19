@@ -14,6 +14,10 @@ from janus.core.fixtures import analytic_market, competitive_orders
 from janus.core.randomness import DisturbanceTape
 from janus.evaluation.hidden_analysis import run_hidden_analysis
 from janus.evaluation.hidden_release import generate_hidden_release, prepare_hidden_seed
+from janus.evaluation.hidden_sensitivity import (
+    generate_normative_oracles,
+    run_hidden_sensitivity,
+)
 from janus.evaluation.openai_hidden import (
     HIDDEN_MAXIMUM_CUMULATIVE_CEILING_USD,
     RECOMMENDED_CUMULATIVE_CEILING_USD,
@@ -38,6 +42,7 @@ from janus.evaluation.openai_smoke import (
 )
 from janus.evaluation.phase0d_runner import run_phase0d
 from janus.evaluation.phase0e_runner import run_phase0e_dry_run
+from janus.evaluation.publication import generate_publication_outputs
 from janus.evaluation.robustness import run_robustness_audit
 from janus.models.providers.openai import make_openai_sdk_transport
 
@@ -226,9 +231,7 @@ def build_parser() -> argparse.ArgumentParser:
     hidden_analysis.add_argument(
         "--response-manifest",
         type=Path,
-        default=Path(
-            "artifacts/openai-hidden-v1/manifests/run-20261019T083004.963054Z.json"
-        ),
+        default=Path("artifacts/openai-hidden-v1/manifests/run-20261019T083004.963054Z.json"),
     )
     hidden_analysis.add_argument(
         "--output",
@@ -236,6 +239,45 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path("artifacts/hidden-v1-analysis/report.json"),
     )
     hidden_analysis.add_argument("--response-commit", required=True)
+    hidden_sensitivity = subparsers.add_parser(
+        "hidden-sensitivity",
+        help="run local-only invalid-response and normative sensitivity analyses",
+    )
+    hidden_sensitivity.add_argument(
+        "--response-manifest",
+        type=Path,
+        default=Path("artifacts/openai-hidden-v1/manifests/run-20261019T083004.963054Z.json"),
+    )
+    hidden_sensitivity.add_argument(
+        "--normative-output",
+        type=Path,
+        default=Path("artifacts/hidden-v1-normative"),
+    )
+    hidden_sensitivity.add_argument(
+        "--output",
+        type=Path,
+        default=Path("artifacts/hidden-v1-analysis/sensitivity.json"),
+    )
+    hidden_sensitivity.add_argument("--workers", type=int, default=4)
+    hidden_publication = subparsers.add_parser(
+        "hidden-publication",
+        help="generate final hidden-v1 tables and vector figures",
+    )
+    hidden_publication.add_argument(
+        "--primary-report",
+        type=Path,
+        default=Path("artifacts/hidden-v1-analysis/report.json"),
+    )
+    hidden_publication.add_argument(
+        "--sensitivity-report",
+        type=Path,
+        default=Path("artifacts/hidden-v1-analysis/sensitivity.json"),
+    )
+    hidden_publication.add_argument(
+        "--output",
+        type=Path,
+        default=Path("reports/hidden-v1-publication"),
+    )
     hidden_seed = subparsers.add_parser(
         "hidden-seed", help="create a private seed and public commitment before generation"
     )
@@ -432,6 +474,42 @@ def main(argv: Sequence[str] | None = None) -> int:
                 sort_keys=True,
             )
         )
+        return 0
+    if args.command == "hidden-sensitivity":
+        normative_manifest = generate_normative_oracles(
+            Path.cwd(),
+            args.normative_output,
+            workers=args.workers,
+            progress=lambda completed, total: print(
+                f"local replay progress: {completed}/{total} worlds",
+                flush=True,
+            ),
+        )
+        report = run_hidden_sensitivity(
+            Path.cwd(),
+            args.response_manifest,
+            args.normative_output,
+            args.output,
+        )
+        print(
+            json.dumps(
+                {
+                    "output": str(args.output),
+                    "provider_calls": report["provider_calls"],
+                    "normative_worlds": normative_manifest["world_count"],
+                },
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "hidden-publication":
+        publication_manifest = generate_publication_outputs(
+            Path.cwd(),
+            args.primary_report,
+            args.sensitivity_report,
+            args.output,
+        )
+        print(json.dumps(publication_manifest, sort_keys=True))
         return 0
     if args.command == "hidden-seed":
         commitment = prepare_hidden_seed(

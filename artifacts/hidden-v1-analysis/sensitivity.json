@@ -1,0 +1,1015 @@
+{
+  "analyses": {
+    "consumer_protection": {
+      "incomplete_as_worst": {
+        "best_constant_action": "supply_subsidy",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 207,
+          "price_ceiling": 2,
+          "transaction_tax": 88
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.006666666666666667,
+          "lower_95": 0.0,
+          "upper_95": 0.016666666666666666
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 1201.493515136517,
+          "partial_information_minus_llm": 322.54961806670326
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 25475.440423911958,
+          "do_nothing": 25203.337690904154,
+          "price_ceiling": 25107.37177747439,
+          "supply_subsidy": 26557.543439632474,
+          "transaction_tax": 24785.801828911463
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.09071685316685842,
+          "lower_95": 0.08585448899659598,
+          "upper_95": 0.095803137921003
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 25203.337690904154,
+          "heuristic_utility": 25374.597425041877,
+          "oracle_utility": 26616.444965454037,
+          "partial_information_utility": 25414.95145031752,
+          "random_utility": 25425.899032166893,
+          "utility": 25092.401832250816
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": -110.9358586533401,
+          "lower_95": -147.70957155966843,
+          "upper_95": -76.86201002516972
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": -282.19559279105783,
+          "lower_95": -406.93403434107483,
+          "upper_95": -160.8163248261314
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -322.5496180667067,
+          "lower_95": -419.9801915526445,
+          "upper_95": -226.56022256435912
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": -333.49719991607293,
+          "lower_95": -382.8655194007097,
+          "upper_95": -287.028562313594
+        },
+        "trials": 300
+      },
+      "intention_to_evaluate": {
+        "best_constant_action": "supply_subsidy",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 251,
+          "price_ceiling": 2,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.006666666666666667,
+          "lower_95": 0.0,
+          "upper_95": 0.016666666666666666
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 1201.493515136517,
+          "partial_information_minus_llm": 259.47542596105995
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 25475.440423911958,
+          "do_nothing": 25203.337690904154,
+          "price_ceiling": 25107.37177747439,
+          "supply_subsidy": 26557.543439632474,
+          "transaction_tax": 24785.801828911463
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.0869624369700939,
+          "lower_95": 0.08303564142522972,
+          "upper_95": 0.09101105551110648
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 25203.337690904154,
+          "heuristic_utility": 25374.597425041877,
+          "oracle_utility": 26616.444965454037,
+          "partial_information_utility": 25414.95145031752,
+          "random_utility": 25425.899032166893,
+          "utility": 25155.47602435646
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": -47.86166654769631,
+          "lower_95": -69.9462814289402,
+          "upper_95": -24.739025439963473
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": -219.12140068541407,
+          "lower_95": -328.8769808245393,
+          "upper_95": -111.36358178390259
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -259.4754259610629,
+          "lower_95": -341.4641026871918,
+          "upper_95": -174.5937055517579
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": -270.42300781042906,
+          "lower_95": -302.8285326396027,
+          "upper_95": -239.72717719308073
+        },
+        "trials": 300
+      },
+      "valid_only": {
+        "best_constant_action": "supply_subsidy",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 207,
+          "price_ceiling": 2,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.0078125,
+          "lower_95": 0.0,
+          "upper_95": 0.01984126984126984
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 1267.3072940935672,
+          "partial_information_minus_llm": 172.64426248475138
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 25615.855985034905,
+          "do_nothing": 25432.293575431504,
+          "price_ceiling": 25335.826322838104,
+          "supply_subsidy": 26773.492462710492,
+          "transaction_tax": 25016.908806032618
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.08571140217728095,
+          "lower_95": 0.08175922740998957,
+          "upper_95": 0.08994882362067472
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 25432.293575431504,
+          "heuristic_utility": 25516.186505446436,
+          "oracle_utility": 26816.15724152424,
+          "partial_information_utility": 25548.849947430674,
+          "random_utility": 25634.875430409524,
+          "utility": 25376.205684945922
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": -56.08789048558161,
+          "lower_95": -84.58204395195425,
+          "upper_95": -29.092703089094393
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": -139.98082050051426,
+          "lower_95": -231.84348143977607,
+          "upper_95": -54.96549092399226
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -172.64426248475493,
+          "lower_95": -243.51607426847917,
+          "upper_95": -104.56202186860799
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": -258.66974546360115,
+          "lower_95": -292.31390139317614,
+          "upper_95": -228.01910022933558
+        },
+        "trials": 256
+      }
+    },
+    "fiscal_neutral": {
+      "incomplete_as_worst": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 207,
+          "price_ceiling": 7,
+          "supply_subsidy": 35,
+          "transaction_tax": 48
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.4866666666666667,
+          "lower_95": 0.4166666666666667,
+          "upper_95": 0.56
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.603969687606877,
+          "partial_information_minus_llm": 155.84098570771675
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17033.4402210544,
+          "do_nothing": 16955.35823214426,
+          "price_ceiling": 16855.232914121436,
+          "supply_subsidy": 16454.332364349444,
+          "transaction_tax": 16928.758215693433
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.01032410448781689,
+          "lower_95": 0.007125682517925115,
+          "upper_95": 0.013645569879748229
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 16955.35823214426,
+          "heuristic_utility": 16987.583549454415,
+          "oracle_utility": 17075.914862683385,
+          "partial_information_utility": 17058.310892995778,
+          "random_utility": 16845.4243894726,
+          "utility": 16902.46990728806
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": -52.888324856199965,
+          "lower_95": -77.6717693825369,
+          "upper_95": -30.209827899824774
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": -85.11364216635586,
+          "lower_95": -151.51623366824268,
+          "upper_95": -18.371843261839423
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -155.8409857077195,
+          "lower_95": -210.54759585224627,
+          "upper_95": -102.33485424188927
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 57.04551781546537,
+          "lower_95": 26.942733680731557,
+          "upper_95": 85.6042613735965
+        },
+        "trials": 300
+      },
+      "intention_to_evaluate": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 251,
+          "price_ceiling": 2,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.55,
+          "lower_95": 0.4866666666666667,
+          "upper_95": 0.6133333333333333
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.603969687606877,
+          "partial_information_minus_llm": 99.07283068922698
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17033.4402210544,
+          "do_nothing": 16955.35823214426,
+          "price_ceiling": 16855.232914121436,
+          "supply_subsidy": 16454.332364349444,
+          "transaction_tax": 16928.758215693433
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.006945047641478125,
+          "lower_95": 0.004524301033846325,
+          "upper_95": 0.009473844911169758
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 16955.35823214426,
+          "heuristic_utility": 16987.583549454415,
+          "oracle_utility": 17075.914862683385,
+          "partial_information_utility": 17058.310892995778,
+          "random_utility": 16845.4243894726,
+          "utility": 16959.23806230655
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": 3.879830162291291,
+          "lower_95": -4.722615860390413,
+          "upper_95": 15.938017304227026
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": -28.345487147864606,
+          "lower_95": -81.5304340571613,
+          "upper_95": 22.14694480612837
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -99.07283068922825,
+          "lower_95": -138.84169744120868,
+          "upper_95": -60.34260895893979
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 113.81367283395662,
+          "lower_95": 101.3477685683983,
+          "upper_95": 126.04059984769873
+        },
+        "trials": 300
+      },
+      "valid_only": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 207,
+          "price_ceiling": 2,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.5703125,
+          "lower_95": 0.503731343283582,
+          "upper_95": 0.6398467432950191
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.037326704710722,
+          "partial_information_minus_llm": 59.308303461912146
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17119.65983857298,
+          "do_nothing": 17083.962483249474,
+          "price_ceiling": 16983.866799472828,
+          "supply_subsidy": 16558.01534933417,
+          "transaction_tax": 17061.162732689663
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.004544382748013262,
+          "lower_95": 0.0028143080235266973,
+          "upper_95": 0.006514583779498746
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 17083.962483249474,
+          "heuristic_utility": 17073.01171526443,
+          "oracle_utility": 17164.854789387533,
+          "partial_information_utility": 17147.817462682822,
+          "random_utility": 16961.333440663824,
+          "utility": 17088.50915922091
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": 4.546675971435107,
+          "lower_95": -5.480463588690044,
+          "upper_95": 18.706386263497585
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": 15.497443956481568,
+          "lower_95": -28.057900545437946,
+          "upper_95": 54.73654353171764
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -59.308303461910484,
+          "lower_95": -91.89543104270761,
+          "upper_95": -30.222746497565325
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 127.17571855708782,
+          "lower_95": 115.62460818415425,
+          "upper_95": 139.17257277750116
+        },
+        "trials": 256
+      }
+    },
+    "primary": {
+      "incomplete_as_worst": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 207,
+          "price_ceiling": 2,
+          "supply_subsidy": 44,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.4866666666666667,
+          "lower_95": 0.4166666666666667,
+          "upper_95": 0.5566666666666666
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.603969687606877,
+          "partial_information_minus_llm": 354.9786416054849
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17033.4402210544,
+          "do_nothing": 16955.35823214426,
+          "price_ceiling": 16855.232914121436,
+          "supply_subsidy": 15017.651348724443,
+          "transaction_tax": 16928.758215693433
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.022177536386493363,
+          "lower_95": 0.015381248698605552,
+          "upper_95": 0.029843925631848577
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 16955.35823214426,
+          "heuristic_utility": 16987.583549454415,
+          "oracle_utility": 17075.914862683385,
+          "partial_information_utility": 17058.310892995778,
+          "random_utility": 16558.08818634759,
+          "utility": 16703.332251390293
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": -252.02598075396463,
+          "lower_95": -353.91901652588587,
+          "upper_95": -163.0408571037413
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": -284.25129806412053,
+          "lower_95": -420.451828102315,
+          "upper_95": -156.1840804212548
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -354.97864160548414,
+          "lower_95": -482.2925040166848,
+          "upper_95": -235.45428558832185
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 145.2440650427006,
+          "lower_95": 38.308044413369124,
+          "upper_95": 241.5877426166513
+        },
+        "trials": 300
+      },
+      "intention_to_evaluate": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 251,
+          "price_ceiling": 2,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.55,
+          "lower_95": 0.4866666666666667,
+          "upper_95": 0.6133333333333333
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.603969687606877,
+          "partial_information_minus_llm": 99.07283068922698
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17033.4402210544,
+          "do_nothing": 16955.35823214426,
+          "price_ceiling": 16855.232914121436,
+          "supply_subsidy": 15017.651348724443,
+          "transaction_tax": 16928.758215693433
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.006945047641478125,
+          "lower_95": 0.0045649218895301436,
+          "upper_95": 0.009440704775186303
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 16955.35823214426,
+          "heuristic_utility": 16987.583549454415,
+          "oracle_utility": 17075.914862683385,
+          "partial_information_utility": 17058.310892995778,
+          "random_utility": 16558.08818634759,
+          "utility": 16959.23806230655
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": 3.879830162291291,
+          "lower_95": -4.818555095428699,
+          "upper_95": 16.032063890710923
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": -28.345487147864606,
+          "lower_95": -82.1540034974366,
+          "upper_95": 23.910725808051055
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -99.07283068922825,
+          "lower_95": -139.20950658744533,
+          "upper_95": -59.27798462251892
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 401.14987595895644,
+          "lower_95": 387.3991555454862,
+          "upper_95": 414.0575530431596
+        },
+        "trials": 300
+      },
+      "valid_only": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 207,
+          "price_ceiling": 2,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.5703125,
+          "lower_95": 0.5019762845849802,
+          "upper_95": 0.6374573404495225
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.037326704710722,
+          "partial_information_minus_llm": 59.308303461912146
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17119.65983857298,
+          "do_nothing": 17083.962483249474,
+          "price_ceiling": 16983.866799472828,
+          "supply_subsidy": 15113.101851409367,
+          "transaction_tax": 17061.162732689663
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.004544382748013262,
+          "lower_95": 0.002807277870621104,
+          "upper_95": 0.006531611518871432
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 17083.962483249474,
+          "heuristic_utility": 17073.01171526443,
+          "oracle_utility": 17164.854789387533,
+          "partial_information_utility": 17147.817462682822,
+          "random_utility": 16672.350741078862,
+          "utility": 17088.50915922091
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": 4.546675971435107,
+          "lower_95": -5.676996506870154,
+          "upper_95": 18.654089823738634
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": 15.497443956481568,
+          "lower_95": -28.39268023694357,
+          "upper_95": 54.17964002000075
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -59.308303461910484,
+          "lower_95": -91.67686667923883,
+          "upper_95": -30.69535995667544
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 416.1584181420486,
+          "lower_95": 403.9751521438515,
+          "upper_95": 428.46445815455445
+        },
+        "trials": 256
+      }
+    },
+    "producer_continuity": {
+      "incomplete_as_worst": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 207,
+          "price_ceiling": 2,
+          "supply_subsidy": 44,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.4866666666666667,
+          "lower_95": 0.42,
+          "upper_95": 0.56
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.603969687606877,
+          "partial_information_minus_llm": 354.9786416054849
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17033.4402210544,
+          "do_nothing": 16955.35823214426,
+          "price_ceiling": 16855.232914121436,
+          "supply_subsidy": 15017.651348724443,
+          "transaction_tax": 16928.758215693433
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.022177536386493363,
+          "lower_95": 0.015174874320256075,
+          "upper_95": 0.02977736463690796
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 16955.35823214426,
+          "heuristic_utility": 16987.583549454415,
+          "oracle_utility": 17075.914862683385,
+          "partial_information_utility": 17058.310892995778,
+          "random_utility": 16558.08818634759,
+          "utility": 16703.332251390293
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": -252.02598075396463,
+          "lower_95": -352.39898549393394,
+          "upper_95": -161.56669763497896
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": -284.25129806412053,
+          "lower_95": -421.14380534002447,
+          "upper_95": -155.33705261704196
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -354.97864160548414,
+          "lower_95": -481.62031240972107,
+          "upper_95": -238.51150474866628
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 145.2440650427006,
+          "lower_95": 37.39802061733047,
+          "upper_95": 245.69826281073762
+        },
+        "trials": 300
+      },
+      "intention_to_evaluate": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 251,
+          "price_ceiling": 2,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.55,
+          "lower_95": 0.4866666666666667,
+          "upper_95": 0.6166666666666667
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.603969687606877,
+          "partial_information_minus_llm": 99.07283068922698
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17033.4402210544,
+          "do_nothing": 16955.35823214426,
+          "price_ceiling": 16855.232914121436,
+          "supply_subsidy": 15017.651348724443,
+          "transaction_tax": 16928.758215693433
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.006945047641478125,
+          "lower_95": 0.004548936770196471,
+          "upper_95": 0.009519887189090841
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 16955.35823214426,
+          "heuristic_utility": 16987.583549454415,
+          "oracle_utility": 17075.914862683385,
+          "partial_information_utility": 17058.310892995778,
+          "random_utility": 16558.08818634759,
+          "utility": 16959.23806230655
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": 3.879830162291291,
+          "lower_95": -4.709788268053432,
+          "upper_95": 16.098489251654236
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": -28.345487147864606,
+          "lower_95": -82.30189941138318,
+          "upper_95": 23.914079213267065
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -99.07283068922825,
+          "lower_95": -140.07531465288605,
+          "upper_95": -59.791568454524445
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 401.14987595895644,
+          "lower_95": 387.3226306354809,
+          "upper_95": 414.1899484056316
+        },
+        "trials": 300
+      },
+      "valid_only": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 207,
+          "price_ceiling": 2,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.5703125,
+          "lower_95": 0.5038167938931297,
+          "upper_95": 0.6388888888888888
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.037326704710722,
+          "partial_information_minus_llm": 59.308303461912146
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17119.65983857298,
+          "do_nothing": 17083.962483249474,
+          "price_ceiling": 16983.866799472828,
+          "supply_subsidy": 15113.101851409367,
+          "transaction_tax": 17061.162732689663
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.004544382748013262,
+          "lower_95": 0.002786509800041446,
+          "upper_95": 0.00649942652609699
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 17083.962483249474,
+          "heuristic_utility": 17073.01171526443,
+          "oracle_utility": 17164.854789387533,
+          "partial_information_utility": 17147.817462682822,
+          "random_utility": 16672.350741078862,
+          "utility": 17088.50915922091
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": 4.546675971435107,
+          "lower_95": -5.57180684707514,
+          "upper_95": 18.96696992898992
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": 15.497443956481568,
+          "lower_95": -27.37358816259837,
+          "upper_95": 54.82345537332152
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -59.308303461910484,
+          "lower_95": -91.76408492834388,
+          "upper_95": -30.541717762289025
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 416.1584181420486,
+          "lower_95": 404.2963549402088,
+          "upper_95": 428.5115011918912
+        },
+        "trials": 256
+      }
+    },
+    "stability_aware": {
+      "incomplete_as_worst": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 207,
+          "price_ceiling": 2,
+          "supply_subsidy": 44,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.4866666666666667,
+          "lower_95": 0.4166666666666667,
+          "upper_95": 0.56
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.6049474133506,
+          "partial_information_minus_llm": 355.1155726849647
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17031.864253894822,
+          "do_nothing": 16953.670544201857,
+          "price_ceiling": 16853.554182973894,
+          "supply_subsidy": 15015.748342816341,
+          "transaction_tax": 16927.06344315914
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.02218574524394719,
+          "lower_95": 0.015002728842612317,
+          "upper_95": 0.029687463890196726
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 16953.670544201857,
+          "heuristic_utility": 16985.986652406238,
+          "oracle_utility": 17074.340253830298,
+          "partial_information_utility": 17056.735306416947,
+          "random_utility": 16556.380153409213,
+          "utility": 16701.619733731983
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": -252.05081046987266,
+          "lower_95": -353.767341444055,
+          "upper_95": -164.21065313384312
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": -284.3669186742552,
+          "lower_95": -423.1405285326511,
+          "upper_95": -156.04227733608195
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -355.11557268496165,
+          "lower_95": -483.222171621434,
+          "upper_95": -238.40405041836647
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 145.23958032277227,
+          "lower_95": 38.12807832422502,
+          "upper_95": 241.6874009452425
+        },
+        "trials": 300
+      },
+      "intention_to_evaluate": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 251,
+          "price_ceiling": 2,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.55,
+          "lower_95": 0.4866666666666667,
+          "upper_95": 0.6133333333333333
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.6049474133506,
+          "partial_information_minus_llm": 99.18050962318375
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17031.864253894822,
+          "do_nothing": 16953.670544201857,
+          "price_ceiling": 16853.554182973894,
+          "supply_subsidy": 15015.748342816341,
+          "transaction_tax": 16927.06344315914
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.006951515299793765,
+          "lower_95": 0.004569798922876867,
+          "upper_95": 0.009416248724292614
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 16953.670544201857,
+          "heuristic_utility": 16985.986652406238,
+          "oracle_utility": 17074.340253830298,
+          "partial_information_utility": 17056.735306416947,
+          "random_utility": 16556.380153409213,
+          "utility": 16957.554796793764
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": 3.8842525919048665,
+          "lower_95": -4.708814840649368,
+          "upper_95": 16.30377348057356
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": -28.431855612477698,
+          "lower_95": -82.12703303721392,
+          "upper_95": 22.727413254616458
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -99.18050962318416,
+          "lower_95": -140.39289847533203,
+          "upper_95": -60.3349364654896
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 401.1746433845497,
+          "lower_95": 387.62125988429574,
+          "upper_95": 414.22292161839766
+        },
+        "trials": 300
+      },
+      "valid_only": {
+        "best_constant_action": "collusion_investigation",
+        "effective_action_counts": {
+          "collusion_investigation": 3,
+          "do_nothing": 207,
+          "price_ceiling": 2,
+          "transaction_tax": 44
+        },
+        "epsilon_optimal_rate": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.5703125,
+          "lower_95": 0.5040642210857592,
+          "upper_95": 0.6392236662106702
+        },
+        "gap_decomposition": {
+          "oracle_minus_partial_information": 17.03820661734062,
+          "partial_information_minus_llm": 59.38429638789603
+        },
+        "mean_constant_action_utilities": {
+          "collusion_investigation": 17118.088344499563,
+          "do_nothing": 17082.310178902193,
+          "price_ceiling": 16982.222569516704,
+          "supply_subsidy": 15111.231501179063,
+          "transaction_tax": 17059.5019177879
+        },
+        "mean_normalized_regret": {
+          "bootstrap_samples": 10000,
+          "estimate": 0.004548958512216386,
+          "lower_95": 0.0027752427062382656,
+          "upper_95": 0.006544895028932251
+        },
+        "mean_utilities": {
+          "do_nothing_utility": 17082.310178902193,
+          "heuristic_utility": 17071.419680604507,
+          "oracle_utility": 17163.284540413566,
+          "partial_information_utility": 17146.246333796225,
+          "random_utility": 16670.670902377085,
+          "utility": 17086.86203740833
+        },
+        "mean_utility_difference_vs_do_nothing": {
+          "bootstrap_samples": 10000,
+          "estimate": 4.551858506138515,
+          "lower_95": -5.548376188144528,
+          "upper_95": 18.62837935745588
+        },
+        "mean_utility_difference_vs_heuristic": {
+          "bootstrap_samples": 10000,
+          "estimate": 15.442356803823394,
+          "lower_95": -27.785399819071053,
+          "upper_95": 54.210212559289495
+        },
+        "mean_utility_difference_vs_partial_information": {
+          "bootstrap_samples": 10000,
+          "estimate": -59.38429638789648,
+          "lower_95": -92.08705320607311,
+          "upper_95": -30.776764792527402
+        },
+        "mean_utility_difference_vs_random": {
+          "bootstrap_samples": 10000,
+          "estimate": 416.19113503124595,
+          "lower_95": 404.09391043395976,
+          "upper_95": 428.4674731117486
+        },
+        "trials": 256
+      }
+    }
+  },
+  "completed": true,
+  "normalization_scale": 16800.0,
+  "normative_manifest_sha256": "2cc915d6a15e6f3cb8ce1c1986e1214c71549c3fe3a1e8604152f74f2e9dbd18",
+  "objectives": [
+    "primary",
+    "consumer_protection",
+    "producer_continuity",
+    "stability_aware",
+    "fiscal_neutral"
+  ],
+  "primary_recomputation_verified": true,
+  "provider_calls": 0,
+  "response_manifest_sha256": "3f4b2bfa9467f482cf8eb1194fff68dea1f862a8b9fff20e5ea1fb8be2de636b",
+  "schema_version": "janus-hidden-sensitivity-v1",
+  "scoring_rules": [
+    "intention_to_evaluate",
+    "valid_only",
+    "incomplete_as_worst"
+  ],
+  "trials": 300,
+  "verified_normative_artifact_count": 100,
+  "worlds": 100
+}

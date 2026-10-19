@@ -22,8 +22,11 @@ returned five direct valid responses with no repairs or retries. The provider
 gate is complete. The guarded 300-request hidden collection completed on
 2026-10-19, its response set was committed before unblinding, and the frozen
 post-seal analysis is complete. The main result is mixed: GPT-6 Luna beat
-uniform random, did not reliably beat always doing nothing, and performed much
-worse on OOD seller-collusion worlds. See
+uniform random, did not reliably beat always doing nothing or the frozen
+public-information baseline, and performed much worse on OOD seller-collusion
+worlds. The final report includes valid-only, worst-action, and alternative-
+welfare sensitivity analyses plus publication-ready source tables and figures.
+See
 [`reports/hidden-v1-results.md`](reports/hidden-v1-results.md).
 
 The release evidence, exact commands, hashes, cost estimates, limitations, and
@@ -40,6 +43,8 @@ uv run janus phase0e-dry-run --output artifacts/phase0e-freeze
 uv run janus robustness --output artifacts/robustness/report.json --rollouts 64 --workers 4
 uv run janus openai-smoke-preflight --max-usd 0.01
 uv run janus openai-hidden-preflight --max-usd 0.84
+uv run janus hidden-sensitivity --workers 8
+uv run janus hidden-publication
 ```
 
 The live five-world smoke command, environment-key instructions, and layered
@@ -49,7 +54,8 @@ does not read a key, access hidden artifacts, make a network request, or spend
 money.
 
 The hidden collection procedure, conservative `$0.84` cumulative gate, safe key
-entry, resumption behavior, and pre-unblinding commit rule are documented in
+entry, resumption behavior, pre-unblinding commit rule, and local-only final
+analysis commands are documented in
 [`docs/HIDDEN_EVALUATION.md`](docs/HIDDEN_EVALUATION.md).
 
 The package requires Python 3.12 or newer. All stochastic behavior must use the

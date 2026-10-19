@@ -243,9 +243,7 @@ def _recorded_spend(cache_directory: Path, stage: str) -> float:
 
 def _spend_breakdown(project_root: Path, output_directory: Path) -> dict[str, float]:
     return {
-        SMOKE_STAGE: _recorded_spend(
-            project_root / "artifacts/openai-smoke-v1/cache", SMOKE_STAGE
-        ),
+        SMOKE_STAGE: _recorded_spend(project_root / "artifacts/openai-smoke-v1/cache", SMOKE_STAGE),
         DIAGNOSTIC_STAGE: _recorded_spend(
             project_root / "artifacts/openai-diagnostic-2048-v1/cache", DIAGNOSTIC_STAGE
         ),

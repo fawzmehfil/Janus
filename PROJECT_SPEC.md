@@ -1,10 +1,10 @@
 # Janus — Project Specification and Research Charter
 
-**Status:** Source of truth; benchmark v1 frozen as an evaluation-ready local release
+**Status:** Source of truth; hidden-v1 final research release complete
 **Version:** 0.1.0  
 **Date:** 2026-10-16  
 **Project type:** Synthetic, research-oriented LLM decision evaluation  
-**Current phase:** Design only; no simulator or paid model calls are authorized yet
+**Current phase:** Sealed collection and post-seal analysis complete (2026-10-19)
 
 ## 0. Authority and change control
 

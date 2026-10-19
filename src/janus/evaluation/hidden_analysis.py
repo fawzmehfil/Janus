@@ -88,15 +88,9 @@ def _stratum_difference(
     for index in range(BOOTSTRAP_SAMPLES):
         id_selected = rng.integers(0, len(ids), size=len(ids))
         ood_selected = rng.integers(0, len(oods), size=len(oods))
-        id_values = [
-            item
-            for selected in id_selected
-            for item in grouped["id"][ids[int(selected)]]
-        ]
+        id_values = [item for selected in id_selected for item in grouped["id"][ids[int(selected)]]]
         ood_values = [
-            item
-            for selected in ood_selected
-            for item in grouped["ood"][oods[int(selected)]]
+            item for selected in ood_selected for item in grouped["ood"][oods[int(selected)]]
         ]
         estimates[index] = np.mean(ood_values) - np.mean(id_values)
     observed = float(
@@ -130,9 +124,7 @@ def _clustered_confidence_correlation(rows: list[dict[str, Any]]) -> dict[str, f
     for index in range(BOOTSTRAP_SAMPLES):
         selected = rng.integers(0, len(bundle_ids), size=len(bundle_ids))
         sampled_rows = [
-            row
-            for selected_index in selected
-            for row in grouped[bundle_ids[int(selected_index)]]
+            row for selected_index in selected for row in grouped[bundle_ids[int(selected_index)]]
         ]
         estimates[index] = correlation(sampled_rows)
     return {
@@ -148,9 +140,7 @@ def _load_partial_policy(path: Path) -> RidgeActionValuePolicy:
     return RidgeActionValuePolicy(
         feature_mean=tuple(float(value) for value in payload["feature_mean"]),
         feature_scale=tuple(float(value) for value in payload["feature_scale"]),
-        coefficients=tuple(
-            tuple(float(value) for value in row) for row in payload["coefficients"]
-        ),
+        coefficients=tuple(tuple(float(value) for value in row) for row in payload["coefficients"]),
         intercepts=tuple(float(value) for value in payload["intercepts"]),
         regularization=float(payload["regularization"]),
     )
@@ -311,9 +301,7 @@ def run_hidden_analysis(
             sum((float(probabilities[label]) - float(label == family)) ** 2 for label in FAMILIES)
         )
         diagnosis_log_loss.append(-log(max(1e-15, float(probabilities[family]))))
-        confidence_brier.append(
-            (float(row["confidence"]) - float(row["epsilon_optimal"])) ** 2
-        )
+        confidence_brier.append((float(row["confidence"]) - float(row["epsilon_optimal"])) ** 2)
 
     world_actions: dict[str, list[str]] = defaultdict(list)
     for row in rows:
@@ -407,8 +395,7 @@ def run_hidden_analysis(
             ),
             "mean_utility_difference_vs_partial_information": _group_interval(
                 rows,
-                lambda row: float(row["utility"])
-                - float(row["partial_information_utility"]),
+                lambda row: float(row["utility"]) - float(row["partial_information_utility"]),
                 seed=BOOTSTRAP_SEED + 5,
             ),
             "utility_cvar_worst_10_percent": float(
@@ -419,8 +406,7 @@ def run_hidden_analysis(
         "mean_constant_action_utilities": mean_constant_action_utilities,
         "gap_decomposition": {
             "estimated_information_gap_oracle_minus_partial": (
-                mean_utilities["oracle_utility"]
-                - mean_utilities["partial_information_utility"]
+                mean_utilities["oracle_utility"] - mean_utilities["partial_information_utility"]
             ),
             "decision_gap_partial_minus_llm": (
                 mean_utilities["partial_information_utility"] - mean_utilities["utility"]
@@ -467,24 +453,13 @@ def run_hidden_analysis(
     }
     primary = report["primary"]
     report["hypotheses"] = {
-        "H1_better_than_uniform_random": primary[
-            "mean_utility_difference_vs_random"
-        ]["lower_95"]
+        "H1_better_than_uniform_random": primary["mean_utility_difference_vs_random"]["lower_95"]
         > 0,
-        "H2_better_than_do_nothing": primary[
-            "mean_utility_difference_vs_do_nothing"
-        ]["lower_95"]
+        "H2_better_than_do_nothing": primary["mean_utility_difference_vs_do_nothing"]["lower_95"]
         > 0,
-        "H3_ood_increases_regret": report[
-            "ood_minus_id_mean_normalized_regret"
-        ]["lower_95"]
-        > 0,
-        "H4_confidence_positive_association": (
-            float(confidence_correlation["lower_95"]) > 0
-        ),
-        "H5_diagnosis_above_chance_all_trials": float(
-            diagnosis_accuracy_interval["lower_95"]
-        )
+        "H3_ood_increases_regret": report["ood_minus_id_mean_normalized_regret"]["lower_95"] > 0,
+        "H4_confidence_positive_association": (float(confidence_correlation["lower_95"]) > 0),
+        "H5_diagnosis_above_chance_all_trials": float(diagnosis_accuracy_interval["lower_95"])
         > 0.25,
     }
     output_path.parent.mkdir(parents=True, exist_ok=True)

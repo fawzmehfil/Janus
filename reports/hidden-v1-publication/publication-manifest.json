@@ -1,0 +1,33 @@
+{
+  "figure_sha256": {
+    "family-regret.svg": "534fa104ca6bcfe55e3213fd09c0ccafda3b4b2ed0c74935122ca5a0a7d451e0",
+    "invalid-response-sensitivity.svg": "7b80e2b8287ee5538dffc581c5138833a87a390dd088d19b23f6aaf691536895",
+    "normative-robustness-vs-public-information.svg": "802f66514d872a872da71aea6aff340434f68ec9557baee25652f61ff73e0b02",
+    "primary-policy-comparisons.svg": "a95a0201c7d1a87f8d3e04d4375907f3129ea7244bfa2774517a4f1d75344681"
+  },
+  "figures": [
+    "family-regret.svg",
+    "invalid-response-sensitivity.svg",
+    "normative-robustness-vs-public-information.svg",
+    "primary-policy-comparisons.svg"
+  ],
+  "primary_report": "artifacts/hidden-v1-analysis/report.json",
+  "primary_report_sha256": "d7c46b0cd01b67fd50ccb83c3b96cf997eb8a3c1147a341578506f0401c72f30",
+  "schema_version": "janus-publication-outputs-v1",
+  "sensitivity_report": "artifacts/hidden-v1-analysis/sensitivity.json",
+  "sensitivity_report_sha256": "163dcc25888fe06412f62b61e92970fb49405847553d388545f58aeed2c87fb0",
+  "table_sha256": {
+    "invalid-response-sensitivity.csv": "9926ce07131bde729d95b3148dd53e865ac66c5bf7304d6b7265eac738ace5d4",
+    "normative-summary.csv": "e862ec0905fc0c7779d8626491be0644d8915cf0323afba4177d6eb56c8a488c",
+    "primary-policy-comparisons.csv": "ccb7927604c1537b3ca2b732cfe0f9516f3b91760afed1bd2bfe91c1b87e068e",
+    "sensitivity-results.csv": "608cffea2609eb2d4fb3d421ef88db0d86c9153a9431c380eaaca5c3a677cf58",
+    "subgroup-results.csv": "1848045e03e1964f16c06cbc7a4dc5c7558fe0bc66c80cd88d98471682bf5caa"
+  },
+  "tables": [
+    "invalid-response-sensitivity.csv",
+    "normative-summary.csv",
+    "primary-policy-comparisons.csv",
+    "sensitivity-results.csv",
+    "subgroup-results.csv"
+  ]
+}

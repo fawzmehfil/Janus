@@ -72,3 +72,29 @@ spend of `$0.3475366`. The 300 response artifacts and run manifest were sealed
 in commit `95b6b9b` before unblinding. The final analysis is recorded in
 `reports/hidden-v1-results.md` and its machine-readable counterpart is
 `artifacts/hidden-v1-analysis/report.json`.
+
+## Local-only sensitivity and publication workflow
+
+No API key is needed for the remaining analyses. The sensitivity command
+replays the committed private states under the original 256 indexed future
+disturbance tapes, collects all five preregistered welfare objectives, and
+verifies that the recomputed primary action means match the frozen oracles:
+
+```bash
+uv run janus hidden-sensitivity --workers 8
+```
+
+It writes private per-world normative oracle artifacts under
+`artifacts/hidden-v1-normative/` and the joined machine report to
+`artifacts/hidden-v1-analysis/sensitivity.json`. A complete, hash-valid
+normative directory is reused on later invocations.
+
+Regenerate the paper source tables and accessible vector figures with:
+
+```bash
+uv run janus hidden-publication
+```
+
+The outputs are under `reports/hidden-v1-publication/`. Neither command imports
+the OpenAI client, reads `OPENAI_API_KEY`, makes a network call, or changes the
+sealed response set.

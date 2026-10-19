@@ -15,6 +15,7 @@ from janus.evaluation.harness import (
 )
 from janus.evaluation.hidden_analysis import run_hidden_analysis
 from janus.evaluation.hidden_release import prepare_hidden_seed
+from janus.evaluation.hidden_sensitivity import _objective_summary
 from janus.evaluation.openai_hidden import (
     HIDDEN_MAXIMUM_OUTPUT_TOKENS,
     HIDDEN_STAGE,
@@ -740,8 +741,7 @@ def test_hidden_ceiling_is_cent_bound_and_confirmation_is_exact() -> None:
 def test_hidden_analysis_verifies_sealed_set_and_scores_all_trials(tmp_path) -> None:
     project_root = Path(__file__).resolve().parents[1]
     response_manifest = (
-        project_root
-        / "artifacts/openai-hidden-v1/manifests/run-20261019T083004.963054Z.json"
+        project_root / "artifacts/openai-hidden-v1/manifests/run-20261019T083004.963054Z.json"
     )
     report = run_hidden_analysis(
         project_root,
@@ -763,6 +763,23 @@ def test_hidden_analysis_verifies_sealed_set_and_scores_all_trials(tmp_path) -> 
         "H4_confidence_positive_association": True,
         "H5_diagnosis_above_chance_all_trials": False,
     }
+
+
+def test_normative_objective_summary_uses_paired_epsilon_rule() -> None:
+    samples = {
+        "do_nothing": (10.0, 10.0, 10.0),
+        "price_ceiling": (4.0, 4.0, 4.0),
+        "transaction_tax": (7.0, 7.0, 7.0),
+        "supply_subsidy": (5.0, 5.0, 5.0),
+        "collusion_investigation": (12.0, 12.0, 12.0),
+    }
+    summary = _objective_summary(samples)
+    assert summary["best_action"] == "collusion_investigation"
+    assert set(summary["epsilon_optimal_actions"]) == {
+        "do_nothing",
+        "collusion_investigation",
+    }
+    assert summary["epsilon_by_action"]["do_nothing"] == pytest.approx(4.2)
 
 
 def test_mock_phase0e_run_is_zero_cost_and_replayable(tmp_path) -> None:

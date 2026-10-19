@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="475" viewBox="0 0 1000 475" role="img" aria-labelledby="title desc">
+<title id="title">Regret was concentrated in seller-collusion worlds</title>
+<desc id="desc">Horizontal bars compare mean normalized regret across four scenario families.</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="28.0" y="38.0" fill="#172033" font-family="Arial, sans-serif" font-size="24" font-weight="700">Regret was concentrated in seller-collusion worlds</text>
+<text x="28.0" y="64.0" fill="#526078" font-family="Arial, sans-serif" font-size="14">Mean regret as a share of the 20-period reference surplus.</text>
+<text x="217.0" y="118.0" fill="#172033" font-family="Arial, sans-serif" font-size="16" text-anchor="end">Supply shortage</text>
+<rect x="235" y="95" width="6.3" height="34" fill="#1f5a8a"/>
+<text x="251.3" y="118.0" fill="#172033" font-family="Arial, sans-serif" font-size="14">0.028%</text>
+<text x="217.0" y="188.0" fill="#172033" font-family="Arial, sans-serif" font-size="16" text-anchor="end">Demand increase</text>
+<rect x="235" y="165" width="8.2" height="34" fill="#1f5a8a"/>
+<text x="253.2" y="188.0" fill="#172033" font-family="Arial, sans-serif" font-size="14">0.037%</text>
+<text x="217.0" y="258.0" fill="#172033" font-family="Arial, sans-serif" font-size="16" text-anchor="end">Momentum demand</text>
+<rect x="235" y="235" width="15.7" height="34" fill="#1f5a8a"/>
+<text x="260.7" y="258.0" fill="#172033" font-family="Arial, sans-serif" font-size="14">0.071%</text>
+<text x="217.0" y="328.0" fill="#172033" font-family="Arial, sans-serif" font-size="16" text-anchor="end">Seller collusion</text>
+<rect x="235" y="305" width="587.0" height="34" fill="#c44536"/>
+<text x="832.0" y="328.0" fill="#172033" font-family="Arial, sans-serif" font-size="14">2.642%</text>
+<line x1="235" y1="375" x2="910" y2="375" stroke="#758197"/>
+<line x1="235.0" y1="375" x2="235.0" y2="381" stroke="#758197"/>
+<text x="235.0" y="398.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">0.0%</text>
+<line x1="460.0" y1="375" x2="460.0" y2="381" stroke="#758197"/>
+<text x="460.0" y="398.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">1.0%</text>
+<line x1="685.0" y1="375" x2="685.0" y2="381" stroke="#758197"/>
+<text x="685.0" y="398.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">2.0%</text>
+<line x1="910.0" y1="375" x2="910.0" y2="381" stroke="#758197"/>
+<text x="910.0" y="398.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">3.0%</text>
+<text x="572.5" y="461.0" fill="#172033" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Mean normalized full-information regret</text>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="366" viewBox="0 0 1000 366" role="img" aria-labelledby="title desc">
+<title id="title">Invalid-response treatment did not rescue the primary conclusion</title>
+<desc id="desc">Paired Luna-versus-do-nothing utility differences under the preregistered fallback, valid-only, and worst-action scoring rules.</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="28.0" y="38.0" fill="#172033" font-family="Arial, sans-serif" font-size="24" font-weight="700">Invalid-response treatment did not rescue the primary conclusion</text>
+<text x="28.0" y="64.0" fill="#526078" font-family="Arial, sans-serif" font-size="14">Points are estimates; lines are 95% bundle-clustered intervals.</text>
+<line x1="853.1" y1="74" x2="853.1" y2="298" stroke="#758197" stroke-width="1.5"/>
+<rect x="20" y="62" width="960" height="52" fill="#f5f7fa"/>
+<text x="297.0" y="93.0" fill="#172033" font-family="Arial, sans-serif" font-size="16" text-anchor="end">Do-nothing fallback (primary)</text>
+<line x1="846.5" y1="88" x2="875.1" y2="88" stroke="#1f5a8a" stroke-width="4" stroke-linecap="round"/>
+<circle cx="858.4" cy="88" r="7" fill="#c44536" stroke="#ffffff" stroke-width="2"/>
+<text x="938.0" y="93.0" fill="#172033" font-family="Arial, sans-serif" font-size="13" text-anchor="end">+3.9 [-4.8, +16.0]</text>
+<text x="297.0" y="165.0" fill="#172033" font-family="Arial, sans-serif" font-size="16" text-anchor="end">Valid responses only</text>
+<line x1="845.3" y1="160" x2="878.8" y2="160" stroke="#1f5a8a" stroke-width="4" stroke-linecap="round"/>
+<circle cx="859.3" cy="160" r="7" fill="#c44536" stroke="#ffffff" stroke-width="2"/>
+<text x="938.0" y="165.0" fill="#172033" font-family="Arial, sans-serif" font-size="13" text-anchor="end">+4.5 [-5.7, +18.7]</text>
+<rect x="20" y="206" width="960" height="52" fill="#f5f7fa"/>
+<text x="297.0" y="237.0" fill="#172033" font-family="Arial, sans-serif" font-size="16" text-anchor="end">Incomplete as worst action</text>
+<line x1="366.2" y1="232" x2="628.8" y2="232" stroke="#1f5a8a" stroke-width="4" stroke-linecap="round"/>
+<circle cx="506.4" cy="232" r="7" fill="#c44536" stroke="#ffffff" stroke-width="2"/>
+<text x="938.0" y="237.0" fill="#172033" font-family="Arial, sans-serif" font-size="13" text-anchor="end">-252.0 [-353.9, -163.0]</text>
+<line x1="315.0" y1="298" x2="315.0" y2="304" stroke="#758197"/>
+<text x="315.0" y="332.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">-391</text>
+<line x1="468.8" y1="298" x2="468.8" y2="304" stroke="#758197"/>
+<text x="468.8" y="332.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">-279</text>
+<line x1="622.5" y1="298" x2="622.5" y2="304" stroke="#758197"/>
+<text x="622.5" y="332.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">-168</text>
+<line x1="776.2" y1="298" x2="776.2" y2="304" stroke="#758197"/>
+<text x="776.2" y="332.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">-56</text>
+<line x1="930.0" y1="298" x2="930.0" y2="304" stroke="#758197"/>
+<text x="930.0" y="332.0" fill="#526078" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">56</text>
+<text x="622.5" y="354.0" fill="#172033" font-family="Arial, sans-serif" font-size="14" text-anchor="middle">Luna utility minus always-do-nothing utility</text>
+</svg>
