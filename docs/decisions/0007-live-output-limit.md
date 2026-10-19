@@ -48,3 +48,11 @@ This result confirms output-token exhaustion as the operational cause of the
 first smoke failure and supports the 2,048-token corrected setting for the next
 development-only gate. It does not authorize or validate the 300-request hidden
 evaluation.
+
+The corrected five-world gate subsequently returned five direct schema-valid
+responses in five provider calls, with no repairs, incomplete responses,
+refusals, timeouts, schema failures, cache writes, or hidden-artifact access.
+The gate cost $0.0054624 and brought cumulative recorded spend to $0.0107931.
+The 2,048-token setting is therefore accepted for the planned hidden-run
+preflight. This outcome does not itself authorize hidden requests or reveal any
+hidden labels or outcomes.

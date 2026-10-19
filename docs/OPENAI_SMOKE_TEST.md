@@ -192,3 +192,10 @@ The command permits at most five provider calls, disables repair, preserves the
 frozen prompt/schema/high-reasoning settings, and never reads hidden artifacts.
 Unset the key afterward and inspect the immutable manifest before any hidden
 evaluation work.
+
+The corrected smoke completed on 2026-10-19 with five direct `valid` responses,
+five provider calls, no repairs, no cache writes, and no hidden-artifact access.
+It cost $0.0054624, bringing cumulative recorded spend to $0.0107931 under the
+approved $0.02 cap. The immutable run manifest is
+`artifacts/openai-smoke-2048-v2/manifests/run-20261019T065249.067530Z.json`.
+Do not rerun this stage.

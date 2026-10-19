@@ -1,0 +1,292 @@
+{
+  "budget_stop": null,
+  "completed": true,
+  "cumulative_cost_usd": 0.0107931,
+  "development_only": true,
+  "fatal_error_type": null,
+  "finished_at_utc": "2026-10-19T06:52:49.065538+00:00",
+  "hidden_artifacts_accessed": false,
+  "invocation_cost_usd": 0.0054624,
+  "local_hard_ceiling_usd": 0.02,
+  "passed": true,
+  "preflight": {
+    "ceiling_usd": 0.02,
+    "cumulative_spend_before_usd": 0.0053307,
+    "cumulative_upper_bound_usd": 0.0189969,
+    "development_only": true,
+    "fits_ceiling": true,
+    "network_calls": 0,
+    "paid_api_calls": 0,
+    "planned_primary_request_upper_bound_usd": 0.0136662,
+    "pricing_sha256": "3a4898af7a98e58c7dd04b0df937bd031dbfa06f1354933c5927c1fc3eabb3f1",
+    "prior_corrected_smoke_spend_usd": 0.0,
+    "prior_diagnostic_spend_usd": 0.0010983,
+    "prior_smoke_spend_usd": 0.0042324,
+    "prompt_sha256": "bdb0a5a83555f401dd9578ce8d57087448da0cb510ddf0b0d7476089da37e071",
+    "remaining_before_usd": 0.0146693,
+    "repairs_allowed": false,
+    "schema_sha256": "0ab11ce4fa976fe80759ff5788b8d732c90431130560d6cb0a6e334b3cad01fe",
+    "schema_version": "janus-openai-corrected-smoke-preflight-v1",
+    "settings": {
+      "endpoint": "v1/responses",
+      "maximum_output_tokens": 2048,
+      "prompt_version": "primary-v1",
+      "provider": "openai",
+      "reasoning_effort": "high",
+      "requested_model_id": "gpt-6-luna",
+      "schema_version": "janus-decision-v1",
+      "sdk_version": "2.54.0",
+      "temperature": null,
+      "top_p": null
+    },
+    "trial_count": 5,
+    "trials": [
+      {
+        "input_token_upper_bound": 17093,
+        "observation_sha256": "8b836d596d3736f05e02e0b2af70b78cbbc41b45174ae844337fc9a3bc28e10b",
+        "output_token_ceiling": 2048,
+        "request_cost_upper_bound_usd": 0.0027333,
+        "world_id": "janus-development-smoke-000"
+      },
+      {
+        "input_token_upper_bound": 17093,
+        "observation_sha256": "62d6b93c729ccd3eb2373d32f70b667b23ce2562b873d0acd9195f9b01c6eecb",
+        "output_token_ceiling": 2048,
+        "request_cost_upper_bound_usd": 0.0027333,
+        "world_id": "janus-development-smoke-001"
+      },
+      {
+        "input_token_upper_bound": 17095,
+        "observation_sha256": "8e5dc275ab6217bfa0f22ac15e53b046d8ee71051688f187cd3e6081ede96366",
+        "output_token_ceiling": 2048,
+        "request_cost_upper_bound_usd": 0.0027335,
+        "world_id": "janus-development-smoke-002"
+      },
+      {
+        "input_token_upper_bound": 17093,
+        "observation_sha256": "55b5809f1eb1d1587fbcaf883f9ba919a33aa03ac0b2c6c41d5c3443d452e035",
+        "output_token_ceiling": 2048,
+        "request_cost_upper_bound_usd": 0.0027333,
+        "world_id": "janus-development-smoke-003"
+      },
+      {
+        "input_token_upper_bound": 17088,
+        "observation_sha256": "c2658fb6310a02fc2bd8335563481ae27a8fadae977220c4690db69426dfd27c",
+        "output_token_ceiling": 2048,
+        "request_cost_upper_bound_usd": 0.0027328,
+        "world_id": "janus-development-smoke-004"
+      }
+    ]
+  },
+  "pricing_sha256": "3a4898af7a98e58c7dd04b0df937bd031dbfa06f1354933c5927c1fc3eabb3f1",
+  "prior_corrected_smoke_spend_usd": 0.0,
+  "prior_diagnostic_spend_usd": 0.0010983,
+  "prior_smoke_spend_usd": 0.0042324,
+  "prompt_sha256": "bdb0a5a83555f401dd9578ce8d57087448da0cb510ddf0b0d7476089da37e071",
+  "provider_calls_this_invocation": 5,
+  "repairs_allowed": false,
+  "response_artifact_sha256": {
+    "09710edaddeaef5e55575940946ff17ed4714a5a8e195d7507eaccf0ea98d7b6.json": "bbad71476f5d141f73e969e314648a0909d810b07de3920ba0a98be5c3d647ed",
+    "22f4f01870da07ec7334e281ff19fa79a1fc0b76fa1b3972911040d0bec7ce04.json": "2e11921cea6c19a6316b874f6a18250d9130313229089b92ddf51fe83e6ebea7",
+    "c1cd30ee2cbe99b27648412955bb3ec17c90b0f10fc100ee7f2682e17e621c39.json": "0a71554d9654f194fece0682b2bbee3b354e2af0a2a95973e582c75340f00555",
+    "c41a94e9a1cc1100bd2bda0ed3a7e7de9dac3cdbcebc2e740af3b355bd8012de.json": "4591d69a5ebbcb86e93771cc0a90b8b8de669fbdbbab2f9c0742676f283dd2b6",
+    "e87cecfcb24ceb5a3516d02b6c8a9d776b08bfa294e9b5c52faa4ac335eeb295.json": "0a054a82cb5f2f0f5a068488d64a478d655ca48fbe1c0af39eeb8cad7ca8b279"
+  },
+  "returned_model_ids": [
+    "gpt-6-luna"
+  ],
+  "schema_sha256": "0ab11ce4fa976fe80759ff5788b8d732c90431130560d6cb0a6e334b3cad01fe",
+  "schema_version": "janus-openai-corrected-smoke-run-v1",
+  "settings": {
+    "endpoint": "v1/responses",
+    "maximum_output_tokens": 2048,
+    "prompt_version": "primary-v1",
+    "provider": "openai",
+    "reasoning_effort": "high",
+    "requested_model_id": "gpt-6-luna",
+    "schema_version": "janus-decision-v1",
+    "sdk_version": "2.54.0",
+    "temperature": null,
+    "top_p": null
+  },
+  "stage": "openai-development-smoke-2048-v2",
+  "started_at_utc": "2026-10-19T06:51:12.383548+00:00",
+  "status_counts": {
+    "empty": 0,
+    "incomplete": 0,
+    "refusal": 0,
+    "repaired": 0,
+    "schema_failure": 0,
+    "timeout": 0,
+    "valid": 5
+  },
+  "trial_count_completed": 5,
+  "trial_count_planned": 5,
+  "trials": [
+    {
+      "actual_cost_usd": 0.0010833,
+      "cache_key": "e87cecfcb24ceb5a3516d02b6c8a9d776b08bfa294e9b5c52faa4ac335eeb295",
+      "estimated_cost_usd": 0.0027333,
+      "logical_trial_id": "janus-development-smoke-000:corrected-smoke-2048-00",
+      "provider_attempts": [
+        {
+          "actual_cost_usd": 0.0010833,
+          "estimated_cost_usd": 0.0027333,
+          "incomplete_details": null,
+          "kind": "primary",
+          "provider_request_id": "resp_0cd9f2a68d50fbf8016ad5bdf79f6c87d298a08e997a37c1c7",
+          "response_status": "completed",
+          "timestamp_utc": "2026-10-19T06:51:50.296721+00:00",
+          "usage": {
+            "cache_write_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 4433,
+            "output_tokens": 1280,
+            "reasoning_tokens": 1105
+          }
+        }
+      ],
+      "repair_attempted": false,
+      "usage": {
+        "cache_write_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 4433,
+        "output_tokens": 1280,
+        "reasoning_tokens": 1105
+      },
+      "validation_status": "valid"
+    },
+    {
+      "actual_cost_usd": 0.0010293,
+      "cache_key": "c41a94e9a1cc1100bd2bda0ed3a7e7de9dac3cdbcebc2e740af3b355bd8012de",
+      "estimated_cost_usd": 0.0027333,
+      "logical_trial_id": "janus-development-smoke-001:corrected-smoke-2048-00",
+      "provider_attempts": [
+        {
+          "actual_cost_usd": 0.0010293,
+          "estimated_cost_usd": 0.0027333,
+          "incomplete_details": null,
+          "kind": "primary",
+          "provider_request_id": "resp_0e92149ac57f3860016ad5be06719487d286f1eec7e579473f",
+          "response_status": "completed",
+          "timestamp_utc": "2026-10-19T06:52:02.869094+00:00",
+          "usage": {
+            "cache_write_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 4433,
+            "output_tokens": 1172,
+            "reasoning_tokens": 999
+          }
+        }
+      ],
+      "repair_attempted": false,
+      "usage": {
+        "cache_write_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 4433,
+        "output_tokens": 1172,
+        "reasoning_tokens": 999
+      },
+      "validation_status": "valid"
+    },
+    {
+      "actual_cost_usd": 0.0011907999999999999,
+      "cache_key": "c1cd30ee2cbe99b27648412955bb3ec17c90b0f10fc100ee7f2682e17e621c39",
+      "estimated_cost_usd": 0.0027335,
+      "logical_trial_id": "janus-development-smoke-002:corrected-smoke-2048-00",
+      "provider_attempts": [
+        {
+          "actual_cost_usd": 0.0011907999999999999,
+          "estimated_cost_usd": 0.0027335,
+          "incomplete_details": null,
+          "kind": "primary",
+          "provider_request_id": "resp_07dedf354bd64b99016ad5be13070887d28227403c67ba5da0",
+          "response_status": "completed",
+          "timestamp_utc": "2026-10-19T06:52:19.957227+00:00",
+          "usage": {
+            "cache_write_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 4433,
+            "output_tokens": 1495,
+            "reasoning_tokens": 1334
+          }
+        }
+      ],
+      "repair_attempted": false,
+      "usage": {
+        "cache_write_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 4433,
+        "output_tokens": 1495,
+        "reasoning_tokens": 1334
+      },
+      "validation_status": "valid"
+    },
+    {
+      "actual_cost_usd": 0.0011828,
+      "cache_key": "22f4f01870da07ec7334e281ff19fa79a1fc0b76fa1b3972911040d0bec7ce04",
+      "estimated_cost_usd": 0.0027333,
+      "logical_trial_id": "janus-development-smoke-003:corrected-smoke-2048-00",
+      "provider_attempts": [
+        {
+          "actual_cost_usd": 0.0011828,
+          "estimated_cost_usd": 0.0027333,
+          "incomplete_details": null,
+          "kind": "primary",
+          "provider_request_id": "resp_008bfff6c24dce23016ad5be241a2887d2ae4780ace33bd6c0",
+          "response_status": "completed",
+          "timestamp_utc": "2026-10-19T06:52:36.421758+00:00",
+          "usage": {
+            "cache_write_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 4433,
+            "output_tokens": 1479,
+            "reasoning_tokens": 1313
+          }
+        }
+      ],
+      "repair_attempted": false,
+      "usage": {
+        "cache_write_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 4433,
+        "output_tokens": 1479,
+        "reasoning_tokens": 1313
+      },
+      "validation_status": "valid"
+    },
+    {
+      "actual_cost_usd": 0.0009762000000000001,
+      "cache_key": "09710edaddeaef5e55575940946ff17ed4714a5a8e195d7507eaccf0ea98d7b6",
+      "estimated_cost_usd": 0.0027328,
+      "logical_trial_id": "janus-development-smoke-004:corrected-smoke-2048-00",
+      "provider_attempts": [
+        {
+          "actual_cost_usd": 0.0009762000000000001,
+          "estimated_cost_usd": 0.0027328,
+          "incomplete_details": null,
+          "kind": "primary",
+          "provider_request_id": "resp_02e2b61e5463fc1c016ad5be34af2087d284451360581b398a",
+          "response_status": "completed",
+          "timestamp_utc": "2026-10-19T06:52:49.060023+00:00",
+          "usage": {
+            "cache_write_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 4432,
+            "output_tokens": 1066,
+            "reasoning_tokens": 889
+          }
+        }
+      ],
+      "repair_attempted": false,
+      "usage": {
+        "cache_write_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 4432,
+        "output_tokens": 1066,
+        "reasoning_tokens": 889
+      },
+      "validation_status": "valid"
+    }
+  ]
+}

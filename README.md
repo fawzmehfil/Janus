@@ -17,9 +17,10 @@ controls, hidden-set commitment, and local scientific-validity gates pass.
 The first five-world paid development smoke completed under its one-cent limit,
 but every 512-token primary response ended before visible output and required a
 repair. A one-world, 2,048-token development diagnostic then returned one direct
-schema-valid response with no repair. Hidden evaluation remains blocked pending
-a clean five-world rerun under the corrected setting and the approved $0.02
-cumulative ceiling.
+schema-valid response with no repair. The corrected five-world rerun subsequently
+returned five direct valid responses with no repairs or retries. The provider
+gate is complete; hidden evaluation remains blocked only while its 300-request
+runner and final zero-network budget preflight are prepared and reviewed.
 
 The release evidence, exact commands, hashes, cost estimates, limitations, and
 recommendation are in [`reports/readiness.md`](reports/readiness.md).
