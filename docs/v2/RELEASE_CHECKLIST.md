@@ -1,0 +1,48 @@
+# Janus v2 release checklist
+
+## Before hidden generation
+
+- [x] v1 release tag and artifacts unchanged.
+- [x] Five objective-specific public-information baselines hash-frozen.
+- [x] Nested bundle CV and learning curves reviewed.
+- [x] Action-role and unique-optimum audit passes.
+- [x] Matched causal contrast audit passes.
+- [x] Structural OOD reversal audit passes in at least two families.
+- [x] Precision allocation and minimum detectable effect frozen.
+- [x] Preregistered robustness and falsification matrix passes locally.
+- [ ] Prompt and schema versions frozen after external rationale review.
+- [ ] Exact model IDs, endpoints, SDKs, decoding settings, output limits, and dated pricing frozen.
+- [ ] Each provider passes at least 98 valid responses among at least 100 representative development trials.
+- [ ] Prospective per-provider and cumulative budgets approved.
+- [ ] Fresh hidden-v2 seed commitment committed against the frozen code revision.
+
+## Before unblinding
+
+- [ ] Same hidden-v2 public manifest used for all four models.
+- [ ] No retries or provider-specific prompt changes.
+- [ ] Raw responses and usage metadata immutable and hash-manifested.
+- [ ] Budget stops and all other failures retained.
+- [ ] Four blinded response manifests committed to version control.
+- [ ] Commit hash recorded in the unblinding command.
+
+## Publication archive
+
+- [ ] Raw provider responses and response manifests.
+- [ ] Revealed private worlds, states, scenarios, seed, and oracle samples.
+- [ ] Public observations and exact model/pricing metadata.
+- [ ] Frozen baselines, prompts, schemas, configs, analysis code, tables, and figures.
+- [ ] Environment lock, container recipe, CI logs, LICENSE, and CITATION.cff.
+- [ ] Independent auditor runs `uv run janus v2-audit ARCHIVE` from a separately controlled checkout.
+- [ ] Claims remain limited to comparative behavior on Janus v2.
+
+Build the archive only after unblinding and final analysis:
+
+```bash
+uv run janus v2-archive \
+  --response-commit PRE_UNBLIND_COMMIT \
+  --response-manifest PATH_TO_MANIFEST_1 \
+  --response-manifest PATH_TO_MANIFEST_2 \
+  --response-manifest PATH_TO_MANIFEST_3 \
+  --response-manifest PATH_TO_MANIFEST_4 \
+  --output artifacts/janus-v2-reproduction
+```

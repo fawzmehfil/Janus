@@ -1,0 +1,233 @@
+{
+  "bundles_with_contrast": 15,
+  "maximum_public_distance": 1.25,
+  "pair_count": 28,
+  "pairs": [
+    {
+      "bundle_id": "calibration-bundle-000",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0011",
+      "public_distance": 0.5499328809069078,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0045"
+    },
+    {
+      "bundle_id": "calibration-bundle-000",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0011",
+      "public_distance": 1.1954117817608325,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0070"
+    },
+    {
+      "bundle_id": "calibration-bundle-000",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0032",
+      "public_distance": 0.9224211011511078,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0070"
+    },
+    {
+      "bundle_id": "calibration-bundle-001",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0017",
+      "public_distance": 0.5624974313619987,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0047"
+    },
+    {
+      "bundle_id": "calibration-bundle-001",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0017",
+      "public_distance": 1.063659238901776,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0047"
+    },
+    {
+      "bundle_id": "calibration-bundle-001",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0017",
+      "public_distance": 0.9382130356777322,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0003"
+    },
+    {
+      "bundle_id": "calibration-bundle-002",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0073",
+      "public_distance": 0.3986516556814618,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0022"
+    },
+    {
+      "bundle_id": "calibration-bundle-002",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0025",
+      "public_distance": 0.9082704507064047,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0050"
+    },
+    {
+      "bundle_id": "calibration-bundle-003",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0058",
+      "public_distance": 0.5680860633954894,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0051"
+    },
+    {
+      "bundle_id": "calibration-bundle-003",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0056",
+      "public_distance": 0.9852425687987637,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0031"
+    },
+    {
+      "bundle_id": "calibration-bundle-004",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0063",
+      "public_distance": 0.504389016177273,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0061"
+    },
+    {
+      "bundle_id": "calibration-bundle-004",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0040",
+      "public_distance": 1.0783887267783097,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0032"
+    },
+    {
+      "bundle_id": "calibration-bundle-005",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0042",
+      "public_distance": 0.6540806421609969,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0046"
+    },
+    {
+      "bundle_id": "calibration-bundle-005",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0046",
+      "public_distance": 0.9972646823542533,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0021"
+    },
+    {
+      "bundle_id": "calibration-bundle-006",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0034",
+      "public_distance": 0.5315406765912022,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0024"
+    },
+    {
+      "bundle_id": "calibration-bundle-006",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0075",
+      "public_distance": 1.1592084981366768,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0002"
+    },
+    {
+      "bundle_id": "calibration-bundle-007",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0069",
+      "public_distance": 0.5002956944348623,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0025"
+    },
+    {
+      "bundle_id": "calibration-bundle-007",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0026",
+      "public_distance": 1.158439658629765,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0007"
+    },
+    {
+      "bundle_id": "calibration-bundle-008",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0041",
+      "public_distance": 0.5852007892695327,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0074"
+    },
+    {
+      "bundle_id": "calibration-bundle-009",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0040",
+      "public_distance": 0.5878873839362362,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0054"
+    },
+    {
+      "bundle_id": "calibration-bundle-009",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0045",
+      "public_distance": 1.025270318728722,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0004"
+    },
+    {
+      "bundle_id": "calibration-bundle-010",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0046",
+      "public_distance": 0.480193053289431,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0040"
+    },
+    {
+      "bundle_id": "calibration-bundle-011",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0022",
+      "public_distance": 0.44186479047821964,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0044"
+    },
+    {
+      "bundle_id": "calibration-bundle-012",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0072",
+      "public_distance": 0.5011953482937485,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0071"
+    },
+    {
+      "bundle_id": "calibration-bundle-012",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0003",
+      "public_distance": 1.1077479601276532,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0078"
+    },
+    {
+      "bundle_id": "calibration-bundle-013",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0043",
+      "public_distance": 0.724493188816838,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0077"
+    },
+    {
+      "bundle_id": "calibration-bundle-013",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-demand_increase-0074",
+      "public_distance": 1.104914948831785,
+      "right_action": "transaction_tax",
+      "right_world_id": "calibration-momentum_demand-0013"
+    },
+    {
+      "bundle_id": "calibration-bundle-014",
+      "left_action": "do_nothing",
+      "left_world_id": "calibration-supply_shortage-0051",
+      "public_distance": 0.8108496385012652,
+      "right_action": "collusion_investigation",
+      "right_world_id": "calibration-seller_collusion-0030"
+    }
+  ],
+  "passed": true,
+  "schema_version": "janus-v2-matched-contrasts-v1"
+}

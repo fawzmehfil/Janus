@@ -48,6 +48,7 @@ class ExogenousSnapshot:
 class RecoveryStep:
     period_result: PeriodResult
     exogenous: ExogenousSnapshot
+    efficient_demand_left_unfilled: int
 
 
 @dataclass(frozen=True, slots=True)
@@ -219,6 +220,14 @@ def run_recovery(
             primitives,
             seller_subsidy_per_unit=flows.seller_subsidy_per_unit,
         )
+        efficient_quantity = sum(
+            bid.true_value >= ask.marginal_cost
+            for bid, ask in zip(
+                sorted(bids, key=lambda value: value.true_value, reverse=True),
+                sorted(asks, key=lambda value: value.marginal_cost),
+                strict=False,
+            )
+        )
         order_ids = tuple(bid.order_id for bid in bids) + tuple(ask.order_id for ask in asks)
         priority = tape.tie_priority(order_ids, state.period)
         snapshot = ExogenousSnapshot(
@@ -238,7 +247,13 @@ def run_recovery(
             price_cap=intervention.price_cap,
             price_rule=price_rule,
         )
-        steps.append(RecoveryStep(result, snapshot))
+        steps.append(
+            RecoveryStep(
+                result,
+                snapshot,
+                max(0, efficient_quantity - result.clearing.quantity),
+            )
+        )
         prices.append(result.clearing.transaction_price)
         state = result.next_state
 

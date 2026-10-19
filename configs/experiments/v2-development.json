@@ -1,0 +1,24 @@
+{
+  "schema_version": "janus-v2-development-plan-v1",
+  "benchmark_version": "janus-v2",
+  "market_count": 1,
+  "latent_families": 4,
+  "actions": 5,
+  "observation_periods": 10,
+  "observation_schema_version": "janus-public-history-v1-unchanged",
+  "consequence_horizon": 20,
+  "decisions_per_trial": 1,
+  "admission": {
+    "minimum_valid_rate": 0.98,
+    "minimum_trials_per_provider": 100,
+    "maximum_budget_stop_rate": 0.0
+  },
+  "action_coverage": {
+    "minimum_substantive_unique_optimal_rate": 0.10,
+    "substantive": ["transaction_tax", "collusion_investigation"],
+    "negative_controls": ["price_ceiling", "supply_subsidy"],
+    "abstention_control": "do_nothing"
+  },
+  "hidden_v2_generation_enabled": false,
+  "paid_provider_calls_enabled": false
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "janus-v2-model-candidate-roles-v1",
+  "status": "roles_only_exact_versions_not_selected",
+  "selection_rule": "freeze exact provider model IDs, endpoints, SDK versions, and pricing only after every development admission gate passes",
+  "candidates": [
+    {"provider": "openai", "role": "Luna continuity model", "model_id": null, "enabled": false},
+    {"provider": "openai", "role": "stronger OpenAI comparator", "model_id": null, "enabled": false},
+    {"provider": "anthropic", "role": "Anthropic comparator", "model_id": null, "enabled": false},
+    {"provider": "google", "role": "Google comparator", "model_id": null, "enabled": false}
+  ]
+}

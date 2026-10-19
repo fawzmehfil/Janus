@@ -1,0 +1,7 @@
+{
+  "schema_version": "janus-v2-pricing-freeze-v1",
+  "status": "pending_exact_model_selection",
+  "effective_date": null,
+  "models": [],
+  "rule": "Populate from official provider price pages immediately before separately authorized development admission; commit the snapshot and its source URLs before any paid call."
+}

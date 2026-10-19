@@ -16,6 +16,7 @@ dependencies = [
   "pydantic>=2.9,<3",
   "scikit-learn>=1.7,<2",
   "scipy>=1.15,<2",
+  "statsmodels>=0.14,<1",
 ]
 
 [project.scripts]
@@ -50,5 +51,5 @@ strict = true
 packages = ["janus"]
 
 [[tool.mypy.overrides]]
-module = ["scipy.*", "sklearn.*"]
+module = ["pandas.*", "scipy.*", "sklearn.*", "statsmodels.*"]
 ignore_missing_imports = true
