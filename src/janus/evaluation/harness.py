@@ -136,9 +136,29 @@ class EvaluationRunner:
             return ResponseStatus.TIMEOUT
         if reply.refusal:
             return ResponseStatus.REFUSAL
+        if reply.response_status == "incomplete":
+            return ResponseStatus.INCOMPLETE
         if reply.raw_text is None or not reply.raw_text.strip():
             return ResponseStatus.EMPTY
         return ResponseStatus.SCHEMA_FAILURE
+
+    @staticmethod
+    def _attempt_record(
+        kind: str,
+        reply: ProviderReply,
+        estimate: float,
+        actual: float,
+    ) -> dict[str, Any]:
+        return {
+            "kind": kind,
+            "response_status": reply.response_status,
+            "incomplete_details": reply.incomplete_details,
+            "usage": reply.usage.model_dump(mode="json"),
+            "estimated_cost_usd": estimate,
+            "actual_cost_usd": actual,
+            "provider_request_id": reply.provider_request_id,
+            "timestamp_utc": reply.timestamp_utc,
+        }
 
     def run(self, observation: bytes, context: TrialContext) -> TrialArtifact:
         request = self._request(observation, context)
@@ -154,6 +174,9 @@ class EvaluationRunner:
         errors: list[str] = []
         decision: Decision | None = None
         status = self._status(reply)
+        if status is ResponseStatus.INCOMPLETE:
+            reason = (reply.incomplete_details or {}).get("reason", "unknown")
+            errors.append(f"provider response incomplete: {reason}")
         if status is ResponseStatus.SCHEMA_FAILURE:
             try:
                 decision = parse_decision(reply.raw_text or "")
@@ -162,6 +185,8 @@ class EvaluationRunner:
                 errors.append(str(error))
 
         repair_reply: ProviderReply | None = None
+        repair_estimate: float | None = None
+        repair_actual: float | None = None
         repair_blocked_by_budget = False
         if (
             decision is None
@@ -216,6 +241,21 @@ class EvaluationRunner:
             parsed_decision=None if decision is None else decision.model_dump(mode="json"),
             validation_status=status.value,
             validation_errors=errors,
+            provider_attempts=[
+                self._attempt_record("primary", reply, estimate, actual),
+                *(
+                    []
+                    if repair_reply is None
+                    else [
+                        self._attempt_record(
+                            "repair",
+                            repair_reply,
+                            repair_estimate or 0.0,
+                            repair_actual or 0.0,
+                        )
+                    ]
+                ),
+            ],
             repair_attempted=repair_reply is not None,
             repair_blocked_by_budget=repair_blocked_by_budget,
             fallback_action=(

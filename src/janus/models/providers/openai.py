@@ -57,6 +57,8 @@ def make_openai_sdk_transport(
             return {
                 "model": payload["model"],
                 "output_text": None,
+                "status": None,
+                "incomplete_details": None,
                 "timed_out": True,
                 "usage": {},
             }
@@ -127,6 +129,7 @@ class OpenAIResponsesAdapter:
         input_details = usage.get("input_tokens_details", {})
         output_details = usage.get("output_tokens_details", {})
         raw_text = response.get("output_text")
+        incomplete_details = response.get("incomplete_details")
         cached_tokens = int(input_details.get("cached_tokens", 0))
         cache_write_tokens = int(input_details.get("cache_write_tokens", 0))
         total_input_tokens = int(usage.get("input_tokens", 0))
@@ -134,6 +137,10 @@ class OpenAIResponsesAdapter:
             raw_text=None if raw_text is None else str(raw_text),
             returned_model_id=str(response.get("model", request.settings.requested_model_id)),
             provider_request_id=None if response.get("id") is None else str(response["id"]),
+            response_status=(None if response.get("status") is None else str(response["status"])),
+            incomplete_details=(
+                incomplete_details if isinstance(incomplete_details, dict) else None
+            ),
             usage=UsageRecord(
                 input_tokens=max(0, total_input_tokens - cached_tokens - cache_write_tokens),
                 cached_input_tokens=cached_tokens,

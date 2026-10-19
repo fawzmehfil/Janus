@@ -15,7 +15,11 @@ from janus.evaluation.harness import (
 )
 from janus.evaluation.hidden_release import prepare_hidden_seed
 from janus.evaluation.openai_smoke import (
+    DIAGNOSTIC_MAXIMUM_OUTPUT_TOKENS,
     SMOKE_MAXIMUM_CEILING_USD,
+    SMOKE_STAGE,
+    diagnostic_preflight,
+    run_openai_diagnostic,
     run_openai_smoke,
     smoke_preflight,
     validate_smoke_ceiling,
@@ -148,6 +152,10 @@ def test_one_fixed_repair_and_invalid_fallback_are_explicit(tmp_path) -> None:
     repaired = runner(tmp_path / "repaired", repaired_adapter).run(b"{}", context())
     assert repaired["validation_status"] == ResponseStatus.REPAIRED.value
     assert repaired["repair_attempted"] is True
+    assert [attempt["kind"] for attempt in repaired["provider_attempts"]] == [
+        "primary",
+        "repair",
+    ]
     assert repaired_adapter.call_count == 2
 
     invalid_adapter = MockAdapter(("not json", "still not json"))
@@ -165,6 +173,38 @@ def test_one_fixed_repair_and_invalid_fallback_are_explicit(tmp_path) -> None:
     timeout = runner(tmp_path / "timeout", timeout_adapter).run(b"{}", context())
     assert timeout["validation_status"] == ResponseStatus.TIMEOUT.value
     assert timeout_adapter.call_count == 1
+
+
+def test_incomplete_response_is_recorded_and_never_repaired(tmp_path) -> None:
+    adapter = MockAdapter(
+        (None, valid_decision()),
+        incomplete_indices=frozenset({0}),
+        usage=UsageRecord(input_tokens=10, output_tokens=100, reasoning_tokens=100),
+    )
+    artifact = runner(tmp_path, adapter).run(b"{}", context())
+    assert artifact["validation_status"] == ResponseStatus.INCOMPLETE.value
+    assert artifact["validation_errors"] == ["provider response incomplete: max_output_tokens"]
+    assert artifact["repair_attempted"] is False
+    assert artifact["fallback_action"] == "do_nothing"
+    assert adapter.call_count == 1
+    assert artifact["provider_attempts"] == [
+        {
+            "kind": "primary",
+            "response_status": "incomplete",
+            "incomplete_details": {"reason": "max_output_tokens"},
+            "usage": {
+                "input_tokens": 10,
+                "cached_input_tokens": 0,
+                "cache_write_tokens": 0,
+                "output_tokens": 100,
+                "reasoning_tokens": 100,
+            },
+            "estimated_cost_usd": 0.0,
+            "actual_cost_usd": 0.0,
+            "provider_request_id": "mock-world-1:r0-0",
+            "timestamp_utc": "2026-10-17T00:00:00Z",
+        }
+    ]
 
 
 def test_budget_preflight_stops_before_adapter_call(tmp_path) -> None:
@@ -215,6 +255,8 @@ def test_openai_adapter_builds_strict_payload_and_maps_usage_without_network() -
             "id": "response-1",
             "model": "gpt-6-luna-2026-10-01",
             "output_text": valid_decision(),
+            "status": "completed",
+            "incomplete_details": None,
             "usage": {
                 "input_tokens": 100,
                 "input_tokens_details": {"cached_tokens": 20, "cache_write_tokens": 10},
@@ -245,6 +287,8 @@ def test_openai_adapter_builds_strict_payload_and_maps_usage_without_network() -
     assert seen[0]["prompt_cache_options"] == {"mode": "explicit"}
     assert seen[0]["store"] is False
     assert reply.returned_model_id == "gpt-6-luna-2026-10-01"
+    assert reply.response_status == "completed"
+    assert reply.incomplete_details is None
     assert reply.usage.input_tokens == 70
     assert reply.usage.cached_input_tokens == 20
     assert reply.usage.cache_write_tokens == 10
@@ -266,6 +310,8 @@ def test_official_sdk_transport_disables_retries_and_sets_idempotency_without_ne
             return {
                 "id": "response-fake",
                 "model": "gpt-6-luna",
+                "status": "incomplete",
+                "incomplete_details": {"reason": "max_output_tokens"},
                 "output": [{"content": [{"type": "refusal"}]}],
                 "usage": {},
             }
@@ -300,6 +346,8 @@ def test_official_sdk_transport_disables_retries_and_sets_idempotency_without_ne
     }
     assert captured["request"]["extra_headers"] == {"Idempotency-Key": "world-1:r0"}
     assert response["refusal"] is True
+    assert response["status"] == "incomplete"
+    assert response["incomplete_details"] == {"reason": "max_output_tokens"}
 
 
 def test_openai_smoke_preflight_and_fake_run_never_need_a_key(tmp_path) -> None:
@@ -320,6 +368,8 @@ def test_openai_smoke_preflight_and_fake_run_never_need_a_key(tmp_path) -> None:
             "id": f"response-{len(calls)}",
             "model": "gpt-6-luna",
             "output_text": valid_decision(),
+            "status": "completed",
+            "incomplete_details": None,
             "usage": {
                 "input_tokens": 4_000,
                 "input_tokens_details": {"cached_tokens": 0, "cache_write_tokens": 0},
@@ -362,6 +412,103 @@ def test_openai_smoke_preflight_and_fake_run_never_need_a_key(tmp_path) -> None:
     assert replay_manifest["invocation_cost_usd"] == pytest.approx(0)
 
 
+def test_one_world_diagnostic_accounts_for_prior_spend_and_disables_repair(
+    tmp_path,
+) -> None:
+    project_root = Path(__file__).resolve().parents[1]
+    prior_output = tmp_path / "prior-smoke"
+    prior_cache = prior_output / "cache"
+    prior_cache.mkdir(parents=True)
+    prior_spend = 0.0042324
+    (prior_cache / "prior.json").write_text(
+        json.dumps({"stage": SMOKE_STAGE, "actual_cost_usd": prior_spend})
+    )
+    output = tmp_path / "diagnostic"
+    plan = diagnostic_preflight(project_root, prior_output, output)
+    assert plan["network_calls"] == 0
+    assert plan["paid_api_calls"] == 0
+    assert plan["trial_count"] == 1
+    assert plan["repairs_allowed"] is False
+    assert plan["prior_smoke_spend_usd"] == pytest.approx(prior_spend)
+    assert plan["settings"]["maximum_output_tokens"] == DIAGNOSTIC_MAXIMUM_OUTPUT_TOKENS
+    assert plan["fits_ceiling"] is True
+
+    calls = []
+
+    def transport(payload):
+        calls.append(payload)
+        return {
+            "id": "diagnostic-response-1",
+            "model": "gpt-6-luna",
+            "output_text": valid_decision(),
+            "status": "completed",
+            "incomplete_details": None,
+            "usage": {
+                "input_tokens": 4_000,
+                "input_tokens_details": {"cached_tokens": 0, "cache_write_tokens": 0},
+                "output_tokens": 800,
+                "output_tokens_details": {"reasoning_tokens": 650},
+            },
+        }
+
+    passed, manifest_path = run_openai_diagnostic(
+        project_root,
+        prior_output,
+        output,
+        transport=transport,
+        sdk_version="test-sdk",
+    )
+    assert passed
+    assert len(calls) == 1
+    assert calls[0]["max_output_tokens"] == DIAGNOSTIC_MAXIMUM_OUTPUT_TOKENS
+    manifest = json.loads(manifest_path.read_text())
+    assert manifest["repairs_allowed"] is False
+    assert manifest["provider_calls_this_invocation"] == 1
+    assert manifest["trial"]["validation_status"] == ResponseStatus.VALID.value
+    assert manifest["trial"]["repair_attempted"] is False
+    assert manifest["trial"]["provider_attempts"][0]["usage"]["reasoning_tokens"] == 650
+    assert manifest["cumulative_cost_usd"] > prior_spend
+    assert manifest["cumulative_cost_usd"] < SMOKE_MAXIMUM_CEILING_USD
+
+
+def test_one_world_diagnostic_preserves_incomplete_without_repair(tmp_path) -> None:
+    project_root = Path(__file__).resolve().parents[1]
+    calls = []
+
+    def transport(payload):
+        calls.append(payload)
+        return {
+            "id": "diagnostic-incomplete-1",
+            "model": "gpt-6-luna",
+            "output_text": "",
+            "status": "incomplete",
+            "incomplete_details": {"reason": "max_output_tokens"},
+            "usage": {
+                "input_tokens": 4_000,
+                "input_tokens_details": {"cached_tokens": 0, "cache_write_tokens": 0},
+                "output_tokens": DIAGNOSTIC_MAXIMUM_OUTPUT_TOKENS,
+                "output_tokens_details": {"reasoning_tokens": DIAGNOSTIC_MAXIMUM_OUTPUT_TOKENS},
+            },
+        }
+
+    passed, manifest_path = run_openai_diagnostic(
+        project_root,
+        tmp_path / "no-prior",
+        tmp_path / "incomplete",
+        transport=transport,
+        sdk_version="test-sdk",
+    )
+    assert passed is False
+    assert len(calls) == 1
+    manifest = json.loads(manifest_path.read_text())
+    assert manifest["provider_calls_this_invocation"] == 1
+    assert manifest["status_counts"][ResponseStatus.INCOMPLETE.value] == 1
+    assert manifest["trial"]["repair_attempted"] is False
+    assert manifest["trial"]["provider_attempts"][0]["incomplete_details"] == {
+        "reason": "max_output_tokens"
+    }
+
+
 def test_openai_smoke_rejects_any_ceiling_above_one_cent() -> None:
     with pytest.raises(ValueError, match="at most"):
         validate_smoke_ceiling(0.010001)
@@ -375,6 +522,10 @@ def test_openai_smoke_cli_refuses_wrong_confirmation_or_missing_key(monkeypatch)
         main(["openai-smoke", "--confirm-spend", "WRONG"])
     with pytest.raises(SystemExit, match="OPENAI_API_KEY is not set"):
         main(["openai-smoke", "--confirm-spend", "ONE_CENT_SMOKE"])
+    with pytest.raises(SystemExit, match="confirm-spend"):
+        main(["openai-diagnostic", "--confirm-spend", "WRONG"])
+    with pytest.raises(SystemExit, match="OPENAI_API_KEY is not set"):
+        main(["openai-diagnostic", "--confirm-spend", "ONE_CENT_DIAGNOSTIC"])
 
 
 def test_mock_phase0e_run_is_zero_cost_and_replayable(tmp_path) -> None:

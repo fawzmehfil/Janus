@@ -14,8 +14,12 @@ Phases 0A–0E are complete and benchmark v1 is frozen as an evaluation-ready
 local release. The accounting kernel, mechanisms, counterfactual oracle,
 ambiguity bundles, baselines, strict mock/provider harness, hard budget
 controls, hidden-set commitment, and local scientific-validity gates pass.
-No paid model call has been made. A five-world paid smoke test is technically
-eligible but remains a separately authorized next step.
+The first five-world paid development smoke completed under its one-cent limit,
+but every 512-token primary response ended before visible output and required a
+repair. A one-world, 2,048-token development diagnostic then returned one direct
+schema-valid response with no repair. Hidden evaluation remains blocked pending
+a clean five-world rerun under the corrected setting and a separately approved
+$0.02 cumulative ceiling.
 
 The release evidence, exact commands, hashes, cost estimates, limitations, and
 recommendation are in [`reports/readiness.md`](reports/readiness.md).

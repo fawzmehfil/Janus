@@ -36,6 +36,9 @@ SMOKE_MAXIMUM_CEILING_USD = 0.01
 SMOKE_MAXIMUM_OUTPUT_TOKENS = 512
 SMOKE_REASONING_EFFORT = "high"
 SPEND_CONFIRMATION = "ONE_CENT_SMOKE"
+DIAGNOSTIC_STAGE = "openai-development-diagnostic-2048-v1"
+DIAGNOSTIC_MAXIMUM_OUTPUT_TOKENS = 2_048
+DIAGNOSTIC_CONFIRMATION = "ONE_CENT_DIAGNOSTIC"
 
 
 @dataclass(frozen=True, slots=True)
@@ -102,6 +105,12 @@ def smoke_settings(sdk_version: str) -> ModelSettings:
         sdk_version=sdk_version,
         prompt_version="primary-v1",
         schema_version=SCHEMA_VERSION,
+    )
+
+
+def diagnostic_settings(sdk_version: str) -> ModelSettings:
+    return smoke_settings(sdk_version).model_copy(
+        update={"maximum_output_tokens": DIAGNOSTIC_MAXIMUM_OUTPUT_TOKENS}
     )
 
 
@@ -173,16 +182,72 @@ def smoke_preflight(
     }
 
 
-def _existing_spend(cache_directory: Path) -> float:
+def _existing_spend(cache_directory: Path, *, stage: str = SMOKE_STAGE) -> float:
     total = 0.0
     for path in sorted(cache_directory.glob("*.json")):
         payload = _json_object(path)
-        if payload.get("stage") == SMOKE_STAGE:
+        if payload.get("stage") == stage:
             actual_cost = payload.get("actual_cost_usd", 0.0)
             if not isinstance(actual_cost, int | float):
                 raise ValueError(f"invalid cached cost in {path}")
             total += float(actual_cost)
     return total
+
+
+def diagnostic_preflight(
+    project_root: Path,
+    prior_output_directory: Path,
+    output_directory: Path,
+    *,
+    ceiling_usd: float = SMOKE_MAXIMUM_CEILING_USD,
+    sdk_version: str = "preflight-only",
+) -> dict[str, Any]:
+    """Plan one no-repair development request against cumulative project spend."""
+
+    validate_smoke_ceiling(ceiling_usd)
+    prompt, pricing, _, prompt_path, pricing_path = _components(
+        project_root,
+        sdk_version,
+    )
+    settings = diagnostic_settings(sdk_version)
+    item = development_smoke_inputs()[0]
+    usage = conservative_usage_estimate(
+        _request_input_bytes(prompt, item.observation),
+        settings.maximum_output_tokens,
+    )
+    estimate = pricing.cost(usage)
+    prior_smoke_spend = _existing_spend(prior_output_directory / "cache")
+    prior_diagnostic_spend = _existing_spend(
+        output_directory / "cache",
+        stage=DIAGNOSTIC_STAGE,
+    )
+    cumulative_spend = prior_smoke_spend + prior_diagnostic_spend
+    return {
+        "schema_version": "janus-openai-diagnostic-preflight-v1",
+        "network_calls": 0,
+        "paid_api_calls": 0,
+        "development_only": True,
+        "trial_count": 1,
+        "repairs_allowed": False,
+        "ceiling_usd": ceiling_usd,
+        "prior_smoke_spend_usd": prior_smoke_spend,
+        "prior_diagnostic_spend_usd": prior_diagnostic_spend,
+        "cumulative_spend_before_usd": cumulative_spend,
+        "remaining_before_usd": ceiling_usd - cumulative_spend,
+        "request_cost_upper_bound_usd": estimate,
+        "cumulative_upper_bound_usd": cumulative_spend + estimate,
+        "fits_ceiling": cumulative_spend + estimate <= ceiling_usd,
+        "settings": settings.model_dump(mode="json"),
+        "prompt_sha256": _sha256(prompt_path.read_bytes()),
+        "schema_sha256": _sha256(decision_schema_bytes()),
+        "pricing_sha256": _sha256(pricing_path.read_bytes()),
+        "trial": {
+            "world_id": item.world_id,
+            "observation_sha256": _sha256(item.observation),
+            "input_token_upper_bound": usage.input_tokens,
+            "output_token_ceiling": usage.output_tokens,
+        },
+    }
 
 
 def _write_manifest(output_directory: Path, payload: dict[str, Any]) -> Path:
@@ -323,5 +388,143 @@ def run_openai_smoke(
             }
             for item in artifacts
         ],
+    }
+    return passed, _write_manifest(output_directory, manifest)
+
+
+def run_openai_diagnostic(
+    project_root: Path,
+    prior_output_directory: Path,
+    output_directory: Path,
+    *,
+    transport: OpenAITransport,
+    sdk_version: str,
+    ceiling_usd: float = SMOKE_MAXIMUM_CEILING_USD,
+) -> tuple[bool, Path]:
+    """Run one 2,048-token development request without syntax repair."""
+
+    validate_smoke_ceiling(ceiling_usd)
+    started_at = _utc_now()
+    prompt, pricing, _, prompt_path, pricing_path = _components(
+        project_root,
+        sdk_version,
+    )
+    settings = diagnostic_settings(sdk_version)
+    preflight = diagnostic_preflight(
+        project_root,
+        prior_output_directory,
+        output_directory,
+        ceiling_usd=ceiling_usd,
+        sdk_version=sdk_version,
+    )
+    if not preflight["fits_ceiling"]:
+        raise BudgetExceeded("diagnostic request does not fit the cumulative local ceiling")
+
+    prior_smoke_spend = float(preflight["prior_smoke_spend_usd"])
+    prior_diagnostic_spend = float(preflight["prior_diagnostic_spend_usd"])
+    cumulative_prior_spend = prior_smoke_spend + prior_diagnostic_spend
+    diagnostic_stage_ceiling = ceiling_usd - prior_smoke_spend
+    budget = BudgetLedger(
+        pricing=pricing,
+        total_ceiling_usd=ceiling_usd,
+        stage_ceilings_usd={DIAGNOSTIC_STAGE: diagnostic_stage_ceiling},
+        total_spent_usd=cumulative_prior_spend,
+        stage_spent_usd={DIAGNOSTIC_STAGE: prior_diagnostic_spend},
+    )
+    counted_transport = CountingTransport(transport)
+    adapter = OpenAIResponsesAdapter(
+        counted_transport,
+        sdk_version=sdk_version,
+        timestamp=_utc_now,
+    )
+    cache_directory = output_directory / "cache"
+    runner = EvaluationRunner(
+        adapter=adapter,
+        settings=settings,
+        prompt=prompt,
+        cache=FileTrialCache(cache_directory),
+        budget=budget,
+        allow_repair=False,
+    )
+
+    artifact: dict[str, Any] | None = None
+    budget_stop: str | None = None
+    fatal_error_type: str | None = None
+    item = development_smoke_inputs()[0]
+    try:
+        artifact = dict(
+            runner.run(
+                item.observation,
+                TrialContext(
+                    world_id=item.world_id,
+                    replicate_id="diagnostic-2048-00",
+                    benchmark_version="janus-v1",
+                    stage=DIAGNOSTIC_STAGE,
+                ),
+            )
+        )
+    except BudgetExceeded as error:
+        budget_stop = str(error)
+    except Exception as error:  # provider errors stop the stage; no blind retries
+        fatal_error_type = type(error).__name__
+
+    completed = artifact is not None
+    passed = (
+        artifact is not None
+        and artifact["validation_status"] == ResponseStatus.VALID.value
+        and counted_transport.call_count <= 1
+        and budget.total_spent_usd <= ceiling_usd + 1e-12
+        and budget_stop is None
+        and fatal_error_type is None
+    )
+    cache_hashes = {
+        path.name: _sha256(path.read_bytes()) for path in sorted(cache_directory.glob("*.json"))
+    }
+    status_counts = {
+        status.value: int(artifact is not None and artifact["validation_status"] == status.value)
+        for status in ResponseStatus
+    }
+    manifest = {
+        "schema_version": "janus-openai-diagnostic-run-v1",
+        "stage": DIAGNOSTIC_STAGE,
+        "started_at_utc": started_at,
+        "finished_at_utc": _utc_now(),
+        "completed": completed,
+        "passed": passed,
+        "development_only": True,
+        "hidden_artifacts_accessed": False,
+        "trial_count_planned": 1,
+        "trial_count_completed": int(completed),
+        "provider_calls_this_invocation": counted_transport.call_count,
+        "repairs_allowed": False,
+        "prior_smoke_spend_usd": prior_smoke_spend,
+        "prior_diagnostic_spend_usd": prior_diagnostic_spend,
+        "invocation_cost_usd": budget.total_spent_usd - cumulative_prior_spend,
+        "cumulative_cost_usd": budget.total_spent_usd,
+        "local_hard_ceiling_usd": ceiling_usd,
+        "budget_stop": budget_stop,
+        "fatal_error_type": fatal_error_type,
+        "settings": settings.model_dump(mode="json"),
+        "prompt_sha256": _sha256(prompt_path.read_bytes()),
+        "schema_sha256": _sha256(decision_schema_bytes()),
+        "pricing_sha256": _sha256(pricing_path.read_bytes()),
+        "preflight": preflight,
+        "returned_model_ids": ([] if artifact is None else [str(artifact["returned_model_id"])]),
+        "status_counts": status_counts,
+        "response_artifact_sha256": cache_hashes,
+        "trial": (
+            None
+            if artifact is None
+            else {
+                "logical_trial_id": artifact["logical_trial_id"],
+                "cache_key": artifact["cache_key"],
+                "validation_status": artifact["validation_status"],
+                "repair_attempted": artifact["repair_attempted"],
+                "actual_cost_usd": artifact["actual_cost_usd"],
+                "estimated_cost_usd": artifact["estimated_cost_usd"],
+                "usage": artifact["usage"],
+                "provider_attempts": artifact["provider_attempts"],
+            }
+        ),
     }
     return passed, _write_manifest(output_directory, manifest)

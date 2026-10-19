@@ -12,6 +12,7 @@ class MockAdapter:
     replies: tuple[str | None, ...]
     refusal_indices: frozenset[int] = frozenset()
     timeout_indices: frozenset[int] = frozenset()
+    incomplete_indices: frozenset[int] = frozenset()
     usage: UsageRecord = field(default_factory=UsageRecord)
     call_count: int = 0
 
@@ -23,6 +24,10 @@ class MockAdapter:
             raw_text=raw,
             returned_model_id="janus-mock-v1",
             provider_request_id=f"mock-{request.logical_trial_id}-{index}",
+            response_status="incomplete" if index in self.incomplete_indices else "completed",
+            incomplete_details=(
+                {"reason": "max_output_tokens"} if index in self.incomplete_indices else None
+            ),
             usage=self.usage,
             refusal=index in self.refusal_indices,
             timed_out=index in self.timeout_indices,

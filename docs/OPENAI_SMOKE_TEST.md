@@ -1,5 +1,24 @@
 # OpenAI development smoke test
 
+## Observed first-run outcome
+
+The first authorized run completed on 2026-10-19 for $0.0042324 and did not
+access hidden evaluation data. All five primary responses were empty and all
+five fixed repairs returned schema-valid JSON, producing ten provider calls.
+Those repaired decisions are not scientifically usable because the repair saw
+an empty primary response. Do not rerun the original smoke blindly.
+
+The harness now records provider `status`, `incomplete_details`, and usage for
+each primary and repair request. An `incomplete` response is a terminal status
+and is never sent to syntax repair.
+
+The one-request diagnostic completed on 2026-10-19 for $0.0010983. It returned
+one direct schema-valid response with no repair, using 4,433 input tokens and
+1,310 total output tokens, of which 1,136 were reasoning tokens. Cumulative
+recorded spend is $0.0053307. The 2,048-token setting is therefore frozen for a
+clean five-world rerun; see Decision 0007. Do not run that stage until a $0.02
+cumulative local and provider hard limit is separately approved.
+
 This run validates the live provider boundary using five development
 observations. It does not access or score the hidden evaluation. The command is
 deliberately impossible to start without both a process-local API key and an
@@ -104,3 +123,38 @@ test -z "${OPENAI_API_KEY-}" && echo "OPENAI_API_KEY removed"
 ```
 
 Close the terminal afterward if it is no longer needed.
+
+## 6. One-request 2,048-token diagnostic
+
+Run the free preflight first. It includes the immutable $0.0042324 smoke spend
+when checking the original cumulative one-cent ceiling:
+
+```bash
+uv run janus openai-diagnostic-preflight \
+  --max-usd 0.01 \
+  --prior-output artifacts/openai-smoke-v1 \
+  --output artifacts/openai-diagnostic-2048-v1
+```
+
+The frozen preflight bound is $0.0027333 for one request and $0.0069657
+cumulative. The diagnostic uses the first development observation, preserves
+`reasoning.effort=high`, raises only `max_output_tokens` to 2,048, permits no
+repair, and never reads hidden artifacts.
+
+After exporting a new key as described in section 2, run:
+
+```bash
+uv run janus openai-diagnostic \
+  --max-usd 0.01 \
+  --confirm-spend ONE_CENT_DIAGNOSTIC \
+  --prior-output artifacts/openai-smoke-v1 \
+  --output artifacts/openai-diagnostic-2048-v1
+```
+
+Unset the key afterward. A passing diagnostic must contain one direct `valid`
+response, one provider call, no repair, and cumulative cost below $0.01. If it
+is still `incomplete`, stop and revise the output allowance under a new budget;
+do not continue to the hidden evaluation.
+
+This diagnostic has now passed. Its immutable manifest is under
+`artifacts/openai-diagnostic-2048-v1/manifests/`; do not submit it again.

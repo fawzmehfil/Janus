@@ -50,6 +50,7 @@ class Decision(StrictFrozenModel):
 class ResponseStatus(StrEnum):
     VALID = "valid"
     REPAIRED = "repaired"
+    INCOMPLETE = "incomplete"
     SCHEMA_FAILURE = "schema_failure"
     REFUSAL = "refusal"
     TIMEOUT = "timeout"
@@ -108,6 +109,8 @@ class ProviderReply(StrictFrozenModel):
     raw_text: str | None = None
     returned_model_id: str
     provider_request_id: str | None = None
+    response_status: str | None = None
+    incomplete_details: dict[str, object] | None = None
     usage: UsageRecord = Field(default_factory=UsageRecord)
     refusal: bool = False
     timed_out: bool = False
