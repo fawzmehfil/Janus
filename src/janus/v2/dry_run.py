@@ -12,7 +12,7 @@ from janus.evaluation.harness import PromptRenderer
 from janus.models.base import ModelSettings, TrialContext
 from janus.scenarios.generator import CandidateGeneratorConfig, generate_candidates
 from janus.storage.cache import FileTrialCache
-from janus.v2 import BENCHMARK_VERSION, SCHEMA_VERSION
+from janus.v2 import BENCHMARK_VERSION, PROMPT_VERSION, SCHEMA_VERSION
 from janus.v2.contracts import decision_schema_bytes
 from janus.v2.harness import V2EvaluationRunner
 from janus.v2.providers import AnthropicV2Adapter, GoogleV2Adapter, OpenAIV2Adapter
@@ -64,7 +64,7 @@ def _transports() -> dict[str, Any]:
 
 def run_v2_dry_run(output_directory: Path, project_root: Path) -> bool:
     prompt_path = project_root / "configs/prompts/primary-v2.txt"
-    prompt = PromptRenderer(prompt_path.read_text(), version="primary-v2")
+    prompt = PromptRenderer(prompt_path.read_text(), version=PROMPT_VERSION)
     world = generate_candidates(
         "v2-dry-run", CandidateGeneratorConfig(candidates_per_family=1, root_seed=20261020)
     )[0]

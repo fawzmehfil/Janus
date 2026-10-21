@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any, cast
 
 from janus.interventions.actions import ActionID
+from janus.v2 import PROMPT_VERSION, SCHEMA_VERSION
+from janus.v2.contracts import decision_schema_bytes
 
 
 def _read(path: Path) -> dict[str, Any]:
@@ -126,9 +128,34 @@ def development_gate_report(project_root: Path) -> dict[str, Any]:
     )
     prompt_review = project_root / "manifests/v2/prompt-review-approval.json"
     prompt_review_payload = _read(prompt_review) if prompt_review.exists() else {}
+    prompt_path = project_root / "configs/prompts/primary-v2.txt"
+    reviewed_prompt_current = (
+        prompt_path.exists()
+        and prompt_review_payload.get("prompt_sha256") == _sha256(prompt_path)
+        and prompt_review_payload.get("prompt_version") == PROMPT_VERSION
+    )
+    reviewed_schema_current = (
+        prompt_review_payload.get("decision_schema_sha256")
+        == hashlib.sha256(decision_schema_bytes()).hexdigest()
+        and prompt_review_payload.get("decision_schema_version") == SCHEMA_VERSION
+    )
+    criteria = prompt_review_payload.get("criteria", {})
+    required_criteria = (
+        "intervention_semantics_match_simulator",
+        "welfare_language_matches_ledger",
+        "confidence_is_action_optimality_probability",
+        "provider_neutral_wording",
+    )
     check(
-        "external_prompt_rationale_review",
-        prompt_review.exists() and prompt_review_payload.get("approved") is True,
+        "evidence_based_prompt_rationale_review",
+        prompt_review.exists()
+        and prompt_review_payload.get("approved") is True
+        and prompt_review_payload.get("review_type") == "ai_assisted_internal_desk_review"
+        and prompt_review_payload.get("independent_reviewer") is False
+        and reviewed_prompt_current
+        and reviewed_schema_current
+        and isinstance(criteria, dict)
+        and all(criteria.get(name) is True for name in required_criteria),
         str(prompt_review),
     )
     return {

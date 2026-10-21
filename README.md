@@ -42,8 +42,10 @@ the action-margin and matched-contrast audits pass, the structural OOD pilot
 finds cue-to-action reversals, and a four-role offline provider dry run passes.
 The precision analysis selects 40 independent bundles and 300 trials per model.
 No hidden-v2 set has been generated and no v2 paid provider call has been made.
-Exact model versions and the four 100-trial provider admission runs remain
-intentional gates; `uv run janus v2-gates` reports them.
+An evidence-based, hash-pinned internal prompt review is complete, with the lack
+of independent external review disclosed. Exact model versions and the four
+100-trial provider admission runs remain intentional gates; `uv run janus
+v2-gates` reports them.
 
 ## Local setup
 

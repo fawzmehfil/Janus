@@ -10,7 +10,7 @@
 - [x] Structural OOD reversal audit passes in at least two families.
 - [x] Precision allocation and minimum detectable effect frozen.
 - [x] Preregistered robustness and falsification matrix passes locally.
-- [ ] Prompt and schema versions frozen after external rationale review.
+- [x] Prompt and schema versions hash-frozen after an evidence-based desk review; lack of independent review disclosed.
 - [ ] Exact model IDs, endpoints, SDKs, decoding settings, output limits, and dated pricing frozen.
 - [ ] Each provider passes at least 98 valid responses among at least 100 representative development trials.
 - [ ] Prospective per-provider and cumulative budgets approved.

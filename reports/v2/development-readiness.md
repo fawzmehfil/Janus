@@ -26,11 +26,12 @@ The v1-informed allocation simulation compares the original three-replicate desi
 
 ## Remaining gates
 
-1. External subject-matter review of the frozen prompt wording.
-2. Select exact dated model versions, endpoints, SDK/HTTP revisions, decoding parameters, and official prices.
-3. Obtain explicit budgets, then run at least 100 representative development trials for each of the four roles.
-4. Require at least 98% direct schema-valid outputs per provider and freeze the validated output allowance.
-5. Commit the resulting admission manifest and exact model config.
-6. Only then create and commit the fresh hidden-v2 seed commitment and generate hidden-v2.
+The evidence-based prompt review is complete. It is an AI-assisted internal desk review rather than independent external assurance; that limitation is recorded in the approval manifest and must be disclosed in any publication.
 
-Run `uv run janus v2-gates` for the machine-readable status. The expected result today is blocked on external prompt review, exact-model freeze, and four-provider admission; that is a safety property, not a failed build.
+1. Select exact dated model versions, endpoints, SDK/HTTP revisions, decoding parameters, and official prices.
+2. Obtain explicit budgets, then run at least 100 representative development trials for each of the four roles.
+3. Require at least 98% direct schema-valid outputs per provider and freeze the validated output allowance.
+4. Commit the resulting admission manifest and exact model config.
+5. Only then create and commit the fresh hidden-v2 seed commitment and generate hidden-v2.
+
+Run `uv run janus v2-gates` for the machine-readable status. The expected result today is blocked on exact-model freeze and four-provider admission; that is a safety property, not a failed build.

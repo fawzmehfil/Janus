@@ -12,7 +12,7 @@ from janus.evaluation.budget import BudgetLedger
 from janus.evaluation.harness import PromptRenderer
 from janus.models.base import ModelAdapter, ModelSettings, TrialContext
 from janus.storage.cache import FileTrialCache
-from janus.v2 import BENCHMARK_VERSION
+from janus.v2 import BENCHMARK_VERSION, PROMPT_VERSION
 from janus.v2.harness import V2EvaluationRunner
 
 
@@ -36,7 +36,7 @@ def run_v2_collection(
     if public.get("benchmark_version") != BENCHMARK_VERSION:
         raise ValueError("collection requires the frozen hidden-v2 public manifest")
     prompt_path = project_root / "configs/prompts/primary-v2.txt"
-    prompt = PromptRenderer(prompt_path.read_text(), version="primary-v2")
+    prompt = PromptRenderer(prompt_path.read_text(), version=PROMPT_VERSION)
     cache_directory = output_directory / "cache"
     record_directory = output_directory / "records"
     record_directory.mkdir(parents=True, exist_ok=True)
