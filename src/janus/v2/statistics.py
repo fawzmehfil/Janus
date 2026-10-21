@@ -352,13 +352,13 @@ def fit_hierarchical_mixed_model(rows: list[dict[str, Any]]) -> dict[str, Any]:
             **dict(zip(variance_names, variance_values, strict=True)),
             "residual": float(result.scale),
         },
-        "provider_family_marginal_means": {
+        "model_family_marginal_means": {
             family: float(frame.loc[frame["model_family"] == family, "decision_loss"].mean())
             for family in sorted(frame["model_family"].unique())
         },
         "identifiability_note": (
-            "Provider family is reported as a marginal summary because Anthropic and Google "
-            "each contribute one model; it is not interpreted as a provider-family causal effect."
+            "Model family and architecture descriptors are descriptive because the four-model "
+            "panel cannot identify their independent causal effects."
         ),
     }
 

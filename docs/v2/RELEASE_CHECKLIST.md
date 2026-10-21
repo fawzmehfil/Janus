@@ -12,14 +12,14 @@
 - [x] Preregistered robustness and falsification matrix passes locally.
 - [x] Prompt and schema versions hash-frozen after an evidence-based desk review; lack of independent review disclosed.
 - [ ] Exact model IDs, endpoints, SDKs, decoding settings, output limits, and dated pricing frozen.
-- [ ] Each provider passes at least 98 valid responses among at least 100 representative development trials.
-- [ ] Prospective per-provider and cumulative budgets approved.
+- [ ] Each model passes at least 98 direct valid responses among 100 representative development trials.
+- [x] Prospective per-model and $5 cumulative budgets frozen; each paid invocation still requires explicit confirmation.
 - [ ] Fresh hidden-v2 seed commitment committed against the frozen code revision.
 
 ## Before unblinding
 
 - [ ] Same hidden-v2 public manifest used for all four models.
-- [ ] No retries or provider-specific prompt changes.
+- [ ] No retries or model-specific prompt changes.
 - [ ] Raw responses and usage metadata immutable and hash-manifested.
 - [ ] Budget stops and all other failures retained.
 - [ ] Four blinded response manifests committed to version control.

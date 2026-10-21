@@ -73,6 +73,30 @@ def make_google_http_transport(api_key: str, *, timeout_seconds: float = 120.0) 
     )
 
 
+def make_fireworks_http_transport(
+    api_key: str,
+    *,
+    base_url: str = "https://api.fireworks.ai/inference/v1",
+    timeout_seconds: float = 120.0,
+) -> Transport:
+    """Build the frozen Fireworks OpenAI-compatible chat transport.
+
+    The caller supplies the credential explicitly. The transport performs one
+    HTTP request and never retries.
+    """
+
+    if not api_key.strip():
+        raise ValueError("FIREWORKS_API_KEY is empty")
+    normalized = base_url.rstrip("/")
+    if not normalized.startswith("https://"):
+        raise ValueError("Fireworks base URL must use HTTPS")
+    return _http_json_transport(
+        f"{normalized}/chat/completions",
+        {"Authorization": f"Bearer {api_key}"},
+        timeout_seconds=timeout_seconds,
+    )
+
+
 def _text(value: object) -> str | None:
     return None if value is None else str(value)
 
@@ -87,6 +111,18 @@ def _rate_limits(response: dict[str, Any]) -> dict[str, str] | None:
         if "rate" in str(key).lower() or "retry" in str(key).lower()
     }
     return result or None
+
+
+def _request_id(response: dict[str, Any]) -> str | None:
+    if response.get("id") is not None:
+        return str(response["id"])
+    headers = response.get("_headers")
+    if not isinstance(headers, dict):
+        return None
+    for key, value in headers.items():
+        if str(key).lower() in {"x-request-id", "request-id"}:
+            return str(value)
+    return None
 
 
 def _is_rate_limited(response: dict[str, Any]) -> bool:
@@ -243,7 +279,7 @@ class OpenAIV2Adapter(NativeStructuredAdapter):
         return ProviderReply(
             raw_text=_text(response.get("output_text")),
             returned_model_id=_text(response.get("model")) or request.settings.requested_model_id,
-            provider_request_id=_text(response.get("id")),
+            provider_request_id=_request_id(response),
             response_status=_text(response.get("status")),
             incomplete_details=(
                 response.get("incomplete_details")
@@ -257,6 +293,90 @@ class OpenAIV2Adapter(NativeStructuredAdapter):
                 reasoning_tokens=int(output_details.get("reasoning_tokens", 0)),
             ),
             refusal=bool(response.get("refusal", False)),
+            latency_ms=latency_ms,
+            rate_limit_metadata=_rate_limits(response),
+            timestamp_utc=self.timestamp(),
+        )
+
+
+class FireworksV2Adapter(NativeStructuredAdapter):
+    """Fireworks Chat Completions adapter with native JSON-schema decoding."""
+
+    provider = "fireworks"
+
+    def payload(self, request: ModelRequest) -> dict[str, Any]:
+        import json
+
+        messages = [
+            {"role": role, "content": content.decode()}
+            for role, content in (
+                ("system", request.system_input),
+                ("developer", request.developer_input),
+                ("user", request.user_input),
+            )
+            if content
+        ]
+        payload: dict[str, Any] = {
+            "model": request.settings.requested_model_id,
+            "messages": messages,
+            "max_tokens": request.settings.maximum_output_tokens,
+            "response_format": {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": request.settings.schema_version,
+                    "schema": json.loads(request.output_schema),
+                },
+            },
+            "stream": False,
+        }
+        if request.settings.reasoning_effort is not None:
+            payload["reasoning_effort"] = request.settings.reasoning_effort
+        if request.settings.temperature is not None:
+            payload["temperature"] = request.settings.temperature
+        if request.settings.top_p is not None:
+            payload["top_p"] = request.settings.top_p
+        return payload
+
+    def parse(
+        self, response: dict[str, Any], request: ModelRequest, latency_ms: float
+    ) -> ProviderReply:
+        choices = response.get("choices", [])
+        choice = choices[0] if isinstance(choices, list) and choices else {}
+        choice = choice if isinstance(choice, dict) else {}
+        message = choice.get("message", {})
+        message = message if isinstance(message, dict) else {}
+        usage = response.get("usage", {})
+        usage = usage if isinstance(usage, dict) else {}
+        prompt_details = usage.get("prompt_tokens_details", {})
+        completion_details = usage.get("completion_tokens_details", {})
+        prompt_details = prompt_details if isinstance(prompt_details, dict) else {}
+        completion_details = (
+            completion_details if isinstance(completion_details, dict) else {}
+        )
+        cached = int(prompt_details.get("cached_tokens", 0) or 0)
+        prompt_tokens = int(usage.get("prompt_tokens", 0) or 0)
+        finish_reason = _text(choice.get("finish_reason"))
+        incomplete: dict[str, object] | None = (
+            {"reason": "max_output_tokens"} if finish_reason == "length" else None
+        )
+        refusal = bool(message.get("refusal")) or finish_reason in {
+            "content_filter",
+            "safety",
+        }
+        return ProviderReply(
+            raw_text=_text(message.get("content")),
+            returned_model_id=_text(response.get("model"))
+            or request.settings.requested_model_id,
+            provider_request_id=_request_id(response),
+            response_status="incomplete" if incomplete else "completed",
+            incomplete_details=incomplete,
+            usage=UsageRecord(
+                input_tokens=max(0, prompt_tokens - cached),
+                cached_input_tokens=cached,
+                output_tokens=int(usage.get("completion_tokens", 0) or 0),
+                reasoning_tokens=int(completion_details.get("reasoning_tokens", 0) or 0),
+            ),
+            refusal=refusal,
             latency_ms=latency_ms,
             rate_limit_metadata=_rate_limits(response),
             timestamp_utc=self.timestamp(),

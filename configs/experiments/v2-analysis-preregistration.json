@@ -15,9 +15,11 @@
     "pairwise_model_tests": "two-sided paired t-tests on bundle-mean decision-loss contrasts",
     "multiplicity": "Holm family-wise correction across all six model pairs",
     "hierarchical_terms": {
-      "fixed": ["model", "provider_family", "mechanism_family", "OOD", "model:family", "model:OOD", "provider_family:OOD"],
+      "fixed": ["model", "mechanism_family", "OOD", "model:family", "model:OOD"],
       "nested_random": ["bundle", "world_within_bundle", "replicate_within_world"]
-    }
+    },
+    "model_descriptors": ["model_family", "total_parameters_b", "active_parameters_b", "architecture", "reasoning_mode", "serving_configuration"],
+    "descriptor_interpretation": "Model descriptors are reported and used for prespecified descriptive stratification; with four models they are not interpreted as separately identified causal effects."
   },
   "intention_to_evaluate": {
     "include": ["valid", "incomplete", "refusal", "timeout", "rate_limited", "transport_error", "budget_stop", "schema_failure", "empty"],

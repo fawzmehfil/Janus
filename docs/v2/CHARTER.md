@@ -18,7 +18,7 @@ The first term is information loss; the second is decision loss. This prevents u
 
 ## Comparators and failures
 
-Four model roles are preregistered: Luna continuity, a stronger OpenAI model, one Anthropic model, and one Google model. Exact dated versions are frozen only after development admission testing. Every role sees the same semantic prompt, schema, observations, worlds, and replicate schedule through native provider wrappers.
+Four open-weight models are preregistered: OpenAI gpt-oss-120b, DeepSeek V4.1 Flash, GLM 5.3 Flash, and NVIDIA Nemotron Lightning 3.5 30B-A3B. All are served through the frozen Fireworks standard-serverless configuration. Every model sees the same semantic prompt, schema, observations, worlds, replicate schedule, reasoning-effort setting, and output allowance.
 
 The intention-to-evaluate analysis preserves incomplete outputs, refusals, timeouts, rate limits, transport failures, schema failures, empty responses, and budget stops. There are no silent retries. The primary invalid-response rule assigns the worst action utility in that world; valid-only and do-nothing assignment are sensitivities.
 
@@ -28,4 +28,4 @@ Permitted claims compare model behavior on Janus v2. The benchmark does not esta
 
 ## Stop rules
 
-Hidden-v2 generation is blocked until all local design gates pass. Paid development is blocked until a dated model/pricing freeze and explicit user budget approval. Hidden evaluation is blocked until every provider achieves at least 98% valid structured output on at least 100 representative development trials, output allowances are frozen, and prospective cost ceilings are approved. Unblinding is blocked until all four response manifests are committed.
+Hidden-v2 generation is blocked until all local design gates pass. Paid development is blocked until a dated model/pricing freeze and explicit user budget approval. Hidden evaluation is blocked until every model achieves at least 98% direct valid structured output on 100 representative development trials, output allowances are frozen, and prospective cost ceilings are approved. Unblinding is blocked until all four response manifests are committed.

@@ -2,4 +2,4 @@
 
 Status: accepted.
 
-Each provider receives identical prompt and schema bytes through its native structured-output API. The adapter layer changes transport representation only. Semantic hashes, returned model IDs, usage, latency, and all failure states are recorded. Retries are disabled so providers are compared on first-attempt behavior and cost.
+Each model receives identical prompt and schema bytes through the same frozen Fireworks JSON-schema transport. Semantic hashes, returned model IDs, usage, latency, request IDs, cost, and all failure states are recorded. Retries are disabled so models are compared on first-attempt behavior and cost.

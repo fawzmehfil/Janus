@@ -116,6 +116,8 @@ def run_v2_unblinding(
     }
     v1_validity = _read(project_root / "artifacts/phase0d-release/validity_report.json")
     heuristic = PublicHeuristicPolicy(**dict(v1_validity["baselines"]["heuristic_parameters"]))
+    model_config = _read(project_root / "configs/models/v2-candidates.json")
+    descriptors = {str(row["role"]): row for row in model_config["candidates"]}
     rows = []
     response_hashes = {}
     for manifest_path, manifest in zip(response_manifests, manifests, strict=True):
@@ -128,6 +130,7 @@ def run_v2_unblinding(
             artifact = _read(path)
             artifacts[(str(artifact["world_id"]), str(artifact["replicate_id"]))] = artifact
         response_hashes[str(manifest["model_role"])] = _sha256(manifest_path)
+        descriptor = descriptors[str(manifest["model_role"])]
         for trial_key in sorted(trial_sets[0]):
             artifact = artifacts[trial_key]
             world_id = trial_key[0]
@@ -151,8 +154,13 @@ def run_v2_unblinding(
             rows.append(
                 {
                     "model_id": str(manifest["requested_model_id"]),
-                    "model_family": str(manifest["provider"]),
+                    "model_family": str(descriptor["model_family"]),
                     "model_role": str(manifest["model_role"]),
+                    "total_parameters_b": descriptor["total_parameters_b"],
+                    "active_parameters_b": descriptor["active_parameters_b"],
+                    "architecture": str(descriptor["architecture"]),
+                    "reasoning_mode": descriptor["reasoning_mode"],
+                    "serving_configuration": descriptor["serving_configuration"],
                     "bundle_id": str(world["opaque_bundle_id"]),
                     "world_id": world_id,
                     "replicate_id": trial_key[1],

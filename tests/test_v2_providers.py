@@ -7,7 +7,12 @@ import pytest
 from janus.models.base import ModelRequest, ModelSettings, TrialContext
 from janus.v2 import SCHEMA_VERSION
 from janus.v2.contracts import decision_schema_bytes
-from janus.v2.providers import AnthropicV2Adapter, GoogleV2Adapter, OpenAIV2Adapter
+from janus.v2.providers import (
+    AnthropicV2Adapter,
+    FireworksV2Adapter,
+    GoogleV2Adapter,
+    OpenAIV2Adapter,
+)
 
 
 def request(provider: str) -> ModelRequest:
@@ -64,11 +69,37 @@ def test_native_payloads_preserve_structured_schema() -> None:
     openai = OpenAIV2Adapter(noop, sdk_version="x", timestamp=timestamp)
     anthropic = AnthropicV2Adapter(noop, sdk_version="x", timestamp=timestamp)
     google = GoogleV2Adapter(noop, sdk_version="x", timestamp=timestamp)
+    fireworks = FireworksV2Adapter(noop, sdk_version="x", timestamp=timestamp)
     assert openai.payload(request("openai"))["text"]["format"]["type"] == "json_schema"
     assert anthropic.payload(request("anthropic"))["output_config"]["format"]["type"] == (
         "json_schema"
     )
     assert google.payload(request("google"))["response_format"]["mime_type"] == ("application/json")
+    assert fireworks.payload(request("fireworks"))["response_format"]["type"] == "json_schema"
+
+
+def test_fireworks_reply_normalizes_usage_and_request_id() -> None:
+    adapter = FireworksV2Adapter(
+        lambda payload: {
+            "id": "fw-request-1",
+            "model": payload["model"],
+            "choices": [{"finish_reason": "stop", "message": {"content": valid_text()}}],
+            "usage": {
+                "prompt_tokens": 20,
+                "completion_tokens": 7,
+                "prompt_tokens_details": {"cached_tokens": 5},
+                "completion_tokens_details": {"reasoning_tokens": 3},
+            },
+        },
+        sdk_version="x",
+        timestamp=lambda: "now",
+    )
+    reply = adapter.complete(request("fireworks"))
+    assert reply.provider_request_id == "fw-request-1"
+    assert reply.usage.input_tokens == 15
+    assert reply.usage.cached_input_tokens == 5
+    assert reply.usage.output_tokens == 7
+    assert reply.usage.reasoning_tokens == 3
 
 
 @pytest.mark.parametrize("provider", ["openai", "anthropic", "google"])

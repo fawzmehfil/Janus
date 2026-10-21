@@ -89,22 +89,37 @@ def development_gate_report(project_root: Path) -> dict[str, Any]:
     )
 
     model_config = _read(project_root / "configs/models/v2-candidates.json")
-    exact_models_frozen = all(
-        row.get("enabled") is True and isinstance(row.get("model_id"), str)
-        for row in model_config["candidates"]
-    )
-    check(
-        "exact_model_versions_frozen",
-        exact_models_frozen,
-        "intentionally pending until development admission tests pass",
-    )
-    admission_path = project_root / "manifests/v2/provider-admission.json"
+    exact_models_frozen = False
+    admission_path = project_root / "manifests/v2/model-admission.json"
     admissions = _read(admission_path) if admission_path.exists() else {}
+    configured_ids = {
+        str(row.get("model_id"))
+        for row in model_config["candidates"]
+        if row.get("enabled") is True and isinstance(row.get("model_id"), str)
+    }
+    admitted_ids = {
+        str(row.get("requested_model_id"))
+        for row in admissions.get("models", [])
+        if row.get("admitted") is True
+    }
+    exact_models_frozen = (
+        model_config.get("status") == "exact_candidate_settings_frozen_for_admission"
+        and len(configured_ids) == 4
+        and configured_ids == admitted_ids
+    )
     check(
-        "four_provider_admission_gate",
+        "exact_models_admitted_and_frozen",
+        exact_models_frozen,
+        str(admission_path),
+    )
+    check(
+        "four_model_admission_gate",
         admission_path.exists()
-        and len(admissions.get("providers", [])) == 4
-        and all(row.get("admitted") for row in admissions.get("providers", [])),
+        and len(admissions.get("models", [])) == 4
+        and all(
+            row.get("admitted") and row.get("model_identity_match")
+            for row in admissions.get("models", [])
+        ),
         str(admission_path),
     )
     ood_path = project_root / "reports/v2/structural-ood.json"

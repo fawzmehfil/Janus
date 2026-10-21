@@ -1,4 +1,4 @@
-"""Four-provider, zero-network Janus v2 harness dry run."""
+"""Four-model, zero-network Fireworks Janus v2 harness dry run."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ from janus.storage.cache import FileTrialCache
 from janus.v2 import BENCHMARK_VERSION, PROMPT_VERSION, SCHEMA_VERSION
 from janus.v2.contracts import decision_schema_bytes
 from janus.v2.harness import V2EvaluationRunner
-from janus.v2.providers import AnthropicV2Adapter, GoogleV2Adapter, OpenAIV2Adapter
+from janus.v2.providers import FireworksV2Adapter
 
 
 def _decision() -> str:
@@ -37,29 +37,21 @@ def _decision() -> str:
 
 def _transports() -> dict[str, Any]:
     raw = _decision()
-    return {
-        "openai": lambda payload: {
-            "id": "openai-mock-1",
+    def response(payload: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "id": "fireworks-mock-1",
             "model": payload["model"],
-            "status": "completed",
-            "output_text": raw,
-            "usage": {"input_tokens": 800, "output_tokens": 90},
-        },
-        "anthropic": lambda payload: {
-            "id": "anthropic-mock-1",
-            "model": payload["model"],
-            "stop_reason": "end_turn",
-            "content": [{"type": "text", "text": raw}],
-            "usage": {"input_tokens": 800, "output_tokens": 90},
-        },
-        "google": lambda payload: {
-            "id": "google-mock-1",
-            "model": payload["model"],
-            "status": "completed",
-            "output_text": raw,
-            "usage_metadata": {"prompt_token_count": 800, "candidates_token_count": 90},
-        },
-    }
+            "choices": [{"finish_reason": "stop", "message": {"content": raw}}],
+            "usage": {"prompt_tokens": 800, "completion_tokens": 90},
+        }
+
+    roles = (
+        "gpt_oss_120b",
+        "deepseek_v4p1_flash",
+        "glm_5p3_flash",
+        "nemotron_lightning_3p5_30b_a3b",
+    )
+    return {role: response for role in roles}
 
 
 def run_v2_dry_run(output_directory: Path, project_root: Path) -> bool:
@@ -83,22 +75,13 @@ def run_v2_dry_run(output_directory: Path, project_root: Path) -> bool:
     transports = _transports()
     timestamp = lambda: "2026-10-19T00:00:00+00:00"  # noqa: E731
     adapters = {
-        "openai_luna": OpenAIV2Adapter(
-            transports["openai"], sdk_version="mock", timestamp=timestamp
-        ),
-        "openai_strong": OpenAIV2Adapter(
-            transports["openai"], sdk_version="mock", timestamp=timestamp
-        ),
-        "anthropic": AnthropicV2Adapter(
-            transports["anthropic"], sdk_version="mock", timestamp=timestamp
-        ),
-        "google": GoogleV2Adapter(transports["google"], sdk_version="mock", timestamp=timestamp),
+        role: FireworksV2Adapter(transport, sdk_version="mock", timestamp=timestamp)
+        for role, transport in transports.items()
     }
     artifacts = []
     for role, adapter in adapters.items():
-        provider = "openai" if role.startswith("openai_") else role
         settings = ModelSettings(
-            provider=provider,
+            provider="fireworks",
             requested_model_id=f"{role}-offline-mock",
             endpoint="local://mock",
             temperature=0,
@@ -127,7 +110,7 @@ def run_v2_dry_run(output_directory: Path, project_root: Path) -> bool:
         artifacts.append(
             {
                 "model_role": role,
-                "provider": provider,
+                "provider": "fireworks",
                 "status": first["validation_status"],
                 "semantic_input_sha256": first["semantic_input_sha256"],
                 "cache_replay_identical": first == replay,
@@ -147,7 +130,7 @@ def run_v2_dry_run(output_directory: Path, project_root: Path) -> bool:
         "paid_api_calls": 0,
         "prompt_sha256": prompt.hash,
         "schema_sha256": hashlib.sha256(decision_schema_bytes()).hexdigest(),
-        "provider_results": artifacts,
+        "model_results": artifacts,
     }
     output_directory.mkdir(parents=True, exist_ok=True)
     (output_directory / "run_manifest.json").write_text(

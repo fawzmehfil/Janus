@@ -50,6 +50,11 @@ from janus.v2.archive import build_reproduction_archive
 from janus.v2.audit import audit_reproduction_archive, development_gate_report
 from janus.v2.development import run_v2_local_development
 from janus.v2.dry_run import run_v2_dry_run
+from janus.v2.live import (
+    CONFIRMATIONS,
+    FIREWORKS_MODEL_ROLES,
+    run_fireworks_collection,
+)
 from janus.v2.ood_pilot import run_structural_ood_pilot
 from janus.v2.precision import run_precision_analysis
 from janus.v2.publication import generate_v2_publication_outputs
@@ -335,6 +340,34 @@ def build_parser() -> argparse.ArgumentParser:
         "v2-dry-run", help="exercise all four model roles with injected offline transports"
     )
     v2_dry_run.add_argument("--output", type=Path, default=Path("artifacts/v2-dry-run"))
+    for command, stage, help_text in (
+        ("v2-smoke", "smoke-v2", "run or resume a five-trial Fireworks transport smoke test"),
+        (
+            "v2-collect-development",
+            "development-v2",
+            "run or resume one model's 100-trial Fireworks admission collection",
+        ),
+        (
+            "v2-collect-hidden",
+            "hidden-v2",
+            "run or resume one admitted model's 300-trial hidden collection",
+        ),
+    ):
+        live = subparsers.add_parser(command, help=help_text)
+        live.set_defaults(v2_live_stage=stage)
+        live.add_argument("--model-role", required=True, choices=FIREWORKS_MODEL_ROLES)
+        live.add_argument("--max-usd", required=True, type=float)
+        live.add_argument("--timeout-seconds", type=float, default=120.0)
+        live.add_argument(
+            "--base-url",
+            default="https://api.fireworks.ai/inference/v1",
+            help="must match the frozen Fireworks base URL",
+        )
+        live.add_argument(
+            "--confirm-spend",
+            required=True,
+            help=f"must equal {CONFIRMATIONS[stage]!r}",
+        )
     subparsers.add_parser(
         "v2-gates", help="report all prerequisites that still block hidden-v2 generation"
     )
@@ -371,7 +404,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     v2_admission.add_argument("manifests", nargs=4, type=Path)
     v2_admission.add_argument(
-        "--output", type=Path, default=Path("manifests/v2/provider-admission.json")
+        "--output", type=Path, default=Path("manifests/v2/model-admission.json")
     )
     v2_archive = subparsers.add_parser(
         "v2-archive", help="build the complete post-unblinding reproduction directory"
@@ -643,6 +676,25 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.command == "v2-dry-run":
         passed = run_v2_dry_run(args.output, Path.cwd())
         print(json.dumps({"output": str(args.output), "passed": passed}, sort_keys=True))
+        return 0 if passed else 2
+    if args.command in {"v2-smoke", "v2-collect-development", "v2-collect-hidden"}:
+        api_key = os.environ.get("FIREWORKS_API_KEY", "")
+        output = Path.cwd() / "artifacts/v2-fireworks" / args.v2_live_stage / args.model_role
+        try:
+            passed, manifest = run_fireworks_collection(
+                Path.cwd(),
+                stage=args.v2_live_stage,
+                role=args.model_role,
+                output_directory=output,
+                api_key=api_key,
+                confirmation=args.confirm_spend,
+                ceiling_usd=args.max_usd,
+                base_url=args.base_url,
+                timeout_seconds=args.timeout_seconds,
+            )
+        except ValueError as error:
+            raise SystemExit(f"refusing paid Fireworks run: {error}") from error
+        print(json.dumps({"manifest": str(manifest), "passed": passed}, sort_keys=True))
         return 0 if passed else 2
     if args.command == "v2-gates":
         report = development_gate_report(Path.cwd())

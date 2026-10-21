@@ -1,0 +1,21 @@
+{
+  "schema_version": "janus-v2-pricing-freeze-v2",
+  "status": "frozen_for_paid_admission",
+  "retrieval_date": "2026-10-21",
+  "currency": "USD",
+  "unit": "per_million_tokens",
+  "provider": "Fireworks AI",
+  "base_url": "https://api.fireworks.ai/inference/v1",
+  "endpoint": "/chat/completions",
+  "api_surface": "OpenAI-compatible Chat Completions API",
+  "project_maximum_usd": 5.0,
+  "expected_project_cost_usd": {"minimum": 2.0, "maximum": 3.0},
+  "models": [
+    {"role": "gpt_oss_120b", "model_id": "accounts/fireworks/models/gpt-oss-120b", "service_tier": "standard-serverless", "quantization": "MXFP4 weights with 8-bit serving metadata", "input_per_million_usd": 0.15, "cached_input_per_million_usd": 0.015, "output_per_million_usd": 0.6, "maximum_project_allocation_usd": 1.5, "retrieval_date": "2026-10-21", "source_url": "https://docs.fireworks.ai/serverless/pricing"},
+    {"role": "deepseek_v4p1_flash", "model_id": "accounts/fireworks/models/deepseek-v4p1-flash", "service_tier": "standard-serverless", "quantization": "not reported in the Fireworks model card", "input_per_million_usd": 0.3, "cached_input_per_million_usd": 0.006, "output_per_million_usd": 1.2, "maximum_project_allocation_usd": 1.5, "retrieval_date": "2026-10-21", "source_url": "https://docs.fireworks.ai/serverless/pricing"},
+    {"role": "glm_5p3_flash", "model_id": "accounts/fireworks/models/glm-5p3-flash", "service_tier": "standard-serverless", "quantization": "not reported in the Fireworks model card", "input_per_million_usd": 0.15, "cached_input_per_million_usd": 0.03, "output_per_million_usd": 0.5, "maximum_project_allocation_usd": 1.0, "retrieval_date": "2026-10-21", "source_url": "https://docs.fireworks.ai/serverless/pricing"},
+    {"role": "nemotron_lightning_3p5_30b_a3b", "model_id": "accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b", "service_tier": "standard-serverless", "quantization": "not reported in the Fireworks model card", "input_per_million_usd": 0.05, "cached_input_per_million_usd": 0.01, "output_per_million_usd": 0.2, "maximum_project_allocation_usd": 1.0, "retrieval_date": "2026-10-21", "source_url": "https://docs.fireworks.ai/serverless/pricing"}
+  ],
+  "reasoning_billing_note": "Reasoning tokens are included in billed output tokens and are not charged a second time by the local ledger.",
+  "source_urls": ["https://docs.fireworks.ai/serverless/pricing", "https://docs.fireworks.ai/guides/querying-text-models", "https://docs.fireworks.ai/structured-responses/structured-response-formatting", "https://docs.fireworks.ai/guides/reasoning"]
+}

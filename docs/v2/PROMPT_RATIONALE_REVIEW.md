@@ -1,6 +1,6 @@
 # Prompt and rationale policy review
 
-Status: evidence-based desk review complete; approved for provider admission. No independent external reviewer was available, and that limitation must remain disclosed. See `EVIDENCE_BASED_PROMPT_REVIEW.md` and the hash-pinned approval manifest.
+Status: evidence-based desk review complete; approved for model admission. No independent external reviewer was available, and that limitation must remain disclosed. See `EVIDENCE_BASED_PROMPT_REVIEW.md` and the hash-pinned approval manifest.
 
 The scored response contains only diagnosis, four probabilities, action, and confidence. Free-form rationale was removed because it increased truncation risk in v1, is not needed to score the intervention, can reward verbosity, and is not comparable across providers with different reasoning interfaces. No hidden chain of thought is requested or stored.
 

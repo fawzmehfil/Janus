@@ -1,6 +1,6 @@
 {
   "approved": true,
-  "approved_for": "provider-admission testing only",
+  "approved_for": "model-admission testing only",
   "criteria": {
     "confidence_is_action_optimality_probability": true,
     "intervention_semantics_match_simulator": true,

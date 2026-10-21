@@ -35,16 +35,19 @@ See
 
 The release evidence, exact commands, hashes, cost estimates, limitations, and
 recommendation are in [`reports/readiness.md`](reports/readiness.md).
+The v2 paid workflow is documented in
+[`docs/v2/LIVE_FIREWORKS_COLLECTION.md`](docs/v2/LIVE_FIREWORKS_COLLECTION.md).
 
 The v2 local scientific layer is complete: five objective-specific public-
 information policies are frozen after bundle-preserving nested validation,
 the action-margin and matched-contrast audits pass, the structural OOD pilot
-finds cue-to-action reversals, and a four-role offline provider dry run passes.
+finds cue-to-action reversals, and a four-model offline Fireworks dry run passes.
 The precision analysis selects 40 independent bundles and 300 trials per model.
 No hidden-v2 set has been generated and no v2 paid provider call has been made.
 An evidence-based, hash-pinned internal prompt review is complete, with the lack
-of independent external review disclosed. Exact model versions and the four
-100-trial provider admission runs remain intentional gates; `uv run janus
+of independent external review disclosed. Exact candidate model IDs, serving
+settings, and a dated pricing snapshot are frozen. The four 100-trial model
+admission runs remain intentional gates; `uv run janus
 v2-gates` reports them.
 
 ## Local setup
@@ -64,6 +67,11 @@ uv run janus v2-dry-run --output artifacts/v2-dry-run
 uv run janus v2-local-development --objective-rollouts 64 --workers 4
 uv run janus v2-ood-pilot
 uv run janus v2-gates
+# Paid commands require FIREWORKS_API_KEY, --max-usd, and the exact confirmation
+# phrase shown by `--help`; run one frozen model role at a time:
+uv run janus v2-smoke --help
+uv run janus v2-collect-development --help
+uv run janus v2-collect-hidden --help
 # After the sealed four-model run and authorized unblinding only:
 uv run janus v2-publication
 ```

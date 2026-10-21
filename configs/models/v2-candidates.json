@@ -1,11 +1,64 @@
 {
-  "schema_version": "janus-v2-model-candidate-roles-v1",
-  "status": "roles_only_exact_versions_not_selected",
-  "selection_rule": "freeze exact provider model IDs, endpoints, SDK versions, and pricing only after every development admission gate passes",
+  "schema_version": "janus-v2-model-candidates-v2",
+  "status": "exact_candidate_settings_frozen_for_admission",
+  "selection_rule": "These exact candidate IDs and settings must pass 100-trial development admission before hidden-v2 collection.",
+  "serving_provider": "Fireworks AI",
+  "public_manifest_sha256": {
+    "development-v2": "2c715eca91830cc798bd0d4597c06cf3f5a4892a2c3978b160e97d2fd54493fd",
+    "smoke-v2": "61cba4213178775098008e20c30b7def189e0d9e790f33102262ae61bfa01c32"
+  },
   "candidates": [
-    {"provider": "openai", "role": "Luna continuity model", "model_id": null, "enabled": false},
-    {"provider": "openai", "role": "stronger OpenAI comparator", "model_id": null, "enabled": false},
-    {"provider": "anthropic", "role": "Anthropic comparator", "model_id": null, "enabled": false},
-    {"provider": "google", "role": "Google comparator", "model_id": null, "enabled": false}
+    {
+      "role": "gpt_oss_120b",
+      "display_name": "OpenAI gpt-oss-120b",
+      "developer": "OpenAI",
+      "model_family": "gpt-oss",
+      "model_id": "accounts/fireworks/models/gpt-oss-120b",
+      "enabled": true,
+      "total_parameters_b": 117.0,
+      "active_parameters_b": 5.1,
+      "architecture": "mixture-of-experts",
+      "reasoning_mode": {"enabled": true, "normalized_effort": "medium"},
+      "serving_configuration": {"base_url": "https://api.fireworks.ai/inference/v1", "endpoint": "/chat/completions", "service_tier": "standard-serverless", "quantization": "MXFP4 weights with 8-bit serving metadata", "maximum_output_tokens": 512, "temperature": null, "top_p": null}
+    },
+    {
+      "role": "deepseek_v4p1_flash",
+      "display_name": "DeepSeek V4.1 Flash",
+      "developer": "DeepSeek",
+      "model_family": "DeepSeek V4",
+      "model_id": "accounts/fireworks/models/deepseek-v4p1-flash",
+      "enabled": true,
+      "total_parameters_b": 552.0,
+      "active_parameters_b": null,
+      "architecture": "not reported in the Fireworks model card",
+      "reasoning_mode": {"enabled": true, "normalized_effort": "medium"},
+      "serving_configuration": {"base_url": "https://api.fireworks.ai/inference/v1", "endpoint": "/chat/completions", "service_tier": "standard-serverless", "quantization": "not reported in the Fireworks model card", "maximum_output_tokens": 512, "temperature": null, "top_p": null}
+    },
+    {
+      "role": "glm_5p3_flash",
+      "display_name": "GLM 5.3 Flash",
+      "developer": "Z.ai",
+      "model_family": "GLM 5",
+      "model_id": "accounts/fireworks/models/glm-5p3-flash",
+      "enabled": true,
+      "total_parameters_b": 320.0,
+      "active_parameters_b": 18.0,
+      "architecture": "mixture-of-experts",
+      "reasoning_mode": {"enabled": true, "normalized_effort": "medium"},
+      "serving_configuration": {"base_url": "https://api.fireworks.ai/inference/v1", "endpoint": "/chat/completions", "service_tier": "standard-serverless", "quantization": "not reported in the Fireworks model card", "maximum_output_tokens": 512, "temperature": null, "top_p": null}
+    },
+    {
+      "role": "nemotron_lightning_3p5_30b_a3b",
+      "display_name": "NVIDIA Nemotron Lightning 3.5 30B-A3B",
+      "developer": "NVIDIA",
+      "model_family": "Nemotron",
+      "model_id": "accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b",
+      "enabled": true,
+      "total_parameters_b": 32.9,
+      "active_parameters_b": 3.0,
+      "architecture": "mixture-of-experts hybrid Mamba-Transformer",
+      "reasoning_mode": {"enabled": true, "normalized_effort": "medium"},
+      "serving_configuration": {"base_url": "https://api.fireworks.ai/inference/v1", "endpoint": "/chat/completions", "service_tier": "standard-serverless", "quantization": "not reported in the Fireworks model card", "maximum_output_tokens": 512, "temperature": null, "top_p": null}
+    }
   ]
 }

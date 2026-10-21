@@ -1,7 +1,7 @@
 # Janus v2 evidence-based prompt review
 
 Date: 2026-10-19  
-Decision: approved for provider-admission testing  
+Decision: approved for model-admission testing
 Review type: AI-assisted internal desk review; not independent external review
 
 ## Scope and limitation
@@ -52,5 +52,5 @@ Sources were checked on 2026-10-19.
 ## Approval boundary
 
 Approval means the prompt and schema are sufficiently specified for the
-four-provider development admission test. It does not authorize spending,
+four-model development admission test. It does not authorize spending,
 hidden-v2 generation, hidden evaluation, unblinding, or real-policy claims.

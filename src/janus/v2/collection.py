@@ -29,12 +29,15 @@ def run_v2_collection(
     adapter: ModelAdapter,
     settings: ModelSettings,
     budget: BudgetLedger,
+    stage: str = "hidden-v2",
 ) -> tuple[bool, Path]:
-    """Collect one model role; callers own credentials and explicit approval."""
+    """Collect one model role from a public manifest; callers own approval."""
 
     public = _read(public_manifest_path)
     if public.get("benchmark_version") != BENCHMARK_VERSION:
-        raise ValueError("collection requires the frozen hidden-v2 public manifest")
+        raise ValueError("collection requires a frozen Janus v2 public manifest")
+    if public.get("stage", stage) != stage:
+        raise ValueError("collection stage does not match the public manifest")
     prompt_path = project_root / "configs/prompts/primary-v2.txt"
     prompt = PromptRenderer(prompt_path.read_text(), version=PROMPT_VERSION)
     cache_directory = output_directory / "cache"
@@ -61,7 +64,7 @@ def run_v2_collection(
                         world_id=str(world["world_id"]),
                         replicate_id=str(replicate_id),
                         benchmark_version=BENCHMARK_VERSION,
-                        stage="hidden-v2",
+                        stage=stage,
                     ),
                 )
                 record_path = record_directory / f"{artifact['cache_key']}.json"
@@ -76,9 +79,21 @@ def run_v2_collection(
     }
     planned = int(public["trials_per_model"])
     completed = len(artifacts) == planned
+    usage_fields = (
+        "input_tokens",
+        "cached_input_tokens",
+        "cache_write_tokens",
+        "output_tokens",
+        "reasoning_tokens",
+    )
+    aggregate_usage = {
+        field: sum(int(row.get("usage", {}).get(field, 0)) for row in artifacts)
+        for field in usage_fields
+    }
     manifest = {
         "schema_version": "janus-v2-response-manifest-v1",
         "model_role": model_role,
+        "stage": stage,
         "provider": settings.provider,
         "requested_model_id": settings.requested_model_id,
         "returned_model_ids": sorted({str(row["returned_model_id"]) for row in artifacts}),
@@ -91,6 +106,7 @@ def run_v2_collection(
         "started_at_utc": started,
         "finished_at_utc": datetime.now(UTC).isoformat(),
         "provider_calls": sum(row["validation_status"] != "budget_stop" for row in artifacts),
+        "aggregate_usage": aggregate_usage,
         "cost_usd": budget.total_spent_usd,
         "local_hard_ceiling_usd": budget.total_ceiling_usd,
         "completed": completed,
