@@ -32,8 +32,11 @@ The local project ceiling remains $5 even though expected use is $2–$3.
 
 ## Consequences
 
-Every model receives the same prompt, schema, 512-token allowance, and medium
-reasoning effort through one no-retry transport. Each must still pass 98 direct
-valid responses among 100 development trials before hidden collection. The
-panel can be changed only by a new preregistration amendment before paid data
-collection.
+Every model receives the same prompt, schema, and 4,096-token allowance through
+one no-retry transport. GPT-OSS receives its minimum supported reasoning effort
+(`low`), as does thinking-only GLM; reasoning is disabled for DeepSeek and
+Nemotron. The allowance and effort were amended by ADR 0021 after transport
+smoke testing exposed uniform truncation and provider-specific effort
+normalization. Each must still pass 98 direct valid responses among 100
+development trials before hidden collection. The panel can be changed only by
+a new preregistration amendment before paid data collection.

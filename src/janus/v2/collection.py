@@ -79,6 +79,9 @@ def run_v2_collection(
     }
     planned = int(public["trials_per_model"])
     completed = len(artifacts) == planned
+    directly_valid = completed and all(
+        row["validation_status"] == "valid" for row in artifacts
+    )
     usage_fields = (
         "input_tokens",
         "cached_input_tokens",
@@ -110,7 +113,7 @@ def run_v2_collection(
         "cost_usd": budget.total_spent_usd,
         "local_hard_ceiling_usd": budget.total_ceiling_usd,
         "completed": completed,
-        "passed": completed,
+        "passed": directly_valid,
         "unblinded": False,
         "private_hidden_artifacts_accessed": False,
         "retry_count": 0,
@@ -131,4 +134,4 @@ def run_v2_collection(
     manifest_directory.mkdir(parents=True, exist_ok=True)
     manifest_path = manifest_directory / "run-manifest.json"
     manifest_path.write_text(json.dumps(manifest, sort_keys=True, indent=2) + "\n")
-    return completed, manifest_path
+    return directly_valid, manifest_path

@@ -20,10 +20,19 @@ interrupted run that did not finish a manifest.
 
 ## 1. Smoke test each exact model
 
+The initial 512-token transport smoke exhausted the output allowance on
+reasoning for all 20 calls. A first 2,048-token rerun at medium effort still
+truncated 12 of 20 calls and revealed that Fireworks promotes DeepSeek V4.1
+`medium` to its high tier. A low-effort 2,048-token diagnostic passed for GPT
+and GLM but still truncated DeepSeek and Nemotron. ADR 0021 therefore freezes a
+corrected shared 4,096-token allowance with minimum supported reasoning before
+development admission: `low` for GPT-OSS and GLM, and `none` for DeepSeek and
+Nemotron. A smoke passes only when all five responses are directly schema-valid.
+
 ```bash
 uv run janus v2-smoke \
   --model-role gpt_oss_120b \
-  --max-usd 0.05 \
+  --max-usd 0.10 \
   --confirm-spend 'I CONFIRM FIREWORKS V2 SMOKE SPEND'
 ```
 

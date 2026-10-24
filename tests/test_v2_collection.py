@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from janus.evaluation.budget import BudgetLedger, PricingConfig
 from janus.models.base import ModelSettings
 from janus.v2 import SCHEMA_VERSION
@@ -10,7 +12,19 @@ from janus.v2.collection import run_v2_collection
 from janus.v2.providers import OpenAIV2Adapter
 
 
-def test_collection_writes_blinded_hash_manifest(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    ("response_status", "incomplete_details", "expected_passed"),
+    [
+        ("completed", None, True),
+        ("incomplete", {"reason": "max_output_tokens"}, False),
+    ],
+)
+def test_collection_writes_blinded_hash_manifest(
+    tmp_path: Path,
+    response_status: str,
+    incomplete_details: dict[str, str] | None,
+    expected_passed: bool,
+) -> None:
     prompt_directory = tmp_path / "configs/prompts"
     prompt_directory.mkdir(parents=True)
     (prompt_directory / "primary-v2.txt").write_text("{{OBSERVATION_JSON}}")
@@ -53,7 +67,8 @@ def test_collection_writes_blinded_hash_manifest(tmp_path: Path) -> None:
         lambda payload: {
             "id": "response-1",
             "model": "mock",
-            "status": "completed",
+            "status": response_status,
+            "incomplete_details": incomplete_details,
             "output_text": raw,
             "usage": {},
         },
@@ -84,7 +99,7 @@ def test_collection_writes_blinded_hash_manifest(tmp_path: Path) -> None:
         output_per_million_usd=0,
         reasoning_per_million_usd=0,
     )
-    completed, manifest_path = run_v2_collection(
+    passed, manifest_path = run_v2_collection(
         tmp_path,
         public_path,
         tmp_path / "responses/luna",
@@ -94,7 +109,9 @@ def test_collection_writes_blinded_hash_manifest(tmp_path: Path) -> None:
         budget=BudgetLedger(pricing, 0, {"hidden-v2": 0}),
     )
     manifest = json.loads(manifest_path.read_text())
-    assert completed
+    assert passed is expected_passed
+    assert manifest["completed"] is True
+    assert manifest["passed"] is expected_passed
     assert manifest["unblinded"] is False
     assert manifest["private_hidden_artifacts_accessed"] is False
     assert len(manifest["response_artifact_sha256"]) == 1

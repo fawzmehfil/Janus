@@ -43,12 +43,14 @@ information policies are frozen after bundle-preserving nested validation,
 the action-margin and matched-contrast audits pass, the structural OOD pilot
 finds cue-to-action reversals, and a four-model offline Fireworks dry run passes.
 The precision analysis selects 40 independent bundles and 300 trials per model.
-No hidden-v2 set has been generated and no v2 paid provider call has been made.
-An evidence-based, hash-pinned internal prompt review is complete, with the lack
-of independent external review disclosed. Exact candidate model IDs, serving
-settings, and a dated pricing snapshot are frozen. The four 100-trial model
-admission runs remain intentional gates; `uv run janus
-v2-gates` reports them.
+No hidden-v2 set has been generated. The paid Fireworks smoke and documented
+pre-development serving amendment are complete: the final settings produced 20
+direct-valid responses across the four exact models, with $0.114403055 in total
+smoke and diagnostic spend. An evidence-based, hash-pinned internal prompt
+review is complete, with the lack of independent external review disclosed.
+Exact candidate model IDs, serving settings, and a dated pricing snapshot are
+frozen. The four 100-trial model admission runs remain intentional gates; `uv
+run janus v2-gates` reports them.
 
 ## Local setup
 
