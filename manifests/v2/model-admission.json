@@ -1,0 +1,111 @@
+{
+  "exactly_100_trials_per_model": true,
+  "four_unique_model_ids": true,
+  "four_unique_model_roles": true,
+  "hidden_evaluation_authorized": false,
+  "identical_prompt_hash": true,
+  "identical_schema_hash": true,
+  "model_freeze_authorized": true,
+  "models": [
+    {
+      "admitted": true,
+      "attempted": 100,
+      "budget_stops": 0,
+      "cost_usd": 0.08266526999999999,
+      "endpoint": "https://api.fireworks.ai/inference/v1/chat/completions",
+      "manifest": "artifacts/v2-fireworks/development-v2/gpt_oss_120b/manifests/run-manifest.json",
+      "manifest_sha256": "dda4cc77a57f0953c99b7c13039b4871237ae14fb7e6de5371d014ae860928d0",
+      "maximum_output_tokens": 4096,
+      "model_identity_match": true,
+      "model_role": "gpt_oss_120b",
+      "paid_api_calls": 100,
+      "provider": "gpt_oss_120b",
+      "reasons": [],
+      "requested_model_id": "accounts/fireworks/models/gpt-oss-120b",
+      "returned_model_ids": [
+        "accounts/fireworks/models/gpt-oss-120b"
+      ],
+      "sdk_version": "stdlib-urllib-no-retry",
+      "serving_provider": "fireworks",
+      "valid": 99,
+      "valid_rate": 0.99
+    },
+    {
+      "admitted": true,
+      "attempted": 100,
+      "budget_stops": 0,
+      "cost_usd": 0.146560116,
+      "endpoint": "https://api.fireworks.ai/inference/v1/chat/completions",
+      "manifest": "artifacts/v2-fireworks/development-v2/deepseek_v4p1_flash/manifests/run-manifest.json",
+      "manifest_sha256": "81b8f05b3f8cb61716cfd413a8ac3e7126f405077fa4023bec503d0fbde70f5b",
+      "maximum_output_tokens": 4096,
+      "model_identity_match": true,
+      "model_role": "deepseek_v4p1_flash",
+      "paid_api_calls": 100,
+      "provider": "deepseek_v4p1_flash",
+      "reasons": [],
+      "requested_model_id": "accounts/fireworks/models/deepseek-v4p1-flash",
+      "returned_model_ids": [
+        "accounts/fireworks/models/deepseek-v4p1-flash"
+      ],
+      "sdk_version": "stdlib-urllib-no-retry",
+      "serving_provider": "fireworks",
+      "valid": 100,
+      "valid_rate": 1.0
+    },
+    {
+      "admitted": true,
+      "attempted": 100,
+      "budget_stops": 0,
+      "cost_usd": 0.08173625999999998,
+      "endpoint": "https://api.fireworks.ai/inference/v1/chat/completions",
+      "manifest": "artifacts/v2-fireworks/development-v2/glm_5p3_flash/manifests/run-manifest.json",
+      "manifest_sha256": "07cd964d9e8c55be70169e58a1e31ca51a9226de9a69ce2f29aea34c44d08496",
+      "maximum_output_tokens": 4096,
+      "model_identity_match": true,
+      "model_role": "glm_5p3_flash",
+      "paid_api_calls": 100,
+      "provider": "glm_5p3_flash",
+      "reasons": [],
+      "requested_model_id": "accounts/fireworks/models/glm-5p3-flash",
+      "returned_model_ids": [
+        "accounts/fireworks/models/glm-5p3-flash"
+      ],
+      "sdk_version": "stdlib-urllib-no-retry",
+      "serving_provider": "fireworks",
+      "valid": 99,
+      "valid_rate": 0.99
+    },
+    {
+      "admitted": true,
+      "attempted": 100,
+      "budget_stops": 0,
+      "cost_usd": 0.029463820000000016,
+      "endpoint": "https://api.fireworks.ai/inference/v1/chat/completions",
+      "manifest": "artifacts/v2-fireworks/development-v2/nemotron_lightning_3p5_30b_a3b/manifests/run-manifest.json",
+      "manifest_sha256": "8cb28d6d3e381be2fa585e0de38b6635df2c9421ece3795c32f6ce170da0a64d",
+      "maximum_output_tokens": 4096,
+      "model_identity_match": true,
+      "model_role": "nemotron_lightning_3p5_30b_a3b",
+      "paid_api_calls": 100,
+      "provider": "nemotron_lightning_3p5_30b_a3b",
+      "reasons": [],
+      "requested_model_id": "accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b",
+      "returned_model_ids": [
+        "accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b"
+      ],
+      "sdk_version": "stdlib-urllib-no-retry",
+      "serving_provider": "fireworks",
+      "valid": 98,
+      "valid_rate": 0.98
+    }
+  ],
+  "passed": true,
+  "same_representative_trials": true,
+  "schema_version": "janus-v2-model-admission-v2",
+  "thresholds": {
+    "maximum_budget_stop_rate": 0.0,
+    "minimum_trials": 100,
+    "minimum_valid_rate": 0.98
+  }
+}
