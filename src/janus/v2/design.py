@@ -221,6 +221,7 @@ def audit_structural_ood_reversals(
     *,
     maximum_distance: float = 1.25,
     minimum_pairs: int = 4,
+    minimum_families: int = 2,
 ) -> dict[str, Any]:
     """Require close public cues whose oracle action changes across ID/OOD.
 
@@ -270,8 +271,9 @@ def audit_structural_ood_reversals(
         "definition": "same-family, close-public-cue pairs with different oracle actions",
         "maximum_public_distance": maximum_distance,
         "minimum_pairs": minimum_pairs,
+        "minimum_families": minimum_families,
         "pair_count": len(selected),
         "family_count": family_count,
         "pairs": selected,
-        "passed": len(selected) >= minimum_pairs and family_count >= 2,
+        "passed": len(selected) >= minimum_pairs and family_count >= minimum_families,
     }

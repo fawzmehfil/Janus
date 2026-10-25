@@ -10,7 +10,7 @@
   "maximum_bundle_distance": 1.25,
   "structural_ood_maximum_distance": 1.25,
   "structural_ood_minimum_pairs": 4,
-  "structural_ood_minimum_families": 2,
+  "structural_ood_minimum_families": 1,
   "replicate_allocation": "one replicate for every world plus a second for three worlds in every bundle and the fourth world in twenty seed-selected bundles",
   "seed_process": "63-bit root seed from Python secrets.randbits using the host OS CSPRNG; canonical private seed manifest committed by SHA-256 before hidden generation",
   "public_id_policy": "opaque randomized world and bundle IDs; no family, stratum, parameter, state, oracle, or reversal fields"

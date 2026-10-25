@@ -73,6 +73,7 @@ def _frozen_input_hashes(project_root: Path) -> dict[str, str]:
         "docs/v2/ROBUSTNESS_AND_FALSIFICATION.md",
         "docs/v2/LIVE_FIREWORKS_COLLECTION.md",
         "docs/decisions/0020-fireworks-open-model-panel.md",
+        "docs/decisions/0023-hidden-v2-ood-scope-amendment.md",
     )
     paths = [project_root / value for value in fixed]
     paths.extend(sorted((project_root / "manifests/v2/baselines").glob("*")))
@@ -293,6 +294,7 @@ def generate_v2_hidden_release(
         {key: primary_oracle(value) for key, value in oracle_payloads.items()},
         maximum_distance=float(plan["structural_ood_maximum_distance"]),
         minimum_pairs=int(plan["structural_ood_minimum_pairs"]),
+        minimum_families=int(plan["structural_ood_minimum_families"]),
     )
     if not reversal["passed"] or reversal["family_count"] < int(
         plan["structural_ood_minimum_families"]

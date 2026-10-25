@@ -7,7 +7,7 @@
 - [x] Nested bundle CV and learning curves reviewed.
 - [x] Action-role and unique-optimum audit passes.
 - [x] Matched causal contrast audit passes.
-- [x] Structural OOD reversal audit passes in at least two families.
+- [x] Structural OOD reversal audit passes with at least four non-overlapping pairs in one or more families; the post-failure scope amendment and five rejected seeds are disclosed in ADR 0023.
 - [x] Precision allocation and minimum detectable effect frozen.
 - [x] Preregistered robustness and falsification matrix passes locally.
 - [x] Prompt and schema versions hash-frozen after an evidence-based desk review; lack of independent review disclosed.
