@@ -1,0 +1,18 @@
+{
+  "schema_version": "janus-v2-publication-manifest-v1",
+  "sha256": {
+    "figures/objective-sensitivity.svg": "4e87a84bca7a412ee13f73db25abf072aa72d21488b08b56be71ea44cb7aa5ae",
+    "figures/primary-model-estimates.svg": "068e315220837f632eb85a3046beb341d7f6c97e045cc99d1471097fe7485b6c",
+    "tables/action-counts.csv": "039410e884e80ec20f2f7492e79d98618ac047b6426496b37bdadef0e88b6eae",
+    "tables/calibration-reliability.csv": "83afbb79f7f13a01c46f1e971a476f7cda751c6bd0bfe52005a6de172bf7a0e1",
+    "tables/economic-outcomes.csv": "006460720c88f896bb1e95f4a297daf29c817ba5b0bc96042a3707bb4446003b",
+    "tables/model-performance-and-calibration.csv": "23cb592057796194e059817c11732620781429ab0e9febdfa790823be1530fb6",
+    "tables/objective-sensitivity.csv": "68169cf2dc953d6361db27dec0e39cf25c7b31806142b539d80e3641004e24ef",
+    "tables/operations.csv": "82c67bd7a1ff654c899df7ecc6ea9a54d9733bcfabf0a88f4279239fa0778dfa",
+    "tables/pairwise-model-comparisons.csv": "2d30ad45fc58371febc0e66f7ca365162978cee6ce3644363b1a254acb1e550d",
+    "tables/primary-model-estimates.csv": "9fcc51df63ce3e3a61ca9c4989edf371b4030ef7657436d47ab7cae63f681b68",
+    "tables/risk-coverage.csv": "d0e75b2b392401e894aae53d86828ec725dbdc1755d704db7a47ddd09eca6f6b"
+  },
+  "source_report": "artifacts/hidden-v2-analysis/comparative-report.json",
+  "source_report_sha256": "23955d9e77cc88dcc2d8ed9f369db54cb106d31e2c11a9c2de6cfc1792898333"
+}
