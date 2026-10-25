@@ -1,4 +1,5 @@
 {
+  "bundle_count": 40,
   "code_commit": "2a901d7",
   "development_gate_sha256": "f905773bb55b264b95e36a9c8ea68dfbac9653a17919c7e3f57cdd6a4c9de2f1",
   "frozen_input_sha256": {
@@ -46,8 +47,14 @@
     "src/janus/v2/unblind.py": "73f63499f7220717258f4c5cc2e60b4dc6edcd9f8a520112626d4b1fd16223b4",
     "uv.lock": "6bc36cf133e4ea21c55361b13c8e20c24d9c0a74f770ecc4d72d4dbc00e37ece"
   },
+  "maximum_bundle_distance": 1.1983955693282138,
+  "plan_sha256": "843dcc36ffd2dd276400fc25a776bbe390591edac7e42ce5f8f677b85d3358a6",
+  "private_manifest_sha256": "1b56aa9bbf471b6813d1feae01df326afb002f5f5dfa97fb064a326507cd5da6",
   "private_seed_manifest": "artifacts/hidden-v2/seed_manifest.json",
+  "public_manifest_sha256": "759769bd1a9d51c1b27c949f7f54106caf56fcfa977fa2d283cac66ebce75729",
   "reveal_policy": "reveal only after all four response manifests are committed",
   "schema_version": "janus-hidden-v2-seed-commitment-v1",
-  "sha256": "7c0d6b41cc11b52831ef1d34dc0d1a741c9107bce8486b7bcab0fa50b7a5b69d"
+  "sha256": "7c0d6b41cc11b52831ef1d34dc0d1a741c9107bce8486b7bcab0fa50b7a5b69d",
+  "trials_per_model": 300,
+  "world_count": 160
 }
