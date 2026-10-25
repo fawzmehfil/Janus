@@ -1,0 +1,103 @@
+{
+  "definition": "same-family, close-public-cue pairs with different oracle actions",
+  "family_count": 2,
+  "final_v2_requirement": "apply the same preregistered reversal gate to fresh hidden-v2 candidates; abort generation if it fails",
+  "maximum_public_distance": 1.25,
+  "minimum_pairs": 4,
+  "paid_api_calls": 0,
+  "pair_count": 11,
+  "pairs": [
+    {
+      "family": "momentum_demand",
+      "id_best_action": "transaction_tax",
+      "id_world_id": "janus-hidden-world-077",
+      "ood_best_action": "do_nothing",
+      "ood_world_id": "janus-hidden-world-086",
+      "public_distance": 0.3769834129740196
+    },
+    {
+      "family": "momentum_demand",
+      "id_best_action": "do_nothing",
+      "id_world_id": "janus-hidden-world-088",
+      "ood_best_action": "transaction_tax",
+      "ood_world_id": "janus-hidden-world-049",
+      "public_distance": 0.4885571422256572
+    },
+    {
+      "family": "momentum_demand",
+      "id_best_action": "transaction_tax",
+      "id_world_id": "janus-hidden-world-043",
+      "ood_best_action": "do_nothing",
+      "ood_world_id": "janus-hidden-world-036",
+      "public_distance": 0.4943562806294428
+    },
+    {
+      "family": "momentum_demand",
+      "id_best_action": "transaction_tax",
+      "id_world_id": "janus-hidden-world-083",
+      "ood_best_action": "do_nothing",
+      "ood_world_id": "janus-hidden-world-070",
+      "public_distance": 0.5546082324512164
+    },
+    {
+      "family": "momentum_demand",
+      "id_best_action": "do_nothing",
+      "id_world_id": "janus-hidden-world-025",
+      "ood_best_action": "transaction_tax",
+      "ood_world_id": "janus-hidden-world-006",
+      "public_distance": 0.6075836942777443
+    },
+    {
+      "family": "momentum_demand",
+      "id_best_action": "do_nothing",
+      "id_world_id": "janus-hidden-world-015",
+      "ood_best_action": "transaction_tax",
+      "ood_world_id": "janus-hidden-world-002",
+      "public_distance": 0.6101595892897358
+    },
+    {
+      "family": "momentum_demand",
+      "id_best_action": "do_nothing",
+      "id_world_id": "janus-hidden-world-044",
+      "ood_best_action": "transaction_tax",
+      "ood_world_id": "janus-hidden-world-075",
+      "public_distance": 0.6215925505206066
+    },
+    {
+      "family": "momentum_demand",
+      "id_best_action": "transaction_tax",
+      "id_world_id": "janus-hidden-world-022",
+      "ood_best_action": "do_nothing",
+      "ood_world_id": "janus-hidden-world-058",
+      "public_distance": 0.6724654561639337
+    },
+    {
+      "family": "momentum_demand",
+      "id_best_action": "transaction_tax",
+      "id_world_id": "janus-hidden-world-032",
+      "ood_best_action": "do_nothing",
+      "ood_world_id": "janus-hidden-world-009",
+      "public_distance": 0.7709005242285047
+    },
+    {
+      "family": "momentum_demand",
+      "id_best_action": "do_nothing",
+      "id_world_id": "janus-hidden-world-093",
+      "ood_best_action": "transaction_tax",
+      "ood_world_id": "janus-hidden-world-016",
+      "public_distance": 0.8669119843315812
+    },
+    {
+      "family": "seller_collusion",
+      "id_best_action": "do_nothing",
+      "id_world_id": "janus-hidden-world-089",
+      "ood_best_action": "collusion_investigation",
+      "ood_world_id": "janus-hidden-world-085",
+      "public_distance": 0.9053980269133571
+    }
+  ],
+  "passed": true,
+  "pilot_only": true,
+  "pilot_source": "completed and revealed hidden-v1 release",
+  "schema_version": "janus-v2-structural-ood-v1"
+}

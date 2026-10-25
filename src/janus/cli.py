@@ -45,6 +45,21 @@ from janus.evaluation.phase0e_runner import run_phase0e_dry_run
 from janus.evaluation.publication import generate_publication_outputs
 from janus.evaluation.robustness import run_robustness_audit
 from janus.models.providers.openai import make_openai_sdk_transport
+from janus.v2.admission import build_provider_admission
+from janus.v2.archive import build_reproduction_archive
+from janus.v2.audit import audit_reproduction_archive, development_gate_report
+from janus.v2.development import run_v2_local_development
+from janus.v2.dry_run import run_v2_dry_run
+from janus.v2.live import (
+    CONFIRMATIONS,
+    FIREWORKS_MODEL_ROLES,
+    run_fireworks_collection,
+)
+from janus.v2.ood_pilot import run_structural_ood_pilot
+from janus.v2.precision import run_precision_analysis
+from janus.v2.publication import generate_v2_publication_outputs
+from janus.v2.release import generate_v2_hidden_release, prepare_v2_seed
+from janus.v2.unblind import run_v2_unblinding
 
 
 def analytic_fixture_command() -> int:
@@ -310,6 +325,112 @@ def build_parser() -> argparse.ArgumentParser:
     robustness.add_argument("--output", type=Path, default=Path("artifacts/robustness/report.json"))
     robustness.add_argument("--rollouts", type=int, default=64)
     robustness.add_argument("--workers", type=int, default=4)
+    v2_development = subparsers.add_parser(
+        "v2-local-development",
+        help="run the local-only v2 baseline, margin, contrast, and precision gates",
+    )
+    v2_development.add_argument("--output", type=Path, default=Path("artifacts/v2-development"))
+    v2_development.add_argument("--objective-rollouts", type=int, default=64)
+    v2_development.add_argument("--workers", type=int, default=4)
+    v2_precision = subparsers.add_parser(
+        "v2-precision", help="recompute the local-only v1-informed allocation analysis"
+    )
+    v2_precision.add_argument("--output", type=Path, default=Path("reports/v2/precision.json"))
+    v2_dry_run = subparsers.add_parser(
+        "v2-dry-run", help="exercise all four model roles with injected offline transports"
+    )
+    v2_dry_run.add_argument("--output", type=Path, default=Path("artifacts/v2-dry-run"))
+    for command, stage, help_text in (
+        ("v2-smoke", "smoke-v2", "run or resume a five-trial Fireworks transport smoke test"),
+        (
+            "v2-collect-development",
+            "development-v2",
+            "run or resume one model's 100-trial Fireworks admission collection",
+        ),
+        (
+            "v2-collect-hidden",
+            "hidden-v2",
+            "run or resume one admitted model's 300-trial hidden collection",
+        ),
+    ):
+        live = subparsers.add_parser(command, help=help_text)
+        live.set_defaults(v2_live_stage=stage)
+        live.add_argument("--model-role", required=True, choices=FIREWORKS_MODEL_ROLES)
+        live.add_argument("--max-usd", required=True, type=float)
+        live.add_argument("--timeout-seconds", type=float, default=120.0)
+        live.add_argument(
+            "--base-url",
+            default="https://api.fireworks.ai/inference/v1",
+            help="must match the frozen Fireworks base URL",
+        )
+        live.add_argument(
+            "--confirm-spend",
+            required=True,
+            help=f"must equal {CONFIRMATIONS[stage]!r}",
+        )
+    subparsers.add_parser(
+        "v2-gates", help="report all prerequisites that still block hidden-v2 generation"
+    )
+    v2_ood = subparsers.add_parser(
+        "v2-ood-pilot", help="audit structural cue/action reversals using revealed v1 pilot data"
+    )
+    v2_ood.add_argument("--output", type=Path, default=Path("reports/v2/structural-ood.json"))
+    v2_audit = subparsers.add_parser(
+        "v2-audit", help="audit a completed reproduction archive without self-certifying it"
+    )
+    v2_audit.add_argument("archive", type=Path)
+    v2_seed = subparsers.add_parser(
+        "v2-hidden-seed", help="create the gated fresh hidden-v2 seed commitment"
+    )
+    v2_seed.add_argument("--code-commit", required=True)
+    v2_seed.add_argument("--private-output", type=Path, default=Path("artifacts/hidden-v2"))
+    v2_seed.add_argument(
+        "--commitment", type=Path, default=Path("manifests/hidden-v2-commitment.json")
+    )
+    v2_generate = subparsers.add_parser(
+        "v2-hidden-generate", help="generate hidden-v2 after every development gate passes"
+    )
+    v2_generate.add_argument("--code-commit", required=True)
+    v2_generate.add_argument("--private-output", type=Path, default=Path("artifacts/hidden-v2"))
+    v2_generate.add_argument(
+        "--public-manifest", type=Path, default=Path("manifests/hidden-v2-public.json")
+    )
+    v2_generate.add_argument(
+        "--commitment", type=Path, default=Path("manifests/hidden-v2-commitment.json")
+    )
+    v2_generate.add_argument("--workers", type=int, default=4)
+    v2_admission = subparsers.add_parser(
+        "v2-admission", help="evaluate four exact-model development response manifests"
+    )
+    v2_admission.add_argument("manifests", nargs=4, type=Path)
+    v2_admission.add_argument(
+        "--output", type=Path, default=Path("manifests/v2/model-admission.json")
+    )
+    v2_archive = subparsers.add_parser(
+        "v2-archive", help="build the complete post-unblinding reproduction directory"
+    )
+    v2_archive.add_argument("--response-commit", required=True)
+    v2_archive.add_argument("--response-manifest", action="append", type=Path, required=True)
+    v2_archive.add_argument("--output", type=Path, required=True)
+    v2_unblind = subparsers.add_parser(
+        "v2-unblind", help="verify four committed response manifests and score hidden-v2"
+    )
+    v2_unblind.add_argument("--response-commit", required=True)
+    v2_unblind.add_argument("--response-manifest", action="append", type=Path, required=True)
+    v2_unblind.add_argument(
+        "--output",
+        type=Path,
+        default=Path("artifacts/hidden-v2-analysis/comparative-report.json"),
+    )
+    v2_publication = subparsers.add_parser(
+        "v2-publication", help="regenerate deterministic v2 tables and vector figures"
+    )
+    v2_publication.add_argument(
+        "--report",
+        type=Path,
+        default=Path("artifacts/hidden-v2-analysis/comparative-report.json"),
+    )
+    v2_publication.add_argument("--output", type=Path, default=Path("reports/v2-publication"))
     return parser
 
 
@@ -539,6 +660,130 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         print(json.dumps({"output": str(args.output), "passed": passed}, sort_keys=True))
         return 0 if passed else 2
+    if args.command == "v2-local-development":
+        report = run_v2_local_development(
+            Path.cwd(),
+            args.output,
+            objective_rollouts=args.objective_rollouts,
+            workers=args.workers,
+        )
+        print(json.dumps(report, sort_keys=True))
+        return 0 if report["passed"] else 2
+    if args.command == "v2-precision":
+        report = run_precision_analysis(Path.cwd(), args.output)
+        print(json.dumps(report, sort_keys=True))
+        return 0
+    if args.command == "v2-dry-run":
+        passed = run_v2_dry_run(args.output, Path.cwd())
+        print(json.dumps({"output": str(args.output), "passed": passed}, sort_keys=True))
+        return 0 if passed else 2
+    if args.command in {"v2-smoke", "v2-collect-development", "v2-collect-hidden"}:
+        api_key = os.environ.get("FIREWORKS_API_KEY", "")
+        output = Path.cwd() / "artifacts/v2-fireworks" / args.v2_live_stage / args.model_role
+        try:
+            passed, manifest = run_fireworks_collection(
+                Path.cwd(),
+                stage=args.v2_live_stage,
+                role=args.model_role,
+                output_directory=output,
+                api_key=api_key,
+                confirmation=args.confirm_spend,
+                ceiling_usd=args.max_usd,
+                base_url=args.base_url,
+                timeout_seconds=args.timeout_seconds,
+            )
+        except ValueError as error:
+            raise SystemExit(f"refusing paid Fireworks run: {error}") from error
+        print(json.dumps({"manifest": str(manifest), "passed": passed}, sort_keys=True))
+        return 0 if passed else 2
+    if args.command == "v2-gates":
+        report = development_gate_report(Path.cwd())
+        print(json.dumps(report, sort_keys=True, indent=2))
+        return 0 if report["passed"] else 2
+    if args.command == "v2-ood-pilot":
+        report = run_structural_ood_pilot(Path.cwd(), args.output)
+        print(json.dumps(report, sort_keys=True))
+        return 0 if report["passed"] else 2
+    if args.command == "v2-audit":
+        report = audit_reproduction_archive(args.archive)
+        print(json.dumps(report, sort_keys=True, indent=2))
+        return 0 if report["passed"] else 2
+    if args.command == "v2-hidden-seed":
+        try:
+            commitment = prepare_v2_seed(
+                Path.cwd(),
+                args.private_output,
+                args.commitment,
+                code_commit=args.code_commit,
+            )
+        except ValueError as error:
+            raise SystemExit(f"refusing hidden-v2 seed: {error}") from error
+        print(json.dumps({"commitment_sha256": commitment}, sort_keys=True))
+        return 0
+    if args.command == "v2-hidden-generate":
+        try:
+            passed = generate_v2_hidden_release(
+                Path.cwd(),
+                args.private_output,
+                args.public_manifest,
+                args.commitment,
+                code_commit=args.code_commit,
+                workers=args.workers,
+            )
+        except ValueError as error:
+            raise SystemExit(f"refusing hidden-v2 generation: {error}") from error
+        print(json.dumps({"public_manifest": str(args.public_manifest), "passed": passed}))
+        return 0 if passed else 2
+    if args.command == "v2-admission":
+        report = build_provider_admission(tuple(args.manifests), args.output)
+        print(json.dumps(report, sort_keys=True, indent=2))
+        return 0 if report["passed"] else 2
+    if args.command == "v2-archive":
+        archive_manifest = build_reproduction_archive(
+            Path.cwd(),
+            args.output,
+            tuple(args.response_manifest),
+            response_commit=args.response_commit,
+        )
+        print(
+            json.dumps(
+                {"output": str(args.output), "files": len(archive_manifest["sha256"])},
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "v2-unblind":
+        try:
+            report = run_v2_unblinding(
+                Path.cwd(),
+                tuple(args.response_manifest),
+                args.output,
+                response_commit=args.response_commit,
+            )
+        except ValueError as error:
+            raise SystemExit(f"refusing hidden-v2 unblinding: {error}") from error
+        print(
+            json.dumps(
+                {
+                    "output": str(args.output),
+                    "models": sorted(report["model_summaries"]),
+                },
+                sort_keys=True,
+            )
+        )
+        return 0
+    if args.command == "v2-publication":
+        publication_manifest = generate_v2_publication_outputs(args.report, args.output)
+        print(
+            json.dumps(
+                {
+                    "output": str(args.output),
+                    "files": len(publication_manifest["sha256"]),
+                },
+                sort_keys=True,
+            )
+        )
+        return 0
     raise AssertionError(f"unhandled command: {args.command}")
 
 

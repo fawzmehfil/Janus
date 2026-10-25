@@ -55,6 +55,9 @@ class ResponseStatus(StrEnum):
     REFUSAL = "refusal"
     TIMEOUT = "timeout"
     EMPTY = "empty"
+    RATE_LIMITED = "rate_limited"
+    TRANSPORT_ERROR = "transport_error"
+    BUDGET_STOP = "budget_stop"
 
 
 class UsageRecord(StrictFrozenModel):
@@ -114,6 +117,10 @@ class ProviderReply(StrictFrozenModel):
     usage: UsageRecord = Field(default_factory=UsageRecord)
     refusal: bool = False
     timed_out: bool = False
+    rate_limited: bool = False
+    transport_error: str | None = None
+    latency_ms: float | None = Field(default=None, ge=0)
+    rate_limit_metadata: dict[str, str] | None = None
     timestamp_utc: str
 
 

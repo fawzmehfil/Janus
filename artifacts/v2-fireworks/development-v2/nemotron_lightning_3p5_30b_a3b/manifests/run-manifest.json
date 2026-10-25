@@ -1,0 +1,841 @@
+{
+  "aggregate_usage": {
+    "cache_write_tokens": 0,
+    "cached_input_tokens": 28887,
+    "input_tokens": 549075,
+    "output_tokens": 8606,
+    "reasoning_tokens": 0
+  },
+  "cache_directory": "artifacts/v2-fireworks/development-v2/nemotron_lightning_3p5_30b_a3b/records",
+  "completed": true,
+  "cost_usd": 0.029463820000000016,
+  "endpoint": "https://api.fireworks.ai/inference/v1/chat/completions",
+  "finished_at_utc": "2026-10-24T23:15:43.861955+00:00",
+  "local_hard_ceiling_usd": 0.35,
+  "maximum_output_tokens": 4096,
+  "model_role": "nemotron_lightning_3p5_30b_a3b",
+  "passed": false,
+  "private_hidden_artifacts_accessed": false,
+  "project_cumulative_cost_usd": 0.4548285210000002,
+  "project_hard_ceiling_usd": 5.0,
+  "prompt_sha256": "ea8bde8f2db4c5633fd2007b45293a58cc0d200b69253083e9be3fcf088576e9",
+  "provider": "fireworks",
+  "provider_calls": 100,
+  "provider_calls_this_invocation": 100,
+  "public_manifest_sha256": "2c715eca91830cc798bd0d4597c06cf3f5a4892a2c3978b160e97d2fd54493fd",
+  "requested_model_id": "accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b",
+  "response_artifact_sha256": {
+    "016db839a00da1e65908d6697b451ba80f12cc2ac3adff5b9b4bcd67c8f21880.json": "ee4d9a8bc495e957250d88a56bb07ad5150d4b3fd5cda23e0cfa6ea10938dc12",
+    "02cb5be1af38580683615e3943d321f64e8b36795e7bb1ccf0127cae6d362a3f.json": "4d1a327ff6667e74c7dd5c104d4ccd2b2d5c89ae18dd8576e7d1b0fdffb8b865",
+    "06e604b608cd7fed5ba9a8c022811cf8a7d8ffe0453e46698f1593e8b44395a1.json": "95b23e17c9f6c3e7737f863087b3d9f2c16a43c7666bccb94000fdf49fbe7d14",
+    "08fc03b8a15bfa59e6a1d5e7cbbc7e85b7dbeeead5b019b9858d4f59e99dd331.json": "727110b6b05bb7f806738430d98642e1099a29f6e993f0cab847cc0a558c8c97",
+    "091c039fddeeacdce56ec430dbedb15d3b76546e7d337453460dbd4ab8d6b92a.json": "303304fb9894d1072a7a2c18bc3a65229205c570f8e93975465939652ed088ee",
+    "09a67dcf1c8e8316d63e0e79b54739c31e21a94927e39bb63a8906520b0abd98.json": "72fb04078b4d0de24067f958613b3a387fbb1959e26da365fef408503a8c83f9",
+    "09e8f7909f5f28c6996263b129b99c0e12419f664bafa10577912b745e59a887.json": "d537d0c2f9b0ebe26c5d60148c07ccbdf25d2de7a9dac18481a25f198bb01959",
+    "0bf7f45414413a55b502b63b53d84472e5a84f1712beed69d90501e522d4ff73.json": "fcbf73a888aa3e471263e1a57e87f137252c2b28d6d4b0ad6bbca2e5a17765ef",
+    "15e67d3d177635262ceeadcbc59625056d64fdd049c57002e6ac7c842000cb6c.json": "e58355ca5732aa67ba69cc913775a1244afc0e8ff9c5a2dffcafd18c41f5fefc",
+    "16ea33e4484af0fefc60f5b6ffd0103536116cfa8482648ca24efe69ba883b2a.json": "11165d8288fb22718dc8e80a05dcd3418d5ecc142a87783bf301ffc317bc8ad7",
+    "173efe60d92cc258811bc5cc3806b5740fd2f48df2138a19f30ca74e6e4075f0.json": "26b8f5ac8449dc1cb4f46b4260e270a3d8cd7b45dd3dee9ad6f9f3d86bc7a80c",
+    "17585744a7807d4c64366958966ffa4acfdab0018567c273460c97fe49c6bafe.json": "a2f3941fd9a5aa50054b01bc5c7b4993330d51f833f4ed0d2608b81de984d409",
+    "194e5a3db5c639b72419b808c4486d930f6e1eb78f47402427586a2a0fdc2344.json": "4c75d999e4c1731c36e6cca97feead6c636d486ce9148ffe0f305aa2e1114346",
+    "1b0f6ba19228fdcb81e7e353dd656457949bc94405eafff2245bc15d6bc60670.json": "5c3073ed611654dfb8905e45620533bdd74b557920904fa1e0678cd575cfb594",
+    "1c6ecdb6a26401b66034d124179a314f6b0ddfd3862a3b3f902d78636f4c4c3b.json": "700f8948fe202c1c58b90e6c52e5aa20ac710a0edbce5cddafb161af69fa6cce",
+    "215a8d0223919d777780560384244612d4da924749dcc15cd5194351d1135d97.json": "d9911872144ffc4ce46d6dc123d2017fcc429f59fa4ab9d793c2ce3b2cb62b21",
+    "2163f020b70a293e752840ab45aaa053d8b04dfa22ef15eb2fb1c3d61951d040.json": "ac8b0842899eacfbc40a786f36e3ed6aa308b288f636a25d5df9940b376a2ce3",
+    "22300d82049ab18d2633c66c08735abbd864331f053fea701985177620c62019.json": "e5d81ab16e915d2b8cd014f89c02ab5c3045172fc38952da3c60037204bd90e6",
+    "28c68d15241c3b417f8b12eafc99b0dd88344d191c8dffeed32d6bae3ff4c925.json": "6189d56c1901d6f7dc743857fb644a43d99da1148ba284ef87ef81444c834a0b",
+    "29df17755fe337ecbc759b58bdc4df52ea5cb41158c7b6bca162da11554ee1f7.json": "213b55107a9437f4fe72bd04431f5b93a91ac550f4e6295962a57b5eba87c2ba",
+    "29fc7f0e138479b45d6087c7a31cc58fd8d77b01c7e4945f93e9a2ca1956ae20.json": "8a8acfe93e9d7e7337855f21be5f58f31d9c0bc4879db5e32d2faf0be3c12835",
+    "2ac5a6a52711e5a057edc574ec1afd88ea1bf5726ecc42431076b2b99ae65571.json": "f66ec7e14e411201d0a516ab3c8aca9c82aced7a900e81c5f011d9f119880f28",
+    "2bfe0ab6c57e7813a168fa5d18412a188d56c593816286b6113c8d13c66bc4e3.json": "7b6c828d00bd953e2a055ab974231d157fbbc808cdbe0f2236cab639050fbf00",
+    "348d528c55927a1a42ba2d40d1a46020961a05796217cf6a5fcfafbe25fe6045.json": "2d6bb9a922d4af3ee80901bbd186a6c2eda4a6f40b283e2d88b8af7d85260637",
+    "352c4ccd64ba4f52bdcff1619ad407ae9e8776343c1052d79991e0591637ab92.json": "64994f13a6c9b115ade74f46dad8e1afab8e7246e4246cba1ba8c0f773af8b30",
+    "38742c0c73b3e9620162f5658ac5977395993725e7f455be0975b1ed07016bcf.json": "735ec92db1a702560fbb9b5077feaeb7bc3ae8f8ab677e5421639d7f4ce4af04",
+    "428ffdc193054150d937fce323ceba256b66e08490c774b14d87b315e37aaf4c.json": "a8d5a1b5c83da39124c618b58d087f9eee2746f4da6f4072dcfe6399a7973af7",
+    "4550bcbb293c42d56ea6854a50e845b78f16705ca06693c3ddbc26a9cab29a92.json": "fb010a875b2c916da7d555466f062569be6b9c884586f77f621308566961c878",
+    "4b35eaefd6f1e221342485c31540fdf02257dd8ff73b5656ceaee5d5c05168e8.json": "ba086ef906ee065eb36495db9b8b380129f7a00d6f94f79ae9f705ac85967725",
+    "4ce6fdf6fa45d4b3fd46363f58a6bf7b4024c601314a3d5b2284c82da4b79db0.json": "1b7c84e78633607c2c26baa644a675bb089abf083f1b7934565fbcb082c7dd4b",
+    "503bb6086e6659f66c6a57ee6da888b3ff2229ac90c9fca064f6b5975db1adc5.json": "6c84dea9e0d4aef751e2d1e63e7127d5b7d10e11beb27e347310afb305bebece",
+    "50ab62964ee2905424b84e70aa5a7d42371124dfc1b74092acef309b932f45ce.json": "6ef9cdf9ef2567cf8b510cc2911a77950ad7c732b9ce3b2828863b1c55170c8a",
+    "5114694860969393810afd8ee6d93e29f71328ce9993e0af8543af448062559f.json": "e4b2adaf7aa7e0b16f9e9a336a3984eb1a11fb0b9c378d66c4801d1452fe6cad",
+    "519655ceec841568e20d426fd1658898d3436d69c18869be5791908d564fa709.json": "92a218ab7e43cfe1703608b0b19d3579a34eeec19c4166c36174267c0ade62fd",
+    "519f8eb814882d01009d60ae189f4e62da7e17ed28d3f9d0f62d889d77cdc176.json": "f65f1be4f9b2b9453b0ba13650b3d74a7918f68340396b70b0be370804c68dce",
+    "55f2fc43fa10706a4ada4e83398f12daafd6bcfe2e23fb6c6506c16c5ac3581b.json": "a946e9d258d8bfa165df48002ce32644353e4b1bdd64253dd98572fa4ffc5b7f",
+    "56bfd08669f0a43d00a9e882cd0652877d1164674bff9ec73d538204ff955c58.json": "43942ac839fb3f3ca320aa3b6ba754af96e5a06b949203c05a93316d68dcf5aa",
+    "583b66edc5b2657b0ba83441f546fa066fa7ea559be602dcced5f715d4ae67f8.json": "9e41005acef218bfbad6538a7e402743d6d94b47a013d9f1d426ebcb402009d4",
+    "5cc2647564d8f136a64fffba59269ec4f5de5917b411a3bb383464eed80ae4ab.json": "02263e5610d54021df5e36cc1263ed6469b255d394643b9de04b4cd89b06e714",
+    "5ef0c558f6d41ecac41763397cfef9e9ab249e7bd9a26af0ff88c9463ea3f95e.json": "3ccfda21c5a92ace5b75b4ccb9fc428247755f7a838e517b44efabcfb0d8d14c",
+    "5f129ea88cb1d53e5b65375cd5b89aab30073f797320c15c597fe53638f156f6.json": "b5d333b71580d437a57c75ea6b7e4980b06714dc21e3695e8100a00f4e9213b1",
+    "5f5187682f6f2e93b21eca9c4b01f4d9589c16f1c16edd2d0991ab7a557981e5.json": "c4c0fa523a3d20752d107193ffdd8130c6b06da6c619ee9109fdefac006401b6",
+    "60eb525e1e3688847ca441d1d21463fdd9d23d3ffee9e2d4f4599dca78561842.json": "71d876d568896e7ae5693a21d732e1ebe92df5423af813ade63bd9ce1cec0938",
+    "637e023ad0bad4eca490cf8d292ca8b391d0b3757ae731585cd5c1220f24d088.json": "ed5fa905cac48520ff8938c02cf2fe071518c30dee3f104f43b970f38888f238",
+    "65e747e80dfb2fb77cc63db80205482db0ab0add0d6ea57695ffcca8f8f35ac2.json": "8a77896bba6d21eb4002e12228bc03273426265cc00402c1b505196b4688371f",
+    "65f8d021f48aa561b0a598e93323650b0fa1a0e8c47d9cde036d76b9aff8efcf.json": "72c2ecc944f473c6ba68a3aae75878d8547ad6e033fd47a42d0034bf22862419",
+    "6e50764c19d52e91ba1f281dc5a2e804ccde6c0e9494658a34ba3bba13263ab5.json": "86a84220a785a9fbb218e36b91243e2e5644e80485be6622e9f5bd28064465ed",
+    "6fa891fa6024c5a44ce5fc1ffeadf2b2e83be9a2ec4c8ebcd5c240d363b8b2b1.json": "fb1e7651ecf46302882cc3dd28f34799587df957e1908033109d32b6fdb56f2d",
+    "71f5cb46c9cae80385ee0dc5aff71c345d4ad693ef23f724db448e47f4f08e3f.json": "0731fa1641ff3fda2d9e58f8279f90b5e31f5a05f861c23187f699c3cf9238f9",
+    "75a13409511acd87d49fc0a286c8ad707669ec05157491dc6a58e20a3bdc8878.json": "82614d03dcf967eb05a40a2f1e02f9eeb81b2c76b56898f1955b1063cdf97ed0",
+    "796e34070891ef5e8b15f7268d812ff8c705b5477fae5affd6adfdcdc4b6d86e.json": "867421bd9d6faeed460ef4abd0db183060dd2e9b4f4d872d94bf5c59b43d4587",
+    "84c0202b24dc464906cd1aa586aaa030cf1c72b9caaeb96370a8a7effe65cce5.json": "119f9381e468b872a2986bc93ef5f0c2bd5105784106d3c7a795f18375eba18f",
+    "86465e02565aaf868ba666899f5a1b63bc7bf1050b5ff909ace0006b252cda0e.json": "3cfcc242d4cfe8d2cf9b8274d845a71768b4701f381c7d7105f4770b3d4621fd",
+    "87e756792f8e8abc1faa85b00cf3618414595f40780dd4b772ce2f893572883e.json": "b5540ab314dafa6279bcbd97f8f8efbbe18757347737b84443c9291248dbf3e3",
+    "8c585884fa34393da0a16ddce60c6c75f73a7a06aae42f7a62dfc6f955e45f2a.json": "42e5cd1b57c36f9cf11343ddfc3e3ccc3e1c1f9f24b13ffb26b788627fde32ee",
+    "904b3f11a374cc80e4a97ff128182010473e7e2cc5e7b15f77c6254ce4a7744e.json": "3f304f2581428923b42f28aa70625f68646b6df949ac788c011ec46cf78ac09e",
+    "9052de735b31f3b6e2dca85d618f702251c691471741eec58a3aa4033ac556a6.json": "b96dc1b96d936647746bdb5098a7bd490743abfdef17093f5ee2d49d87140f16",
+    "929b869d790dd85d692f32f31457ed6ed12420fa89ca6b28fa6e994146b6549c.json": "733b0cb9e5e3b41f891331a5c5fbb42cf7fd6ebbc6787a598a74bd81b3f95b4e",
+    "9e4dbf81fcd029291d208b940b4b221457da7cb8640b185d2678d6480ba0ef8e.json": "4c7c1e59b20d07cf63f30e6ba7d0968155c4682b6ff281028eba09d3dd0ad6da",
+    "9efc0f98a2fdd301c15662e11340bbbccaf74a40f29162069970de17c1cc3c66.json": "4223914ee21fb2ab9064eb8b371c865ca11341c8972a84c0a847f179f7109525",
+    "9fb52165196e5cb2b7b31547c6357e4098e198de9889f461d66754f90fb81257.json": "bdff7ff918e2a44f171805d1bc84ad53bc1f5a2d3e2e18e95a83f01c777fdebe",
+    "a257777702f9e737381aea1417ca192eef9b1cc4b5cf6453c8e598403349a060.json": "6d090d0c50f7c988645a779cae2305919740ec8b242c802d82ed0302be313b5e",
+    "a44db9e625a953d98b08712f1c8f4c365bb8d9b5b06729807ff3f1e613628d4f.json": "fc682905a37e9bdbafbc52507e9812fb72e65b666a46a78f95cb11c8fa50bae5",
+    "a6a0fa38a869e99ce4563fae822c5ef3443519ee91204ac5f3a7a9e733f8f831.json": "e72ba48e50ba84ee10f2e9e86175fa7543e131a9fcd1502dc2ce42bcbef8beb1",
+    "a83301a96959ef49eab5253cd344e3540acb44af1c2da0f814d2fc9d1b08dc58.json": "61dc6c9910cd198ca532a5ba68b675af156a4e5b77a4d5c580253dd7219f0d9e",
+    "af8f260f4950fb568c972705ab762f5e8070d83ccc02444e77ee33b0238f6df9.json": "9c63b6b2e3cc2dd64da5e5ebf1eded00d22cb56c12c9f443687c7d6736be08a1",
+    "b273470d1f1ffab2e7c537d3d7c8ca2c7550341c3100f5a44853b6f3966a5738.json": "2c7534388db088e8aeb40e0380c1736a9bb41b99bc2aa12221d70dade38e3743",
+    "b305bd4f94838871e1c4f662557b07d7966e90c41f8b72e68be54039aeed535c.json": "bbe274ca6623d058ce2b9c8fd1cd1e3be0072c3f8e6114399350d0b0af432025",
+    "b46c85c8e588edee16271d74b0153414cfd3354e60f35906dca3b5f98e956851.json": "f9a9b1e66f6909d0e233c10f6e9b4e72d4bf6357e2e8aeb108ebe315b8525077",
+    "b5975bddad2f1dbb049529b08f4bab9c45aa2161a73c804c1ed9412a18bfb57f.json": "53c81cac694504cb54f2008cb1505991a2b0229252f705fbc9df28c2e467ff98",
+    "b769889da19ade5fe33fbb78e88828325ac21649fa6460a628c94a3152a5fac6.json": "afc79116b1e4ee5b73d2c059df0dda59ccbb6b71ab362aba5515be966cada944",
+    "c0596640403afef6bd87f434598de37172158d3ffe92eeba6e5dc4537b7b1122.json": "75c6aed8cc3edad1a1dd417f535149200612cbbe0c0191c6c92bcab5033563a7",
+    "c466a3cb8a670ef4fe0abfdbad1036b12b4cda6b2262f0fce13d9fb9125b2eee.json": "1755a321114b3e439670a8c4de12f0344865e7a4002dba8adb4438e9c5fa6256",
+    "c8a84598f9d28abff382f41f227ef88fd8000c4419d206f7801c732de71879dc.json": "5ead2e25e35739a8a642f1490fc8db32778496ab4de1ba1fd8ad6beb8641b785",
+    "cbee65229d59e9b78e9c4482706ece4ce1694f805fe3a7a53bf7325c25be02ee.json": "2293cd852cb49e298589fbda4c2566db4415f9ffc42405ec4b737ff9ad9809f6",
+    "cdc98e986d0309cbb56d3fdebf08f08bdd271d09da114855f9cd8d23780f3f45.json": "184a6acb2802fec63f8b78cde84ed721a463987525e9c4019eba3b51c68e9582",
+    "d1d3c54038bb98bd651216ef62d21deab59211431bcdc8f3b75abef470b57312.json": "145db8685049110e08d77f796fcf6d6cbbc9b51e012f5af2e9b60500f8067211",
+    "d2948f1abfd6a2d36d5f7e4955e2a4a639fe38bd1ac9c07c7f1576b0a771aa50.json": "6be94080c1c5c4cc7362a5d3478490538c2d9cf3dee1758f20408b132895f7b1",
+    "d51db6d433e5006e9ff021aa6916bb9d8299ec0cbd655472e28866dfd98e4fec.json": "56d477a86062ba31186a452c3ec6799ce2399eb45c8e942c25856961a0c40e89",
+    "d71338fd68568bb99a78d67e973329ff17b7c702d5969b4430a169844f587a56.json": "f82e8909af6ecc0f8e368592cdeb82018a75c1c7eb53c0f3c7d15b30d0cfbdad",
+    "d9310bc92a25ee90f494b6b6aeaec643e9b84327ada9acaa37055134d18053ce.json": "2daaf7745b0af95d9c443ef4220a92fc7ae73ed6a8e523be685a3385fadd04e7",
+    "d939d2eb2eb808b237402fcca0096297317d55f385d1973c1d479b5da3d2f1b2.json": "ed40086fdfcaf89a6140c042e4d6eb8f6a622cc495e2598919240af810d95862",
+    "da7e4d8639d2e5e0297a15de26252ee861ef50c4319c8cef010d449334326394.json": "b561d4e5d7aeab8742f9822be9ebf5faa6a28c151519ad3061941b2065775a9d",
+    "de698a2453ca79d74dfd1d719505cb0ab78ef707588326ab5f12de85f9cd4033.json": "ec975bcedbb7d94f6030aa7fab0c631e854797b90d6f793fe3223149410c237f",
+    "de7a8628f3fdd227231cf321d8c5eda352a5238ff5f1e922065d30cda49707dd.json": "717f94eeb595da7202f51f397bbf5e03b0312dd02db2bd46cfccba7856f7bfb9",
+    "dee3e333152f2156b03a1eaaf294d843805e9f59b51e0e4a5c568d5f66b573a4.json": "d16b5ea607a4ec0e990da62b004e65043cc8a000648546a5cf8eb873388f4c71",
+    "e8906a8f2ad2b98b1f30e778564871efa708dd8f86e6d8da390056cb019b991a.json": "f3ce5104806a9ee75235b0868ab41199018f155a19618bd0299ed128913c845e",
+    "e8e9610a16fb2ea2f8c3930046c37019940c0807973d43bb6da5c7291ed3d0b5.json": "a3620219ca84b8c3755ddb23620315da3e69de23b5449fadba6b4638f1924cbf",
+    "e92bb6d397ed3df69e1b74b015a80ddad31e7d4171a5d61aa58eee7cdc108628.json": "46f71652556eb353b3a0e4a471d8d0fc63c8242d950683740a1e6e8f1ab341d9",
+    "e9abd05fa4ed65a6d73b7de585015eed93217d37c10d4d042821fe6c14dcb720.json": "aad446d611a2ca5cc987bc3402ca6744e253fe4d07cafa98c0f6237f6352843d",
+    "ed7e3253f72ee7c6893a2fa0e9c60e0d5b7532ff7b084ff6beb332dd131d8bbd.json": "2252257c480ddf625baf92373b7eb14ef250386d93c57b151e9bd726a1a15451",
+    "f05896e152fcba4980d3b7e8e10cea149b134e13d8b82e23bbe9542220f6b774.json": "1c216bd1d789992f69926e25c54affe8f07080a6ac9f234784c4890510939010",
+    "f24938c738b684b28f21b75f457ca3e69c582698085bdade1e7b228e60967b2e.json": "02d16eff200f4a172d8e7e58766e7819a4e7b8c92687f45d4912767b7233823d",
+    "f4307ff62adc56333ccf8019ece7aa50dcd2fd8a2ab6d24c95045c3cbfff483d.json": "ab9012962bc9fe1408752d1e917ce20314ade9e26bb5cf347a8d30e5e2280f80",
+    "f58ea419ebf2530a1b2b9e4fbe53b46a2a8b2ff35af46f181cb9d835faf951c6.json": "68ade6baa3e58af3ce6a8a226d0f5e8ef9e42b6917be181e794e30fcab916021",
+    "f819850a4d00637f9243ec8449e2000b32ab11e3f36f74d661a4c399df858caf.json": "91524c759976f037e594ef542622f91af6f3d8528c4bdaff81a2b45294c2da3d",
+    "f81faf84ef9217537f17f6c81e4d00cd5cf8270933c5d7bf8ca050d2403dae39.json": "1956ede379070b9cdfeb3b308fb0813dc3b3c3211e82df37905bcb290a2680f4",
+    "fb0109c16778171817355a4a16177b15338ccccc1b350a4f4a47bf4099a33bc2.json": "ce0a81ea324c1d204ae2ece9687bfe671bf25d8dc8cc89557f6b0b12c79d1597",
+    "fdc1331a3a08128caf52b335e8e77da89d89a364ca41ed975575593e465a4261.json": "4f5740753344d8be27d66877b79f36741a67a62d89a0f7a60e7bb842cfd94cc5",
+    "fde62eb8d6691aa54f9c80e366b5ab7b57cc2b1c64c3b9f74ec1dfb790b58bbe.json": "5db9c86ffcb6c57485ca7857f4068d9d6a098502a9bc982cf4a148c4bc6cf6e3"
+  },
+  "retry_count": 0,
+  "returned_model_ids": [
+    "accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b"
+  ],
+  "schema_sha256": "0b473794c1ba5ac43144e57c527994958a0b14849867f75752c89ba8dad4fd64",
+  "schema_version": "janus-v2-response-manifest-v1",
+  "sdk_version": "stdlib-urllib-no-retry",
+  "stage": "development-v2",
+  "started_at_utc": "2026-10-24T23:14:40.364855+00:00",
+  "trials": [
+    {
+      "cache_key": "2ac5a6a52711e5a057edc574ec1afd88ea1bf5726ecc42431076b2b99ae65571",
+      "logical_trial_id": "janus-v2:fireworks:development-supply_shortage-0019:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-supply_shortage-0019"
+    },
+    {
+      "cache_key": "16ea33e4484af0fefc60f5b6ffd0103536116cfa8482648ca24efe69ba883b2a",
+      "logical_trial_id": "janus-v2:fireworks:development-demand_increase-0075:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-demand_increase-0075"
+    },
+    {
+      "cache_key": "d71338fd68568bb99a78d67e973329ff17b7c702d5969b4430a169844f587a56",
+      "logical_trial_id": "janus-v2:fireworks:development-seller_collusion-0025:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-seller_collusion-0025"
+    },
+    {
+      "cache_key": "50ab62964ee2905424b84e70aa5a7d42371124dfc1b74092acef309b932f45ce",
+      "logical_trial_id": "janus-v2:fireworks:development-momentum_demand-0008:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-momentum_demand-0008"
+    },
+    {
+      "cache_key": "6e50764c19d52e91ba1f281dc5a2e804ccde6c0e9494658a34ba3bba13263ab5",
+      "logical_trial_id": "janus-v2:fireworks:development-supply_shortage-0046:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-supply_shortage-0046"
+    },
+    {
+      "cache_key": "428ffdc193054150d937fce323ceba256b66e08490c774b14d87b315e37aaf4c",
+      "logical_trial_id": "janus-v2:fireworks:development-demand_increase-0025:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-demand_increase-0025"
+    },
+    {
+      "cache_key": "1c6ecdb6a26401b66034d124179a314f6b0ddfd3862a3b3f902d78636f4c4c3b",
+      "logical_trial_id": "janus-v2:fireworks:development-seller_collusion-0007:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-seller_collusion-0007"
+    },
+    {
+      "cache_key": "5cc2647564d8f136a64fffba59269ec4f5de5917b411a3bb383464eed80ae4ab",
+      "logical_trial_id": "janus-v2:fireworks:development-momentum_demand-0066:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-momentum_demand-0066"
+    },
+    {
+      "cache_key": "f81faf84ef9217537f17f6c81e4d00cd5cf8270933c5d7bf8ca050d2403dae39",
+      "logical_trial_id": "janus-v2:fireworks:development-supply_shortage-0025:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-supply_shortage-0025"
+    },
+    {
+      "cache_key": "1b0f6ba19228fdcb81e7e353dd656457949bc94405eafff2245bc15d6bc60670",
+      "logical_trial_id": "janus-v2:fireworks:development-demand_increase-0011:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-demand_increase-0011"
+    },
+    {
+      "cache_key": "09a67dcf1c8e8316d63e0e79b54739c31e21a94927e39bb63a8906520b0abd98",
+      "logical_trial_id": "janus-v2:fireworks:development-seller_collusion-0031:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-seller_collusion-0031"
+    },
+    {
+      "cache_key": "5f5187682f6f2e93b21eca9c4b01f4d9589c16f1c16edd2d0991ab7a557981e5",
+      "logical_trial_id": "janus-v2:fireworks:development-momentum_demand-0068:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-momentum_demand-0068"
+    },
+    {
+      "cache_key": "87e756792f8e8abc1faa85b00cf3618414595f40780dd4b772ce2f893572883e",
+      "logical_trial_id": "janus-v2:fireworks:development-supply_shortage-0057:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-supply_shortage-0057"
+    },
+    {
+      "cache_key": "e8906a8f2ad2b98b1f30e778564871efa708dd8f86e6d8da390056cb019b991a",
+      "logical_trial_id": "janus-v2:fireworks:development-demand_increase-0033:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-demand_increase-0033"
+    },
+    {
+      "cache_key": "215a8d0223919d777780560384244612d4da924749dcc15cd5194351d1135d97",
+      "logical_trial_id": "janus-v2:fireworks:development-seller_collusion-0000:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-seller_collusion-0000"
+    },
+    {
+      "cache_key": "17585744a7807d4c64366958966ffa4acfdab0018567c273460c97fe49c6bafe",
+      "logical_trial_id": "janus-v2:fireworks:development-momentum_demand-0051:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-momentum_demand-0051"
+    },
+    {
+      "cache_key": "4550bcbb293c42d56ea6854a50e845b78f16705ca06693c3ddbc26a9cab29a92",
+      "logical_trial_id": "janus-v2:fireworks:development-supply_shortage-0075:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-supply_shortage-0075"
+    },
+    {
+      "cache_key": "9fb52165196e5cb2b7b31547c6357e4098e198de9889f461d66754f90fb81257",
+      "logical_trial_id": "janus-v2:fireworks:development-demand_increase-0010:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-demand_increase-0010"
+    },
+    {
+      "cache_key": "fde62eb8d6691aa54f9c80e366b5ab7b57cc2b1c64c3b9f74ec1dfb790b58bbe",
+      "logical_trial_id": "janus-v2:fireworks:development-seller_collusion-0041:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-seller_collusion-0041"
+    },
+    {
+      "cache_key": "f24938c738b684b28f21b75f457ca3e69c582698085bdade1e7b228e60967b2e",
+      "logical_trial_id": "janus-v2:fireworks:development-momentum_demand-0013:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-momentum_demand-0013"
+    },
+    {
+      "cache_key": "65f8d021f48aa561b0a598e93323650b0fa1a0e8c47d9cde036d76b9aff8efcf",
+      "logical_trial_id": "janus-v2:fireworks:development-supply_shortage-0051:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-supply_shortage-0051"
+    },
+    {
+      "cache_key": "a257777702f9e737381aea1417ca192eef9b1cc4b5cf6453c8e598403349a060",
+      "logical_trial_id": "janus-v2:fireworks:development-demand_increase-0016:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-demand_increase-0016"
+    },
+    {
+      "cache_key": "fb0109c16778171817355a4a16177b15338ccccc1b350a4f4a47bf4099a33bc2",
+      "logical_trial_id": "janus-v2:fireworks:development-seller_collusion-0037:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-seller_collusion-0037"
+    },
+    {
+      "cache_key": "c466a3cb8a670ef4fe0abfdbad1036b12b4cda6b2262f0fce13d9fb9125b2eee",
+      "logical_trial_id": "janus-v2:fireworks:development-momentum_demand-0062:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-momentum_demand-0062"
+    },
+    {
+      "cache_key": "a83301a96959ef49eab5253cd344e3540acb44af1c2da0f814d2fc9d1b08dc58",
+      "logical_trial_id": "janus-v2:fireworks:development-supply_shortage-0063:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-supply_shortage-0063"
+    },
+    {
+      "cache_key": "60eb525e1e3688847ca441d1d21463fdd9d23d3ffee9e2d4f4599dca78561842",
+      "logical_trial_id": "janus-v2:fireworks:development-demand_increase-0020:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-demand_increase-0020"
+    },
+    {
+      "cache_key": "28c68d15241c3b417f8b12eafc99b0dd88344d191c8dffeed32d6bae3ff4c925",
+      "logical_trial_id": "janus-v2:fireworks:development-seller_collusion-0024:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-seller_collusion-0024"
+    },
+    {
+      "cache_key": "8c585884fa34393da0a16ddce60c6c75f73a7a06aae42f7a62dfc6f955e45f2a",
+      "logical_trial_id": "janus-v2:fireworks:development-momentum_demand-0055:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-momentum_demand-0055"
+    },
+    {
+      "cache_key": "5f129ea88cb1d53e5b65375cd5b89aab30073f797320c15c597fe53638f156f6",
+      "logical_trial_id": "janus-v2:fireworks:development-supply_shortage-0042:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-supply_shortage-0042"
+    },
+    {
+      "cache_key": "b769889da19ade5fe33fbb78e88828325ac21649fa6460a628c94a3152a5fac6",
+      "logical_trial_id": "janus-v2:fireworks:development-demand_increase-0050:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-demand_increase-0050"
+    },
+    {
+      "cache_key": "6fa891fa6024c5a44ce5fc1ffeadf2b2e83be9a2ec4c8ebcd5c240d363b8b2b1",
+      "logical_trial_id": "janus-v2:fireworks:development-seller_collusion-0069:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-seller_collusion-0069"
+    },
+    {
+      "cache_key": "f819850a4d00637f9243ec8449e2000b32ab11e3f36f74d661a4c399df858caf",
+      "logical_trial_id": "janus-v2:fireworks:development-momentum_demand-0035:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-momentum_demand-0035"
+    },
+    {
+      "cache_key": "c0596640403afef6bd87f434598de37172158d3ffe92eeba6e5dc4537b7b1122",
+      "logical_trial_id": "janus-v2:fireworks:development-supply_shortage-0027:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-supply_shortage-0027"
+    },
+    {
+      "cache_key": "352c4ccd64ba4f52bdcff1619ad407ae9e8776343c1052d79991e0591637ab92",
+      "logical_trial_id": "janus-v2:fireworks:development-demand_increase-0056:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-demand_increase-0056"
+    },
+    {
+      "cache_key": "56bfd08669f0a43d00a9e882cd0652877d1164674bff9ec73d538204ff955c58",
+      "logical_trial_id": "janus-v2:fireworks:development-seller_collusion-0017:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-seller_collusion-0017"
+    },
+    {
+      "cache_key": "d1d3c54038bb98bd651216ef62d21deab59211431bcdc8f3b75abef470b57312",
+      "logical_trial_id": "janus-v2:fireworks:development-momentum_demand-0040:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-momentum_demand-0040"
+    },
+    {
+      "cache_key": "d939d2eb2eb808b237402fcca0096297317d55f385d1973c1d479b5da3d2f1b2",
+      "logical_trial_id": "janus-v2:fireworks:development-supply_shortage-0006:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-supply_shortage-0006"
+    },
+    {
+      "cache_key": "348d528c55927a1a42ba2d40d1a46020961a05796217cf6a5fcfafbe25fe6045",
+      "logical_trial_id": "janus-v2:fireworks:development-demand_increase-0000:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-demand_increase-0000"
+    },
+    {
+      "cache_key": "15e67d3d177635262ceeadcbc59625056d64fdd049c57002e6ac7c842000cb6c",
+      "logical_trial_id": "janus-v2:fireworks:development-seller_collusion-0077:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-seller_collusion-0077"
+    },
+    {
+      "cache_key": "519f8eb814882d01009d60ae189f4e62da7e17ed28d3f9d0f62d889d77cdc176",
+      "logical_trial_id": "janus-v2:fireworks:development-momentum_demand-0028:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "development-momentum_demand-0028"
+    },
+    {
+      "cache_key": "55f2fc43fa10706a4ada4e83398f12daafd6bcfe2e23fb6c6506c16c5ac3581b",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0011:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0011"
+    },
+    {
+      "cache_key": "929b869d790dd85d692f32f31457ed6ed12420fa89ca6b28fa6e994146b6549c",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0032:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0032"
+    },
+    {
+      "cache_key": "0bf7f45414413a55b502b63b53d84472e5a84f1712beed69d90501e522d4ff73",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0045:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0045"
+    },
+    {
+      "cache_key": "2163f020b70a293e752840ab45aaa053d8b04dfa22ef15eb2fb1c3d61951d040",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0070:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "schema_failure",
+      "world_id": "calibration-momentum_demand-0070"
+    },
+    {
+      "cache_key": "71f5cb46c9cae80385ee0dc5aff71c345d4ad693ef23f724db448e47f4f08e3f",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0017:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0017"
+    },
+    {
+      "cache_key": "173efe60d92cc258811bc5cc3806b5740fd2f48df2138a19f30ca74e6e4075f0",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0017:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0017"
+    },
+    {
+      "cache_key": "4b35eaefd6f1e221342485c31540fdf02257dd8ff73b5656ceaee5d5c05168e8",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0047:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0047"
+    },
+    {
+      "cache_key": "c8a84598f9d28abff382f41f227ef88fd8000c4419d206f7801c732de71879dc",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0003:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0003"
+    },
+    {
+      "cache_key": "cbee65229d59e9b78e9c4482706ece4ce1694f805fe3a7a53bf7325c25be02ee",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0073:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0073"
+    },
+    {
+      "cache_key": "e8e9610a16fb2ea2f8c3930046c37019940c0807973d43bb6da5c7291ed3d0b5",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0025:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0025"
+    },
+    {
+      "cache_key": "fdc1331a3a08128caf52b335e8e77da89d89a364ca41ed975575593e465a4261",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0022:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0022"
+    },
+    {
+      "cache_key": "09e8f7909f5f28c6996263b129b99c0e12419f664bafa10577912b745e59a887",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0050:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0050"
+    },
+    {
+      "cache_key": "583b66edc5b2657b0ba83441f546fa066fa7ea559be602dcced5f715d4ae67f8",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0058:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0058"
+    },
+    {
+      "cache_key": "904b3f11a374cc80e4a97ff128182010473e7e2cc5e7b15f77c6254ce4a7744e",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0056:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0056"
+    },
+    {
+      "cache_key": "de698a2453ca79d74dfd1d719505cb0ab78ef707588326ab5f12de85f9cd4033",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0051:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0051"
+    },
+    {
+      "cache_key": "38742c0c73b3e9620162f5658ac5977395993725e7f455be0975b1ed07016bcf",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0031:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0031"
+    },
+    {
+      "cache_key": "65e747e80dfb2fb77cc63db80205482db0ab0add0d6ea57695ffcca8f8f35ac2",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0063:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0063"
+    },
+    {
+      "cache_key": "f58ea419ebf2530a1b2b9e4fbe53b46a2a8b2ff35af46f181cb9d835faf951c6",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0040:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0040"
+    },
+    {
+      "cache_key": "9e4dbf81fcd029291d208b940b4b221457da7cb8640b185d2678d6480ba0ef8e",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0061:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0061"
+    },
+    {
+      "cache_key": "d51db6d433e5006e9ff021aa6916bb9d8299ec0cbd655472e28866dfd98e4fec",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0032:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0032"
+    },
+    {
+      "cache_key": "de7a8628f3fdd227231cf321d8c5eda352a5238ff5f1e922065d30cda49707dd",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0042:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0042"
+    },
+    {
+      "cache_key": "ed7e3253f72ee7c6893a2fa0e9c60e0d5b7532ff7b084ff6beb332dd131d8bbd",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0046:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0046"
+    },
+    {
+      "cache_key": "dee3e333152f2156b03a1eaaf294d843805e9f59b51e0e4a5c568d5f66b573a4",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0046:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0046"
+    },
+    {
+      "cache_key": "29df17755fe337ecbc759b58bdc4df52ea5cb41158c7b6bca162da11554ee1f7",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0021:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0021"
+    },
+    {
+      "cache_key": "016db839a00da1e65908d6697b451ba80f12cc2ac3adff5b9b4bcd67c8f21880",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0034:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0034"
+    },
+    {
+      "cache_key": "091c039fddeeacdce56ec430dbedb15d3b76546e7d337453460dbd4ab8d6b92a",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0075:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0075"
+    },
+    {
+      "cache_key": "29fc7f0e138479b45d6087c7a31cc58fd8d77b01c7e4945f93e9a2ca1956ae20",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0024:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0024"
+    },
+    {
+      "cache_key": "a6a0fa38a869e99ce4563fae822c5ef3443519ee91204ac5f3a7a9e733f8f831",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0002:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0002"
+    },
+    {
+      "cache_key": "cdc98e986d0309cbb56d3fdebf08f08bdd271d09da114855f9cd8d23780f3f45",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0069:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0069"
+    },
+    {
+      "cache_key": "02cb5be1af38580683615e3943d321f64e8b36795e7bb1ccf0127cae6d362a3f",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0026:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0026"
+    },
+    {
+      "cache_key": "d2948f1abfd6a2d36d5f7e4955e2a4a639fe38bd1ac9c07c7f1576b0a771aa50",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0025:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0025"
+    },
+    {
+      "cache_key": "194e5a3db5c639b72419b808c4486d930f6e1eb78f47402427586a2a0fdc2344",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0007:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0007"
+    },
+    {
+      "cache_key": "796e34070891ef5e8b15f7268d812ff8c705b5477fae5affd6adfdcdc4b6d86e",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0041:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0041"
+    },
+    {
+      "cache_key": "e9abd05fa4ed65a6d73b7de585015eed93217d37c10d4d042821fe6c14dcb720",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0068:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0068"
+    },
+    {
+      "cache_key": "f4307ff62adc56333ccf8019ece7aa50dcd2fd8a2ab6d24c95045c3cbfff483d",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0074:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0074"
+    },
+    {
+      "cache_key": "9052de735b31f3b6e2dca85d618f702251c691471741eec58a3aa4033ac556a6",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0045:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0045"
+    },
+    {
+      "cache_key": "75a13409511acd87d49fc0a286c8ad707669ec05157491dc6a58e20a3bdc8878",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0040:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0040"
+    },
+    {
+      "cache_key": "b5975bddad2f1dbb049529b08f4bab9c45aa2161a73c804c1ed9412a18bfb57f",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0045:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0045"
+    },
+    {
+      "cache_key": "86465e02565aaf868ba666899f5a1b63bc7bf1050b5ff909ace0006b252cda0e",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0054:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0054"
+    },
+    {
+      "cache_key": "637e023ad0bad4eca490cf8d292ca8b391d0b3757ae731585cd5c1220f24d088",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0004:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0004"
+    },
+    {
+      "cache_key": "af8f260f4950fb568c972705ab762f5e8070d83ccc02444e77ee33b0238f6df9",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0046:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0046"
+    },
+    {
+      "cache_key": "da7e4d8639d2e5e0297a15de26252ee861ef50c4319c8cef010d449334326394",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0047:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0047"
+    },
+    {
+      "cache_key": "a44db9e625a953d98b08712f1c8f4c365bb8d9b5b06729807ff3f1e613628d4f",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0040:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0040"
+    },
+    {
+      "cache_key": "5114694860969393810afd8ee6d93e29f71328ce9993e0af8543af448062559f",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0005:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0005"
+    },
+    {
+      "cache_key": "22300d82049ab18d2633c66c08735abbd864331f053fea701985177620c62019",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0022:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0022"
+    },
+    {
+      "cache_key": "519655ceec841568e20d426fd1658898d3436d69c18869be5791908d564fa709",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0073:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0073"
+    },
+    {
+      "cache_key": "f05896e152fcba4980d3b7e8e10cea149b134e13d8b82e23bbe9542220f6b774",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0044:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0044"
+    },
+    {
+      "cache_key": "08fc03b8a15bfa59e6a1d5e7cbbc7e85b7dbeeead5b019b9858d4f59e99dd331",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0077:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0077"
+    },
+    {
+      "cache_key": "2bfe0ab6c57e7813a168fa5d18412a188d56c593816286b6113c8d13c66bc4e3",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0072:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0072"
+    },
+    {
+      "cache_key": "9efc0f98a2fdd301c15662e11340bbbccaf74a40f29162069970de17c1cc3c66",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0003:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "schema_failure",
+      "world_id": "calibration-demand_increase-0003"
+    },
+    {
+      "cache_key": "4ce6fdf6fa45d4b3fd46363f58a6bf7b4024c601314a3d5b2284c82da4b79db0",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0071:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0071"
+    },
+    {
+      "cache_key": "e92bb6d397ed3df69e1b74b015a80ddad31e7d4171a5d61aa58eee7cdc108628",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0078:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0078"
+    },
+    {
+      "cache_key": "06e604b608cd7fed5ba9a8c022811cf8a7d8ffe0453e46698f1593e8b44395a1",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0043:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0043"
+    },
+    {
+      "cache_key": "b305bd4f94838871e1c4f662557b07d7966e90c41f8b72e68be54039aeed535c",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0074:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0074"
+    },
+    {
+      "cache_key": "503bb6086e6659f66c6a57ee6da888b3ff2229ac90c9fca064f6b5975db1adc5",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0077:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0077"
+    },
+    {
+      "cache_key": "5ef0c558f6d41ecac41763397cfef9e9ab249e7bd9a26af0ff88c9463ea3f95e",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0013:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0013"
+    },
+    {
+      "cache_key": "b273470d1f1ffab2e7c537d3d7c8ca2c7550341c3100f5a44853b6f3966a5738",
+      "logical_trial_id": "janus-v2:fireworks:calibration-supply_shortage-0051:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-supply_shortage-0051"
+    },
+    {
+      "cache_key": "d9310bc92a25ee90f494b6b6aeaec643e9b84327ada9acaa37055134d18053ce",
+      "logical_trial_id": "janus-v2:fireworks:calibration-demand_increase-0004:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-demand_increase-0004"
+    },
+    {
+      "cache_key": "84c0202b24dc464906cd1aa586aaa030cf1c72b9caaeb96370a8a7effe65cce5",
+      "logical_trial_id": "janus-v2:fireworks:calibration-seller_collusion-0030:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-seller_collusion-0030"
+    },
+    {
+      "cache_key": "b46c85c8e588edee16271d74b0153414cfd3354e60f35906dca3b5f98e956851",
+      "logical_trial_id": "janus-v2:fireworks:calibration-momentum_demand-0049:replicate-00",
+      "replicate_id": "replicate-00",
+      "validation_status": "valid",
+      "world_id": "calibration-momentum_demand-0049"
+    }
+  ],
+  "unblinded": false
+}

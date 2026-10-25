@@ -1,0 +1,30 @@
+{
+  "schema_version": "janus-hidden-v2-seed-rejection-v1",
+  "attempt": 5,
+  "status": "rejected_before_model_inference",
+  "code_commit": "6f22f9c",
+  "commitment_sha256": "a6e388161f15e6f4018888500b93320271d3ff46a6e271577155fe88f0f98344",
+  "commitment_file_sha256": "0199500a9b8f633a67b795d429ee6561debb468f914cf2e0a116e637d0bc679a",
+  "revealed_root_seed": 6612966473116324532,
+  "seed_manifest_sha256": "248d0e457004f34c1e81c2bf3273bec0386115659af5153cbdb6a64dabe2fb20",
+  "candidate_audit_sha256": "5862389d19fa54eef98439d355c2589034603006eceba88dc5745de21f9f9abd",
+  "oracle_file_count": 160,
+  "oracle_set_sha256": "5978111e5d5dafc4af57ee71e83ede9f50337a710b0b8189a14fd6fb1c756cb3",
+  "oracle_set_hash_method": "SHA-256 of sorted '<file_sha256>  <basename>\\n' records",
+  "acceptance_criteria": {
+    "structural_ood_maximum_distance": 1.25,
+    "structural_ood_minimum_pairs": 4,
+    "structural_ood_minimum_families": 2
+  },
+  "observed": {
+    "structural_ood_pair_count": 13,
+    "structural_ood_family_count": 1,
+    "structural_ood_families": ["momentum_demand"],
+    "action_coverage_passed": "not_evaluated_after_prior_gate_failure",
+    "matched_contrasts_passed": "not_evaluated_after_prior_gate_failure"
+  },
+  "reason": "structural OOD reversal family count was 1; frozen minimum is 2",
+  "model_inference_calls": 0,
+  "public_hidden_manifest_created": false,
+  "private_archive": "artifacts/hidden-v2-rejections/attempt-005"
+}

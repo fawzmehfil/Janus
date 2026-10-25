@@ -1,0 +1,7 @@
+comparison,decision_loss_difference,raw_p_value,holm_p_value
+accounts/fireworks/models/deepseek-v4p1-flash minus accounts/fireworks/models/glm-5p3-flash,100.91038630751362,0.0035903244101920875,0.017951622050960438
+accounts/fireworks/models/deepseek-v4p1-flash minus accounts/fireworks/models/gpt-oss-120b,101.00953042524095,0.010620167478603717,0.04248066991441487
+accounts/fireworks/models/deepseek-v4p1-flash minus accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b,15.589662878772478,0.6163112719098673,1.0
+accounts/fireworks/models/glm-5p3-flash minus accounts/fireworks/models/gpt-oss-120b,0.09914411772732593,0.9975403556408321,1.0
+accounts/fireworks/models/glm-5p3-flash minus accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b,-85.32072342874115,0.0012741837562382664,0.007645102537429598
+accounts/fireworks/models/gpt-oss-120b minus accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b,-85.41986754646847,0.03745378432982987,0.1123613529894896

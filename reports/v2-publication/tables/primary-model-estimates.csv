@@ -1,0 +1,5 @@
+model,utility_difference_vs_public_policy,lower_95,upper_95,independent_bundles,epsilon_optimal_rate,valid_completion_rate
+accounts/fireworks/models/deepseek-v4p1-flash,-216.87447510161502,-273.62582872468863,-162.74310673931245,40,0.5733333333333334,1.0
+accounts/fireworks/models/glm-5p3-flash,-115.96408879410141,-157.5473990544803,-77.66651032777821,40,0.39,0.99
+accounts/fireworks/models/gpt-oss-120b,-115.86494467637408,-159.60635583706247,-75.95326580189075,40,0.36666666666666664,1.0
+accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b,-201.28481222284256,-253.75677483403663,-149.96387796167235,40,0.44,0.9733333333333334

@@ -1,0 +1,912 @@
+{
+  "actions": [
+    {
+      "action": "do_nothing",
+      "documented_exception": null,
+      "epsilon_optimal_worlds": 32,
+      "passed": true,
+      "role": "abstention_control",
+      "strict_best_worlds": 32,
+      "threshold": null,
+      "unique_optimal_rate": 0.5166666666666667,
+      "unique_optimal_worlds": 31
+    },
+    {
+      "action": "price_ceiling",
+      "documented_exception": null,
+      "epsilon_optimal_worlds": 0,
+      "passed": true,
+      "role": "negative_control",
+      "strict_best_worlds": 0,
+      "threshold": null,
+      "unique_optimal_rate": 0.0,
+      "unique_optimal_worlds": 0
+    },
+    {
+      "action": "transaction_tax",
+      "documented_exception": null,
+      "epsilon_optimal_worlds": 14,
+      "passed": true,
+      "role": "substantive",
+      "strict_best_worlds": 13,
+      "threshold": 0.1,
+      "unique_optimal_rate": 0.21666666666666667,
+      "unique_optimal_worlds": 13
+    },
+    {
+      "action": "supply_subsidy",
+      "documented_exception": null,
+      "epsilon_optimal_worlds": 0,
+      "passed": true,
+      "role": "negative_control",
+      "strict_best_worlds": 0,
+      "threshold": null,
+      "unique_optimal_rate": 0.0,
+      "unique_optimal_worlds": 0
+    },
+    {
+      "action": "collusion_investigation",
+      "documented_exception": null,
+      "epsilon_optimal_worlds": 15,
+      "passed": true,
+      "role": "substantive",
+      "strict_best_worlds": 15,
+      "threshold": 0.1,
+      "unique_optimal_rate": 0.25,
+      "unique_optimal_worlds": 15
+    }
+  ],
+  "best_vs_second_action_gap": {
+    "maximum": 291.1682793922446,
+    "mean": 49.30719837507901,
+    "median": 20.697850505053793,
+    "minimum": 5.0147914116387255
+  },
+  "constant_policy_epsilon_optimal_rates": {
+    "collusion_investigation": 0.25,
+    "do_nothing": 0.5333333333333333,
+    "price_ceiling": 0.0,
+    "supply_subsidy": 0.0,
+    "transaction_tax": 0.23333333333333334
+  },
+  "epsilon_optimal_action_counts": {
+    "collusion_investigation": 15,
+    "do_nothing": 32,
+    "price_ceiling": 0,
+    "supply_subsidy": 0,
+    "transaction_tax": 14
+  },
+  "item_difficulty": [
+    {
+      "best_vs_second_gap": 20.31101697480699,
+      "bundle_id": "calibration-bundle-000",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.19183135077271046,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0011"
+    },
+    {
+      "best_vs_second_gap": 20.834734422976908,
+      "bundle_id": "calibration-bundle-000",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.2176388074162455,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0032"
+    },
+    {
+      "best_vs_second_gap": 291.1682793922446,
+      "bundle_id": "calibration-bundle-000",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 8.749803275786737,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0045"
+    },
+    {
+      "best_vs_second_gap": 16.181909553957667,
+      "bundle_id": "calibration-bundle-000",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 2.188275662521002,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0070"
+    },
+    {
+      "best_vs_second_gap": 20.182220979682825,
+      "bundle_id": "calibration-bundle-001",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.17944859571087848,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0017"
+    },
+    {
+      "best_vs_second_gap": 20.919380258255842,
+      "bundle_id": "calibration-bundle-001",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.21906182385808362,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0017"
+    },
+    {
+      "best_vs_second_gap": 148.17308610503096,
+      "bundle_id": "calibration-bundle-001",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 4.987802853961407,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0047"
+    },
+    {
+      "best_vs_second_gap": 42.35337193349187,
+      "bundle_id": "calibration-bundle-001",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 4.392234527524834,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0003"
+    },
+    {
+      "best_vs_second_gap": 20.30878008280888,
+      "bundle_id": "calibration-bundle-002",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.18100395903969113,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0073"
+    },
+    {
+      "best_vs_second_gap": 19.84201794866749,
+      "bundle_id": "calibration-bundle-002",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.19950159330587638,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0025"
+    },
+    {
+      "best_vs_second_gap": 51.887436778564734,
+      "bundle_id": "calibration-bundle-002",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 2.390609590003276,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0022"
+    },
+    {
+      "best_vs_second_gap": 18.042628959690774,
+      "bundle_id": "calibration-bundle-002",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 5.418471454730136,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0050"
+    },
+    {
+      "best_vs_second_gap": 17.16081981255593,
+      "bundle_id": "calibration-bundle-003",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.1629001533521622,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0058"
+    },
+    {
+      "best_vs_second_gap": 20.889138658920274,
+      "bundle_id": "calibration-bundle-003",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.19577493509435112,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0056"
+    },
+    {
+      "best_vs_second_gap": 50.393478676272935,
+      "bundle_id": "calibration-bundle-003",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 2.819479306986467,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0051"
+    },
+    {
+      "best_vs_second_gap": 7.383017254844162,
+      "bundle_id": "calibration-bundle-003",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 1.536479234356574,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0031"
+    },
+    {
+      "best_vs_second_gap": 19.888738582929363,
+      "bundle_id": "calibration-bundle-004",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.19451072184182966,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0063"
+    },
+    {
+      "best_vs_second_gap": 21.881206557925907,
+      "bundle_id": "calibration-bundle-004",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.20059918297064774,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0040"
+    },
+    {
+      "best_vs_second_gap": 64.89693757178247,
+      "bundle_id": "calibration-bundle-004",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 2.9550124940340563,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0061"
+    },
+    {
+      "best_vs_second_gap": 19.543795380835945,
+      "bundle_id": "calibration-bundle-004",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 2.508902257294326,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0032"
+    },
+    {
+      "best_vs_second_gap": 17.115973133866646,
+      "bundle_id": "calibration-bundle-005",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.17316697816704985,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0042"
+    },
+    {
+      "best_vs_second_gap": 21.273010923483525,
+      "bundle_id": "calibration-bundle-005",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.2135832004498832,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0046"
+    },
+    {
+      "best_vs_second_gap": 70.2533862854907,
+      "bundle_id": "calibration-bundle-005",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 3.0144078414673245,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0046"
+    },
+    {
+      "best_vs_second_gap": 13.418400904072769,
+      "bundle_id": "calibration-bundle-005",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 2.393999479307562,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0021"
+    },
+    {
+      "best_vs_second_gap": 19.744793802939967,
+      "bundle_id": "calibration-bundle-006",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.1902325152143309,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0034"
+    },
+    {
+      "best_vs_second_gap": 21.070892708725296,
+      "bundle_id": "calibration-bundle-006",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.1982794230952208,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0075"
+    },
+    {
+      "best_vs_second_gap": 118.24911283642723,
+      "bundle_id": "calibration-bundle-006",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 4.311213123897295,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0024"
+    },
+    {
+      "best_vs_second_gap": 34.32847559838774,
+      "bundle_id": "calibration-bundle-006",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 5.113407847503376,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0002"
+    },
+    {
+      "best_vs_second_gap": 20.56096658713068,
+      "bundle_id": "calibration-bundle-007",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.1879949415257114,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0069"
+    },
+    {
+      "best_vs_second_gap": 19.20028678788367,
+      "bundle_id": "calibration-bundle-007",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.1732992792457682,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0026"
+    },
+    {
+      "best_vs_second_gap": 24.785815279330563,
+      "bundle_id": "calibration-bundle-007",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 1.8616847107324772,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0025"
+    },
+    {
+      "best_vs_second_gap": 21.228655771523336,
+      "bundle_id": "calibration-bundle-007",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 2.1663619785276023,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0007"
+    },
+    {
+      "best_vs_second_gap": 20.892117392630098,
+      "bundle_id": "calibration-bundle-008",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.1938331139675786,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0041"
+    },
+    {
+      "best_vs_second_gap": 19.943038447832805,
+      "bundle_id": "calibration-bundle-008",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.20250550216571217,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0068"
+    },
+    {
+      "best_vs_second_gap": 221.60862206025558,
+      "bundle_id": "calibration-bundle-008",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 7.831796580545372,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0074"
+    },
+    {
+      "best_vs_second_gap": 12.592151852204552,
+      "bundle_id": "calibration-bundle-008",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 1.2471488093700316,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-momentum_demand-0045"
+    },
+    {
+      "best_vs_second_gap": 20.33259873345014,
+      "bundle_id": "calibration-bundle-009",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.19287933541717106,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0040"
+    },
+    {
+      "best_vs_second_gap": 19.97399753136051,
+      "bundle_id": "calibration-bundle-009",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.17894798535815745,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0045"
+    },
+    {
+      "best_vs_second_gap": 137.06899331371824,
+      "bundle_id": "calibration-bundle-009",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 5.257844209724149,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0054"
+    },
+    {
+      "best_vs_second_gap": 33.517114264650445,
+      "bundle_id": "calibration-bundle-009",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 3.8312310472152014,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0004"
+    },
+    {
+      "best_vs_second_gap": 19.996733416239294,
+      "bundle_id": "calibration-bundle-010",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.1909267485786913,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0046"
+    },
+    {
+      "best_vs_second_gap": 20.439342146029958,
+      "bundle_id": "calibration-bundle-010",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.18997292279404832,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0047"
+    },
+    {
+      "best_vs_second_gap": 138.9168423510273,
+      "bundle_id": "calibration-bundle-010",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 5.149073245441486,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0040"
+    },
+    {
+      "best_vs_second_gap": 5.0147914116387255,
+      "bundle_id": "calibration-bundle-010",
+      "difficulty_proxy": "near_tie",
+      "epsilon_optimal_actions": [
+        "do_nothing",
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 3.7905790305349942,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-momentum_demand-0005"
+    },
+    {
+      "best_vs_second_gap": 20.137120250929,
+      "bundle_id": "calibration-bundle-011",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.19769311849248786,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0022"
+    },
+    {
+      "best_vs_second_gap": 21.579128572000627,
+      "bundle_id": "calibration-bundle-011",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.20055250456311632,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0073"
+    },
+    {
+      "best_vs_second_gap": 266.55398241748117,
+      "bundle_id": "calibration-bundle-011",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 7.768219795798134,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0044"
+    },
+    {
+      "best_vs_second_gap": 151.52442939033062,
+      "bundle_id": "calibration-bundle-011",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 9.747864271970675,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0077"
+    },
+    {
+      "best_vs_second_gap": 18.138336571741092,
+      "bundle_id": "calibration-bundle-012",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.18185931054677806,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0072"
+    },
+    {
+      "best_vs_second_gap": 20.12654575245324,
+      "bundle_id": "calibration-bundle-012",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.1951828548295055,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0003"
+    },
+    {
+      "best_vs_second_gap": 29.72782955432922,
+      "bundle_id": "calibration-bundle-012",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 2.2746384689716526,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0071"
+    },
+    {
+      "best_vs_second_gap": 16.42545844356937,
+      "bundle_id": "calibration-bundle-012",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 3.1636961749027486,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0078"
+    },
+    {
+      "best_vs_second_gap": 19.484394455419533,
+      "bundle_id": "calibration-bundle-013",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.1746356451578887,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0043"
+    },
+    {
+      "best_vs_second_gap": 20.394014369921933,
+      "bundle_id": "calibration-bundle-013",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.20055277400482963,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0074"
+    },
+    {
+      "best_vs_second_gap": 132.35433734408798,
+      "bundle_id": "calibration-bundle-013",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 4.765326443552718,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0077"
+    },
+    {
+      "best_vs_second_gap": 25.392164752745884,
+      "bundle_id": "calibration-bundle-013",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 3.9883041215403767,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0013"
+    },
+    {
+      "best_vs_second_gap": 20.21060168979602,
+      "bundle_id": "calibration-bundle-014",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "supply_shortage",
+      "paired_monte_carlo_standard_error": 0.1872413822784333,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-supply_shortage-0051"
+    },
+    {
+      "best_vs_second_gap": 19.896931433067948,
+      "bundle_id": "calibration-bundle-014",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "do_nothing"
+      ],
+      "family": "demand_increase",
+      "paired_monte_carlo_standard_error": 0.19490944273840174,
+      "split": "calibration",
+      "strict_best_action": "do_nothing",
+      "world_id": "calibration-demand_increase-0004"
+    },
+    {
+      "best_vs_second_gap": 111.62882791651646,
+      "bundle_id": "calibration-bundle-014",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "collusion_investigation"
+      ],
+      "family": "seller_collusion",
+      "paired_monte_carlo_standard_error": 4.780689502362932,
+      "split": "calibration",
+      "strict_best_action": "collusion_investigation",
+      "world_id": "calibration-seller_collusion-0030"
+    },
+    {
+      "best_vs_second_gap": 81.08969016380433,
+      "bundle_id": "calibration-bundle-014",
+      "difficulty_proxy": "resolved",
+      "epsilon_optimal_actions": [
+        "transaction_tax"
+      ],
+      "family": "momentum_demand",
+      "paired_monte_carlo_standard_error": 8.20985995084616,
+      "split": "calibration",
+      "strict_best_action": "transaction_tax",
+      "world_id": "calibration-momentum_demand-0049"
+    }
+  ],
+  "maximum_constant_policy_epsilon_optimal_rate": 0.5333333333333333,
+  "paired_monte_carlo_standard_error": {
+    "maximum": 9.747864271970675,
+    "mean": 2.2395822898894053
+  },
+  "passed": true,
+  "schema_version": "janus-v2-action-coverage-v1",
+  "split_counts": {
+    "calibration": 60
+  },
+  "strict_best_action_counts": {
+    "collusion_investigation": 15,
+    "do_nothing": 32,
+    "price_ceiling": 0,
+    "supply_subsidy": 0,
+    "transaction_tax": 13
+  },
+  "strict_best_action_counts_by_family": {
+    "demand_increase": {
+      "collusion_investigation": 0,
+      "do_nothing": 15,
+      "price_ceiling": 0,
+      "supply_subsidy": 0,
+      "transaction_tax": 0
+    },
+    "momentum_demand": {
+      "collusion_investigation": 0,
+      "do_nothing": 2,
+      "price_ceiling": 0,
+      "supply_subsidy": 0,
+      "transaction_tax": 13
+    },
+    "seller_collusion": {
+      "collusion_investigation": 15,
+      "do_nothing": 0,
+      "price_ceiling": 0,
+      "supply_subsidy": 0,
+      "transaction_tax": 0
+    },
+    "supply_shortage": {
+      "collusion_investigation": 0,
+      "do_nothing": 15,
+      "price_ceiling": 0,
+      "supply_subsidy": 0,
+      "transaction_tax": 0
+    }
+  },
+  "unique_statistically_resolved_rate": 0.9833333333333333,
+  "unique_statistically_resolved_worlds": 59,
+  "world_count": 60
+}

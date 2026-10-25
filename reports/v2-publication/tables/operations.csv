@@ -1,0 +1,5 @@
+model,actual_cost_usd,mean_latency_ms,cache_write_tokens,cached_input_tokens,input_tokens,output_tokens,reasoning_tokens
+accounts/fireworks/models/deepseek-v4p1-flash,0.25519866,1103.7547833456968,0,813310,756184,19553,0
+accounts/fireworks/models/glm-5p3-flash,0.17180464,3580.3941994160414,0,700768,665304,101972,81672
+accounts/fireworks/models/gpt-oss-120b,0.17220327,2156.8140383126834,0,753858,681836,97700,72675
+accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b,0.05949649,556.783321830444,0,809084,924981,25783,0

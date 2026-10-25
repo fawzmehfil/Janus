@@ -1,0 +1,17 @@
+model,target_coverage,realized_coverage,retained_trials,mean_full_information_regret,epsilon_optimal_rate
+accounts/fireworks/models/deepseek-v4p1-flash,0.25,0.25,75,152.14939624528407,0.6533333333333333
+accounts/fireworks/models/deepseek-v4p1-flash,0.5,0.5,150,212.70517050826592,0.6066666666666667
+accounts/fireworks/models/deepseek-v4p1-flash,0.75,0.75,225,185.36947822886995,0.6044444444444445
+accounts/fireworks/models/deepseek-v4p1-flash,1.0,1.0,300,233.00757057679922,0.5733333333333334
+accounts/fireworks/models/glm-5p3-flash,0.25,0.25,75,75.81769350877914,0.4666666666666667
+accounts/fireworks/models/glm-5p3-flash,0.5,0.49666666666666665,149,88.67214877982354,0.4899328859060403
+accounts/fireworks/models/glm-5p3-flash,0.75,0.7433333333333333,223,107.78960562551816,0.4349775784753363
+accounts/fireworks/models/glm-5p3-flash,1.0,0.99,297,114.16924769002588,0.3939393939393939
+accounts/fireworks/models/gpt-oss-120b,0.25,0.25,75,73.44458686908268,0.44
+accounts/fireworks/models/gpt-oss-120b,0.5,0.5,150,110.17539833388376,0.44666666666666666
+accounts/fireworks/models/gpt-oss-120b,0.75,0.75,225,106.33335050451055,0.38666666666666666
+accounts/fireworks/models/gpt-oss-120b,1.0,1.0,300,133.1844149011113,0.36666666666666664
+accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b,0.25,0.24333333333333335,73,146.51292573608373,0.4931506849315068
+accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b,0.5,0.4866666666666667,146,145.71390289242794,0.4657534246575342
+accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b,0.75,0.73,219,169.67745916975198,0.4703196347031963
+accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b,1.0,0.9733333333333334,292,165.66900994488148,0.4520547945205479

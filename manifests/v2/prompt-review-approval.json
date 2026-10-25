@@ -1,0 +1,23 @@
+{
+  "approved": true,
+  "approved_for": "model-admission testing only",
+  "criteria": {
+    "confidence_is_action_optimality_probability": true,
+    "intervention_semantics_match_simulator": true,
+    "provider_neutral_wording": true,
+    "welfare_language_matches_ledger": true
+  },
+  "decision_schema_sha256": "0b473794c1ba5ac43144e57c527994958a0b14849867f75752c89ba8dad4fd64",
+  "decision_schema_version": "janus-decision-v2",
+  "independent_reviewer": false,
+  "limitations": [
+    "No independent external reviewer was available.",
+    "This review establishes benchmark-internal fidelity, not real-world policy validity."
+  ],
+  "prompt_sha256": "ea8bde8f2db4c5633fd2007b45293a58cc0d200b69253083e9be3fcf088576e9",
+  "prompt_version": "primary-v2.1",
+  "review_date": "2026-10-19",
+  "review_document": "docs/v2/EVIDENCE_BASED_PROMPT_REVIEW.md",
+  "review_type": "ai_assisted_internal_desk_review",
+  "schema_version": "janus-v2-prompt-review-approval-v1"
+}

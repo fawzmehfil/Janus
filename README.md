@@ -8,6 +8,10 @@ counterfactual simulator rather than an LLM judge.
 
 The authoritative research design is [`PROJECT_SPEC.md`](PROJECT_SPEC.md).
 
+Janus v2 is a completed sealed comparative evaluation. Its charter is
+[`docs/v2/CHARTER.md`](docs/v2/CHARTER.md); v1 remains an immutable released
+measurement rather than being rewritten in place.
+
 ## Development status
 
 Phases 0A–0E are complete and benchmark v1 is frozen as an evaluation-ready
@@ -31,6 +35,23 @@ See
 
 The release evidence, exact commands, hashes, cost estimates, limitations, and
 recommendation are in [`reports/readiness.md`](reports/readiness.md).
+The v2 paid workflow is documented in
+[`docs/v2/LIVE_FIREWORKS_COLLECTION.md`](docs/v2/LIVE_FIREWORKS_COLLECTION.md).
+
+The v2 evaluation is complete. Five objective-specific public-information
+policies were frozen after bundle-preserving nested validation; the action-
+margin, matched-contrast, structural-OOD, and model-admission gates passed. The
+sealed hidden evaluation contains 40 independent ambiguity bundles, 160 worlds,
+and 300 trials per model. Four exact Fireworks models were collected against the
+same committed public manifest without retries or model-specific prompt changes,
+and their response manifests were committed before unblinding. All four models
+underperformed the frozen primary public-information policy on the preregistered
+utility estimand. Paid smoke, development, and hidden collection cost
+$1.113531581 in total. Publication tables and figures are in
+[`reports/v2-publication`](reports/v2-publication), and the local reproduction
+archive passes its non-independent hash audit. The evidence-based prompt review
+and archive explicitly disclose that no independent external review has yet
+been performed.
 
 ## Local setup
 
@@ -45,6 +66,17 @@ uv run janus openai-smoke-preflight --max-usd 0.01
 uv run janus openai-hidden-preflight --max-usd 0.84
 uv run janus hidden-sensitivity --workers 8
 uv run janus hidden-publication
+uv run janus v2-dry-run --output artifacts/v2-dry-run
+uv run janus v2-local-development --objective-rollouts 64 --workers 4
+uv run janus v2-ood-pilot
+uv run janus v2-gates
+# Paid commands require FIREWORKS_API_KEY, --max-usd, and the exact confirmation
+# phrase shown by `--help`; run one frozen model role at a time:
+uv run janus v2-smoke --help
+uv run janus v2-collect-development --help
+uv run janus v2-collect-hidden --help
+# After the sealed four-model run and authorized unblinding only:
+uv run janus v2-publication
 ```
 
 The live five-world smoke command, environment-key instructions, and layered

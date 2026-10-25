@@ -659,8 +659,11 @@ def test_hidden_preflight_is_public_only_exact_and_cumulatively_budgeted(tmp_pat
     assert plan["repairs_allowed"] is False
     assert plan["settings"]["maximum_output_tokens"] == HIDDEN_MAXIMUM_OUTPUT_TOKENS
     assert plan["remaining_primary_request_upper_bound_usd"] == pytest.approx(0.8200065)
-    assert plan["cumulative_spend_before_usd"] == pytest.approx(0.0107931)
-    assert plan["cumulative_upper_bound_usd"] == pytest.approx(0.8307996)
+    recorded_spend = sum(plan["recorded_spend_by_stage_usd"].values())
+    assert plan["cumulative_spend_before_usd"] == pytest.approx(recorded_spend)
+    assert plan["cumulative_upper_bound_usd"] == pytest.approx(
+        recorded_spend + plan["remaining_primary_request_upper_bound_usd"]
+    )
     assert plan["fits_ceiling"] is True
     assert plan["required_confirmation"] == hidden_confirmation(0.84)
     assert plan["release_gate"]["passed"] is True
@@ -743,6 +746,14 @@ def test_hidden_analysis_verifies_sealed_set_and_scores_all_trials(tmp_path) -> 
     response_manifest = (
         project_root / "artifacts/openai-hidden-v1/manifests/run-20261019T083004.963054Z.json"
     )
+    required_release_artifacts = (
+        response_manifest,
+        project_root / "artifacts/hidden-v1/private_manifest.json",
+        project_root / "artifacts/hidden-v1/seed_manifest.json",
+        project_root / "artifacts/phase0d-release/partial_policy.json",
+    )
+    if not all(path.exists() for path in required_release_artifacts):
+        pytest.skip("requires the ignored hidden-v1 release archive")
     report = run_hidden_analysis(
         project_root,
         response_manifest,
