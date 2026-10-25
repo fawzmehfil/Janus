@@ -207,7 +207,7 @@ def audit_reproduction_archive(archive: Path) -> dict[str, Any]:
             path = archive / str(name)
             if not path.is_file() or _sha256(path) != expected:
                 hash_failures.append(str(name))
-    response_manifests = tuple((archive / "responses").glob("*/run-manifest.json"))
+    response_manifests = tuple((archive / "responses").glob("*/manifests/run-manifest.json"))
     response_manifest_ok = len(response_manifests) == 4
     if response_manifest_ok:
         response_manifest_ok = all(

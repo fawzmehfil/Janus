@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import numpy as np
 
 from janus.interventions.actions import ActionID
+from janus.v2.audit import audit_reproduction_archive
 from janus.v2.oracle import METRICS, primary_oracle
 from janus.v2.release import _replicate_schedule
 
@@ -36,3 +40,32 @@ def test_split_replicate_schedule_has_300_trials() -> None:
     assert len(schedule) == 160
     assert sum(len(replicates) for replicates in schedule.values()) == 300
     assert all(len(replicates) in {1, 2} for replicates in schedule.values())
+
+
+def test_reproduction_audit_finds_nested_blinded_manifests(tmp_path: Path) -> None:
+    required = (
+        "LICENSE",
+        "CITATION.cff",
+        "configs/experiments/v2-analysis-preregistration.json",
+        "manifests/hidden-v2-commitment.json",
+        "manifests/hidden-v2-public.json",
+        "private/hidden-v2/private_manifest.json",
+        "private/hidden-v2/seed_manifest.json",
+        "analysis/comparative-report.json",
+    )
+    for name in required:
+        path = tmp_path / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("{}\n")
+    (tmp_path / "reports/tables").mkdir(parents=True)
+    (tmp_path / "reports/figures").mkdir(parents=True)
+    for index in range(4):
+        path = tmp_path / f"responses/model-{index}/manifests/run-manifest.json"
+        path.parent.mkdir(parents=True)
+        path.write_text(json.dumps({"unblinded": False}))
+    (tmp_path / "archive-manifest.json").write_text(json.dumps({"sha256": {}}))
+
+    report = audit_reproduction_archive(tmp_path)
+
+    assert report["four_blinded_response_manifests_present"] is True
+    assert report["passed"] is True
