@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="921.6pt" height="576pt" viewBox="0 0 921.6 576" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-25T17:44:01.665352</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 576
+L 921.6 576
+L 921.6 0
+L 0 0
+z
+" style="fill: #fafafa"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 105.984 342.72
+L 419.328 342.72
+L 419.328 216
+L 105.984 216
+z
+" style="fill: #fafafa"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1"/>
+     <g id="text_1">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="105.984" y="360.24" transform="rotate(-0 105.984 360.24)">18</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2"/>
+     <g id="text_2">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="191.441455" y="360.24" transform="rotate(-0 191.441455 360.24)">21</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3"/>
+     <g id="text_3">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="276.898909" y="360.24" transform="rotate(-0 276.898909 360.24)">24</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4"/>
+     <g id="text_4">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="362.356364" y="360.24" transform="rotate(-0 362.356364 360.24)">27</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5"/>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="419.328" y="360.24" transform="rotate(-0 419.328 360.24)">29</text>
+     </g>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="262.656" y="380.89" transform="rotate(-0 262.656 380.89)">Observed period</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_6">
+      <path d="M 105.984 320.357647
+L 419.328 320.357647
+" clip-path="url(#pd61332b6de)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_7"/>
+     <g id="text_7">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: end; fill: #777777" x="97.984" y="325.117647" transform="rotate(-0 97.984 325.117647)">100</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_8">
+      <path d="M 105.984 283.087059
+L 419.328 283.087059
+" clip-path="url(#pd61332b6de)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_9"/>
+     <g id="text_8">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: end; fill: #777777" x="97.984" y="287.847059" transform="rotate(-0 97.984 287.847059)">105</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_10">
+      <path d="M 105.984 245.816471
+L 419.328 245.816471
+" clip-path="url(#pd61332b6de)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_11"/>
+     <g id="text_9">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: end; fill: #777777" x="97.984" y="250.576471" transform="rotate(-0 97.984 250.576471)">110</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_12">
+    <path d="M 105.984 320.348903
+L 134.469818 326.735271
+L 162.955636 253.417136
+L 191.441455 247.579943
+L 219.927273 252.905851
+L 248.413091 258.835333
+L 276.898909 248.612026
+L 305.384727 255.125814
+L 333.870545 252.440475
+L 362.356364 254.935003
+L 390.842182 254.962501
+L 419.328 258.866722
+" clip-path="url(#pd61332b6de)" style="fill: none; stroke: #171717; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_3">
+    <path d="M 529.92 342.72
+L 843.264 342.72
+L 843.264 216
+L 529.92 216
+z
+" style="fill: #fafafa"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_6">
+     <g id="line2d_13"/>
+     <g id="text_10">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="529.92" y="360.24" transform="rotate(-0 529.92 360.24)">18</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_14"/>
+     <g id="text_11">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="615.377455" y="360.24" transform="rotate(-0 615.377455 360.24)">21</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_15"/>
+     <g id="text_12">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="700.834909" y="360.24" transform="rotate(-0 700.834909 360.24)">24</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_16"/>
+     <g id="text_13">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="786.292364" y="360.24" transform="rotate(-0 786.292364 360.24)">27</text>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_17"/>
+     <g id="text_14">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="843.264" y="360.24" transform="rotate(-0 843.264 360.24)">29</text>
+     </g>
+    </g>
+    <g id="text_15">
+     <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: middle; fill: #777777" x="686.592" y="380.89" transform="rotate(-0 686.592 380.89)">Observed period</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_4">
+     <g id="line2d_18">
+      <path d="M 529.92 320.357647
+L 843.264 320.357647
+" clip-path="url(#p060f3671bb)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_19"/>
+     <g id="text_16">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: end; fill: #777777" x="521.92" y="325.117647" transform="rotate(-0 521.92 325.117647)">100</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_20">
+      <path d="M 529.92 283.087059
+L 843.264 283.087059
+" clip-path="url(#p060f3671bb)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_21"/>
+     <g id="text_17">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: end; fill: #777777" x="521.92" y="287.847059" transform="rotate(-0 521.92 287.847059)">105</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_22">
+      <path d="M 529.92 245.816471
+L 843.264 245.816471
+" clip-path="url(#p060f3671bb)" style="fill: none; stroke: #dddddd; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_23"/>
+     <g id="text_18">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: end; fill: #777777" x="521.92" y="250.576471" transform="rotate(-0 521.92 250.576471)">110</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_24">
+    <path d="M 529.92 316.340854
+L 558.405818 309.966779
+L 586.891636 253.643995
+L 615.377455 254.99284
+L 643.863273 254.151352
+L 672.349091 260.268708
+L 700.834909 246.61181
+L 729.320727 252.882326
+L 757.806545 250.868014
+L 786.292364 255.818122
+L 814.778182 262.957564
+L 843.264 252.75401
+" clip-path="url(#p060f3671bb)" style="fill: none; stroke: #b9614d; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+  </g>
+  <g id="line2d_25">
+   <path d="M 82.944 197.568
+L 414.72 197.568
+" style="fill: none; stroke: #dddddd; stroke-width: 0.85; stroke-linecap: square"/>
+  </g>
+  <g id="line2d_26">
+   <path d="M 506.88 197.568
+L 838.656 197.568
+" style="fill: none; stroke: #dddddd; stroke-width: 0.85; stroke-linecap: square"/>
+  </g>
+  <g id="text_19">
+   <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: start; fill: #777777" x="55.296" y="32.256" transform="rotate(-0 55.296 32.256)">JANUS   /   AMBIGUITY</text>
+  </g>
+  <g id="text_20">
+   <text style="font-size: 38px; font-family: 'Baskerville'; text-anchor: start; fill: #171717" x="55.296" y="97.92" transform="rotate(-0 55.296 97.92)">Two near-matches</text>
+  </g>
+  <g id="text_21">
+   <text style="font-size: 14px; font-family: 'Helvetica Neue'; text-anchor: start; fill: #777777" x="55.296" y="135.36" transform="rotate(-0 55.296 135.36)">Similar public price histories; different best interventions after reveal.</text>
+  </g>
+  <g id="text_22">
+   <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: start; fill: #777777" x="82.944" y="184.32" transform="rotate(-0 82.944 184.32)">WORLD 103  /  SHORTAGE</text>
+  </g>
+  <g id="text_23">
+   <text style="font-size: 20px; font-family: 'Baskerville'; text-anchor: start; fill: #171717" x="82.944" y="417.6" transform="rotate(-0 82.944 417.6)">Do nothing</text>
+  </g>
+  <g id="text_24">
+   <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: start; fill: #777777" x="82.944" y="442.944" transform="rotate(-0 82.944 442.944)">Investigation - no action: -53</text>
+  </g>
+  <g id="text_25">
+   <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: start; fill: #777777" x="506.88" y="184.32" transform="rotate(-0 506.88 184.32)">WORLD 102  /  COLLUSION</text>
+  </g>
+  <g id="text_26">
+   <text style="font-size: 20px; font-family: 'Baskerville'; text-anchor: start; fill: #171717" x="506.88" y="417.6" transform="rotate(-0 506.88 417.6)">Investigate collusion</text>
+  </g>
+  <g id="text_27">
+   <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: start; fill: #777777" x="506.88" y="442.944" transform="rotate(-0 506.88 442.944)">Investigation - no action: +1,454</text>
+  </g>
+  <g id="text_28">
+   <text style="font-size: 10.5px; font-family: 'Helvetica Neue'; text-anchor: start; fill: #171717" x="82.944" y="486.144" transform="rotate(-0 82.944 486.144)">Final public reading: price 108.2 vs 109.1  ·  volume 16 vs 17  ·  seller HHI 0.125 in both</text>
+  </g>
+  <g id="text_29">
+   <text style="font-size: 10px; font-family: 'Helvetica Neue'; text-anchor: start; fill: #777777" x="82.944" y="509.76" transform="rotate(-0 82.944 509.76)">Selected public cues shown. Public summaries are close, not identical; standardized distance 0.297.</text>
+  </g>
+  <g id="text_30">
+   <text style="font-size: 9px; font-family: 'Helvetica Neue'; text-anchor: start; fill: #777777" x="55.296" y="532.8" transform="rotate(-0 55.296 532.8)">One illustrative pair · 20 period oracle means · synthetic utility units</text>
+  </g>
+  <g id="text_31">
+   <text style="font-size: 9px; font-family: 'Helvetica Neue'; text-anchor: end; fill: #777777" x="866.304" y="532.8" transform="rotate(-0 866.304 532.8)">janus / hidden v2</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pd61332b6de">
+   <rect x="105.984" y="216" width="313.344" height="126.72"/>
+  </clipPath>
+  <clipPath id="p060f3671bb">
+   <rect x="529.92" y="216" width="313.344" height="126.72"/>
+  </clipPath>
+ </defs>
+</svg>

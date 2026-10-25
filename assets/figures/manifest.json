@@ -1,0 +1,15 @@
+{
+  "schema_version": "janus-public-figure-assets-v1",
+  "created_on": "2026-10-25",
+  "measurement": "janus-v2",
+  "analysis_source": "artifacts/hidden-v2-analysis/comparative-report.json",
+  "analysis_source_sha256": "23955d9e77cc88dcc2d8ed9f369db54cb106d31e2c11a9c2de6cfc1792898333",
+  "files": {
+    "janus-v2-accuracy-utility.png": "bb31514302ca0a4cf62f7722457773308fdfb7ae5fbc5cf96fe9db41d86e7d47",
+    "janus-v2-accuracy-utility.svg": "4325f95bbca5b6b4bb13879f2ebdf6aaa65ac4d588a38ef6f4c63d05983fb953",
+    "janus-v2-ambiguity-pair.png": "16a4c27f177977e9007d4632c8ce32f434b8ddb3560b5176c90c40b8fef09dfe",
+    "janus-v2-ambiguity-pair.svg": "aaf41f4c8e290245dc75dd8ce8fd8689383aa84d92359beb36ec2d532c520aac",
+    "janus-v2-utility-interval.png": "563c1d084fa4b89d62a130a250268ac68bd819f7c3fdcd0fae34765be54422a7",
+    "janus-v2-utility-interval.svg": "b405d4a8becd8c2a613751ee69b6a83e55100620ffe1996e0953f913b4cd8836"
+  }
+}
