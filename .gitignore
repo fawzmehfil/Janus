@@ -16,3 +16,4 @@ build/
 *.egg-info/
 artifacts/**
 !artifacts/.gitkeep
+reports/blog-draft/
