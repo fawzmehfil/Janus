@@ -8,7 +8,7 @@ counterfactual simulator rather than an LLM judge.
 
 The authoritative research design is [`PROJECT_SPEC.md`](PROJECT_SPEC.md).
 
-Janus v2 is under sealed comparative-development. Its charter is
+Janus v2 is a completed sealed comparative evaluation. Its charter is
 [`docs/v2/CHARTER.md`](docs/v2/CHARTER.md); v1 remains an immutable released
 measurement rather than being rewritten in place.
 
@@ -38,19 +38,20 @@ recommendation are in [`reports/readiness.md`](reports/readiness.md).
 The v2 paid workflow is documented in
 [`docs/v2/LIVE_FIREWORKS_COLLECTION.md`](docs/v2/LIVE_FIREWORKS_COLLECTION.md).
 
-The v2 local scientific layer is complete: five objective-specific public-
-information policies are frozen after bundle-preserving nested validation,
-the action-margin and matched-contrast audits pass, the structural OOD pilot
-finds cue-to-action reversals, and a four-model offline Fireworks dry run passes.
-The precision analysis selects 40 independent bundles and 300 trials per model.
-No hidden-v2 set has been generated. The paid Fireworks smoke and documented
-pre-development serving amendment are complete: the final settings produced 20
-direct-valid responses across the four exact models, with $0.114403055 in total
-smoke and diagnostic spend. An evidence-based, hash-pinned internal prompt
-review is complete, with the lack of independent external review disclosed.
-Exact candidate model IDs, serving settings, and a dated pricing snapshot are
-frozen. The four 100-trial model admission runs remain intentional gates; `uv
-run janus v2-gates` reports them.
+The v2 evaluation is complete. Five objective-specific public-information
+policies were frozen after bundle-preserving nested validation; the action-
+margin, matched-contrast, structural-OOD, and model-admission gates passed. The
+sealed hidden evaluation contains 40 independent ambiguity bundles, 160 worlds,
+and 300 trials per model. Four exact Fireworks models were collected against the
+same committed public manifest without retries or model-specific prompt changes,
+and their response manifests were committed before unblinding. All four models
+underperformed the frozen primary public-information policy on the preregistered
+utility estimand. Paid smoke, development, and hidden collection cost
+$1.113531581 in total. Publication tables and figures are in
+[`reports/v2-publication`](reports/v2-publication), and the local reproduction
+archive passes its non-independent hash audit. The evidence-based prompt review
+and archive explicitly disclose that no independent external review has yet
+been performed.
 
 ## Local setup
 

@@ -1,6 +1,6 @@
 # Janus v2 evidence-based prompt review
 
-Date: 2026-10-19  
+Date: 2026-10-19
 Decision: approved for model-admission testing
 Review type: AI-assisted internal desk review; not independent external review
 
